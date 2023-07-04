@@ -1,0 +1,207 @@
+---
+title: "Reproducibility Report for MA211"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Yuan, Z. Y., & Chen, H. Y. H. (2015). Negative effects of fertilization on plant nutrient resorption. _Ecology_, _96_(2), 373–380. https://doi.org/10.1890/14-0140.1
+
+# Result to be reproduced
+
+> Globally, N fertilization increased green-leaf [N] by 27% when all data was pooled (Fig. 2; Appendices A–G). (Yuan & Chen, 2015, p.374)
+
+This result refers to Figure 2, which shows the N fertilization effect of on [N] in the top-left facet. The "Overall" result indicates a sample size of 3298, and the point estimate and confidence interval are only shown graphically. (The effect size shown in the figure is lnRR, rather than the actual response ratio.) The entire page of the article PDF containing the figure was extracted as a PNG image file at 600 dpi using ImageMagick 7.0.8-64 for Windows:
+
+> `magick convert -density 600 MA211.pdf[3] MA211_600.png`
+
+This image was used to extract the numerical values of the point estimate and confidence interval limits using WebPlotDigitizer 4.2 for Windows. The calibration results were recorded in a JSON file output by WebPlotDigitizer:
+
+> {"version":[4,2],"axesColl":[{"name":"Bar","type":"BarAxes","isLog":false,"isRotated":false,"calibrationPoints":[{"px":897,"py":1534,"dx":0,"dy":"-0.5","dz":null},{"px":1345,"py":1534,"dx":0,"dy":"1.0","dz":null}]}],"datasetColl":[{"name":"summary_effect","axesName":"Bar","metadataKeys":["Label"],"data":[{"x":1114,"y":1476.5,"metadata":["ci_lower"],"value":[0.2265625]},{"x":1120,"y":1476.5,"metadata":["ci_upper"],"value":[0.2466517857142857]},{"x":1118,"y":1504.5,"metadata":["point_est_bottom_circle"],"value":[0.2399553571428572]},{"x":1089,"y":1476.5,"metadata":["point_est_left_circle"],"value":[0.1428571428571428]},{"x":1147,"y":1476.5,"metadata":["point_est_right_circle"],"value":[0.3370535714285714]}],"autoDetectionData":null}],"measurementColl":[]}
+
+In the figure, the point estimate was represented by a circle marker which was much bigger than the confidence interval bounds. It was difficult to ascertain precisely where the point estimate was. Two strategies were used: first, the x-position of the most outlying pixels at the very bottom of the circle outline were used as a reference point for the middle of the circle; this resulted in an estimate of 0.2399. Second, the x-positions of the very left- and rightmost pixels of the circle outline were recorded and the average taken; this resulted in an estimate of (0.1429 + 0.3371)/2 = 0.2400. The concordance of these two values is encouraging, especially since the log response ratio of a 27% increase (as reported in the text of the article) is ln(1.27) = 0.2390. The value 0.24 was chosen as the appropriate value to record as the point estimate.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA211",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "log response ratio",
+                             point_est = 0.24,
+                             ci_lower = 0.23,
+                             ci_upper = 0.25,
+                             n = 3298)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Figshare:
+
+Y. Yuan, Z., & Y. H. Chen, H.. (2016). _Negative effects of fertilization on plant nutrient resorption (Version 1)._ Wiley. https://doi.org/10.6084/m9.figshare.c.3307422.v1
+
+* ECOL_96_39.zip
+    + appendix-A.htm
+    + appendix-B.htm
+    + appendix-C.htm
+    + appendix-D.htm
+    + appendix-E.htm
+    + appendix-F.htm
+    + appendix-G.htm
+    + default.htm
+    + FigA1.jpg
+    + FigB1.jpg
+    + FigC1.jpg
+    + FigD1.jpg
+    + FigE1.jpg
+    + FigF1.jpg
+    + FigG1.jpg
+    + header.htm
+    + suppl-1.htm
+    + Thumbs.db
+    + Yuan_and_Chen_data.csv
+    + Yuan_and_Chen_References.html
+    + Yuan_and_Chen_R_codes.R
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The documentation in file `suppl-1.htm` explains that file `Yuan_and_Chen_data.csv` contains the data for all analyses reported (the file literally says "`Yuan_and_Chen_data.csv` contains metadata used for all analyses reported", but I suspect that the word "metadata" used here is a typo).
+
+The documentation for the code file (see below) explicitly says that the code imports the data it requires from `Yuan_and_Chen_data.csv`. 
+
+## Code
+The documentation in file `suppl-1.htm` explains that file `Yuan_and_Chen_R_codes.R` contains code which performs all analyses reported in the study, using data from `Yuan_and_Chen_data.csv`.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(VIM)
+library(mice) 
+library(metafor)
+library(lmodel2)
+library(smatr)
+library(ggplot2)
+library(splines)
+library(grid)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Yuan_and_Chen_R_codes.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+mydata<-read.csv(file = here::here("original", "Yuan_and_Chen_data.csv"),
+                 header = TRUE)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis, error=TRUE}
+
+# Format the data (comment on line 34 reads "subset data").
+
+# Issue on line 35: code seems to be dropping more columns than exist in data
+# frame "mydata", which has only 13 variables/columns.
+sourceLines(orig_source, 35, 35)
+
+# For now, assume that code means to refer to rows, rather than columns.
+growthform <- mydata[-(1:8), ]
+growthform <- growthform[-(2:7), ]
+growthform <- growthform[-(23:41), ]
+
+# Subset then recombine the data by the PFT variable.
+sourceLines(orig_source, 36, 45)
+
+# Perform further data formatting (comment on line 46 reads "1.1 [N]green").
+
+# Issue on line 47: code seems to be dropping more columns than exist in data
+# frame "data" (created on line 45), which has only 13 variables/columns.
+sourceLines(orig_source, 47, 47)
+
+# For now, assume that code means to refer to rows, rather than columns.
+plantN <- data[1:24, ]
+plantN <- plantN[-(5:10), ]
+plantN <- plantN[-(11:17), ]
+
+# Issue on lines 48-49: code assumes variable "Tissue2" (which contains values
+# including "01greenleaf" and "03liveroot") exists in data frame "plantN".
+# This variable/column cannot be found in plantN, nor in the data file
+# Yuan_and_Chen_data.csv - the data file seems to be either incorrect or
+# incomplete.
+sourceLines(orig_source, 48, 49)
+
+# The analysis cannot proceed - the code that actually calculates effect sizes
+# and runs the model (on lines 146-152 of Yuan_and_Chen_R_codes.R) relies on
+# data that is formatted with the assumption that (at least) variable "Tissue2"
+# exists. Since this is demonstrably not the case, the attempt stops here.
+
+repro_result_df <- data.frame(ID = "MA211",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "log response ratio",
+                             point_est = NA_real_,
+                             ci_lower = NA_real_,
+                             ci_upper = NA_real_,
+                             n = NA_integer_)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA211_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

@@ -1,0 +1,160 @@
+SearchID,status_nom_sharing,status_act_sharing,data_format,format_category
+MA001,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA003,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA005,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA006,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA009,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA010,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA011,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA014,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA015,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA016,nom_shared_both_code_data,act_shared_both_code_data,xlsx,Microsoft Excel spreadsheet
+MA017,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA018,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA021,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA022,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA023,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA024,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA025,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA026,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA027,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA029,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA031,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA031,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA035,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA036,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA038,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA040,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA041,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA042,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA042,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA044,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA045,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA048,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA049,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA053,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA053,nom_shared_data_only,act_shared_data_only,doc,Microsoft Word document
+MA054,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA056,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA057,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA059,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA060,nom_shared_both_code_data,act_shared_both_code_data,nex,Plain text formats
+MA060,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA062,nom_shared_both_code_data,act_shared_both_code_data,xlsx,Microsoft Excel spreadsheet
+MA063,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA063,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA064,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA065,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA067,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA068,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA069,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA070,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA071,nom_shared_both_code_data,act_shared_both_code_data,xls,Microsoft Excel spreadsheet
+MA074,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA074,nom_shared_both_code_data,act_shared_both_code_data,docx,Microsoft Word document
+MA076,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA076,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA077,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA079,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA080,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA081,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA082,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA090,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA091,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA092,nom_shared_both_code_data,act_shared_both_code_data,xls,Microsoft Excel spreadsheet
+MA094,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA095,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA096,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA099,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA099,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA099,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA101,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA102,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA103,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA106,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA107,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA108,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA109,nom_shared_data_only,act_shared_data_only,doc,Microsoft Word document
+MA110,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA110,nom_shared_data_only,act_shared_data_only,rtf,Rich Text Format (RTF)
+MA111,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA112,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA117,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA118,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA119,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA119,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA119,nom_shared_data_only,act_shared_data_only,tre,Plain text formats
+MA121,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA125,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA126,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA126,nom_shared_both_code_data,act_shared_both_code_data,new,Plain text formats
+MA128,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA129,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA130,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA130,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA135,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA138,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA140,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA145,nom_shared_both_code_data,act_shared_both_code_data,docx,Microsoft Word document
+MA146,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA147,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA148,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA149,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA149,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA150,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA152,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA155,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA155,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA157,nom_shared_data_only,act_shared_data_only,doc,Microsoft Word document
+MA158,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA160,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA160,nom_shared_data_only,act_shared_data_only,nex,Plain text formats
+MA162,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA163,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA164,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA169,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA170,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA171,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA179,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA180,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA181,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA182,nom_shared_data_only,act_shared_data_only,htm,Hypertext Markup Language (HTML)
+MA184,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA185,nom_shared_data_only,act_shared_data_only,nex,Plain text formats
+MA185,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA185,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA186,nom_shared_data_only,act_shared_data_only,docx,Microsoft Word document
+MA187,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA188,nom_shared_both_code_data,act_shared_both_code_data,Rdata,RData format
+MA190,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA190,nom_shared_data_only,act_shared_data_only,doc,Microsoft Word document
+MA191,nom_shared_both_code_data,act_shared_both_code_data,xls,Microsoft Excel spreadsheet
+MA191,nom_shared_both_code_data,act_shared_both_code_data,xlsx,Microsoft Excel spreadsheet
+MA193,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA193,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA194,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA195,nom_shared_data_only,act_shared_data_only,htm,Hypertext Markup Language (HTML)
+MA197,nom_shared_data_only,act_shared_data_only,doc,Microsoft Word document
+MA198,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA201,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA202,nom_shared_both_code_data,act_shared_both_code_data,xlsx,Microsoft Excel spreadsheet
+MA204,nom_shared_data_only,act_shared_data_only,xls,Microsoft Excel spreadsheet
+MA204,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA205,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA206,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA207,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA208,nom_shared_data_only,act_shared_data_only,csv,Comma-separated values (CSV)
+MA211,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA212,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA213,nom_shared_both_code_data,act_shared_both_code_data,csv,Comma-separated values (CSV)
+MA213,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats
+MA214,nom_shared_data_only,act_shared_data_only,htm,Hypertext Markup Language (HTML)
+MA217,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA218,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA220,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA222,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA223,nom_shared_data_only,act_shared_data_only,pdf,Portable Document Format (PDF)
+MA226,nom_shared_data_only,act_shared_data_only,xlsx,Microsoft Excel spreadsheet
+MA226,nom_shared_data_only,act_shared_data_only,txt,Plain text formats
+MA226,nom_shared_data_only,act_shared_data_only,obj,Other binary formats
+MA229,nom_shared_both_code_data,act_shared_both_code_data,txt,Plain text formats

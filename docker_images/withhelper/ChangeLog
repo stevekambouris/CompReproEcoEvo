@@ -1,0 +1,22 @@
+ChangeLog for rpmaecoevo/withhelper Dockerfile
+
+2021-09-19  0.5.3
+    * Updated to build on image rpmaecoevo/withpkgs:0.5.0
+
+2021-09-19  0.5.2
+    * Updated to build on image rpmaecoevo/withpkgs:0.4.0
+
+2021-09-17  0.5.1
+    * Updated to build on image rpmaecoevo/withpkgs:0.3.0
+
+2021-08-04  0.5.0
+    * No change except to version numbering
+
+2021-07-25  0.3.1
+    * Added command to change ownership of the output folder to rstudio user
+
+2021-07-06  0.3.0
+    * Updated to build on image rpmaecoevo/withpkgs:0.2.0
+
+2021-05-20  0.1.0
+    * Initial version of Dockerfile

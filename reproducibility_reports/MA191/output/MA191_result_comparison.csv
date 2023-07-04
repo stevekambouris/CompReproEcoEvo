@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA191","mean","allometric slope parameter","point_est",0.86,0.85,1.16,"Original and reproduced values differ by less than 10%"
+"MA191","mean","allometric slope parameter","ci_lower",0.77,0.77,0,"Original and reproduced values match exactly"
+"MA191","mean","allometric slope parameter","ci_upper",0.94,0.94,0,"Original and reproduced values match exactly"
+"MA191","mean","allometric slope parameter","n",553,553,0,"Original and reproduced values match exactly"

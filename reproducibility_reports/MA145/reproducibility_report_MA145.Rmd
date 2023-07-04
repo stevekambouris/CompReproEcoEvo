@@ -1,0 +1,521 @@
+---
+title: "Reproducibility Report for MA145"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Moore, F. R., Shuker, D. M., & Dougherty, L. (2016). Stress and sexual signaling: A systematic review and meta-analysis. _Behavioral Ecology_, _27_(2), 363–371. https://doi.org/10.1093/beheco/arv195
+
+# Result to be reproduced
+
+> Across all effect sizes there was no significant correlation between stress levels and the degree of secondary sexual signaling (intercept-only MCMCglmm; posterior mean = −0.08, LHPD = −0.22, UHPD = 0.03, $k = 118$, $N_{studies}  = 38$, $N_{species}  = 25$). (Moore et al., 2016, p.366)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA145",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = -0.08,
+                             hpdi_lower = -0.22,
+                             hpdi_upper = 0.03,
+                             n = 118,
+                             n_studies = 38,
+                             n_species = 25)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://academic.oup.com/beheco/article/27/2/363/2196777#supplementary-data):
+
+* arv195_supplementary_data.zip
+    + Supplementary_material.docx
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+The supplementary material consists of a single Microsoft Word document - not a traditional data file format. Inspection of the document revealed that the effect size data used in the meta-analysis was included as a table in the document, in Section 2, "Effect sizes used in final analysis". To be usable, this data would need to be extracted and formatted into a usable state.
+
+The analysis code (see below) imports a phylogenetic tree data file, `all_species_cladogram.txt`. This data file isn't included in the supplementary material. However, the article includes a diagram of the relevant phylogenetic tree (Figure 2 on page 366), and the article states that all branch lengths were set to one. Therefore, the data file could be reconstructed (in Newick/New Hampshire tree format) from the diagram and branch length information. My reconstruction of the data file (`MA145_recreated_all_species_cladogram.txt`) has been included here in order to run the analysis.
+
+## Code
+The supplementary material consists of a single Microsoft Word document - not a traditional code file format. Inspection of the document revealed that the code used to conduct the meta-analysis was included in the document, in Section 4, "R code used for analysis". To be usable, this code would need to be extracted and placed into a standard text file.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+library(docxtractr)
+library(officer)
+
+# The analysis code is "trapped" in the shared supplementary material Word
+# document, it needs to be extracted and saved to a text file.
+
+# Import the word document using the officer read_docx function.
+word_doc1 <- officer::read_docx(here::here("original",
+                                           "Supplementary_material.docx"))
+
+# Summarise the imported Word document, creating a data frame.
+word_sum1 <- officer::docx_summary(word_doc1)
+
+# Extract the paragraphs in the Word document that correspond to the analysis
+# code.
+word_code1 <- word_sum1[word_sum1$doc_index %in% 118:337, "text"]
+
+# Write the extracted code to a separate R script file which can then be
+# referred to as a source.
+# Write to the current working directory, which is where the session has write
+# permission.
+cat(word_code1, file = "MA145_code_extracted.R", sep = "\n")
+
+# Clean up the objects created so they don't cause conflicts.
+rm(list = c("word_doc1", "word_sum1", "word_code1"))
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(ape) 
+library(MCMCglmm)
+library(orthopolynom)
+library(metafor)
+
+# Set the path to the extracted code file, which is being treated as the
+# "original" code, despite the extraction step.
+orig_source <- here::here("MA145_code_extracted.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+# The effect size data used in the meta-analysis is "trapped" in a table within
+# the shared supplementary material Word document. It needs to be extracted and
+# formatted into a useable form.
+
+# Read in the Word document using the docxtractr package this time.
+Word_doc <- docxtractr::read_docx(here::here("original",
+                                             "Supplementary_material.docx"))
+
+# Identify and extract the table containing the effect sizes. It is the table
+# with index 3 in the document.
+print(docxtractr::docx_tbl_count(Word_doc))
+print(docxtractr::docx_describe_tbls(Word_doc))
+Word_table <- docxtractr::docx_extract_tbl(Word_doc, 3)
+
+# Problem: many cells in the table were merged, and values in merged cells were
+# separated by line breaks, which have been removed by the import process.
+# Need to restore the line-break separated values to the appropriate row in the
+# data table.
+Word_table_cleaned <- Word_table
+
+
+# Drop rows that contain only class/order information, convert these to columns
+# instead.
+Word_table_cleaned$class <- ""
+Word_table_cleaned$order <- ""
+Word_table_cleaned[1:16, "class"] <- "Amphibian"
+Word_table_cleaned[1:16, "order"] <- "Salientia"
+Word_table_cleaned[17:94, "class"] <- "Avian"
+Word_table_cleaned[17:35, "order"] <- "Galliforme"
+Word_table_cleaned[36:94, "order"] <- "Passeriforme"
+Word_table_cleaned[95:103, "class"] <- "Mammalian"
+Word_table_cleaned[95:103, "order"] <- "Primate"
+Word_table_cleaned[104:121, "class"] <- "Reptilian"
+Word_table_cleaned[104:121, "order"] <- "Squamata"
+
+# Get the rows which do not contain the class/order information in the Species
+# column - those are empty subheader rows.
+non_subheader_rows <- which(!Word_table_cleaned$Species %in% c("Amphibian",
+                                                               "Salientia",
+                                                               "Avian",
+                                                               "Galliforme",
+                                                               "Passeriforme",
+                                                               "Mammalian",
+                                                               "Primate",
+                                                               "ReptilianSquamata"))
+Word_table_cleaned <- Word_table_cleaned[non_subheader_rows, ]
+
+# Clean Species.
+check_species <- unique(Word_table_cleaned$Species)
+
+Word_table_cleaned[Word_table_cleaned$Species == check_species[3],
+                   "Species"] <- "Great plains toad (Bufo cognatus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[5],
+                   "Species"] <- "Smith frog (Hypiboas faber)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[6],
+                   "Species"] <- "Green tree frog (Litoria caerulea)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[7],
+                   "Species"] <- "Red legged partridge (Alectoris rufa)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[9],
+                   "Species"] <- "Grey partridge (Perdix perdix)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[10],
+                   "Species"] <- "Red junglefowl (Gallus gallus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[11],
+                   "Species"] <- "Red grouse (Lagopus lagopus scoticus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[12],
+                   "Species"] <- "Northern cardinal (Cardinalis cardinalis)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[14],
+                   "Species"] <- "House finch (Carpodacus mexicanus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[15],
+                   "Species"] <- "Red bishop (Euplectes orix)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[16],
+                   "Species"] <- "Collared flycatcher (Ficedula albicollis)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[17],
+                   "Species"] <- "Pied flycatcher (Ficedula hypoleuca)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[18],
+                   "Species"] <- "Barn swallow (Hirundo rusitca)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[19],
+                   "Species"] <- "Red backed fairy wren (Malarus melodicus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[20],
+                   "Species"] <- "Song sparrow (Melospiza melodia)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[22],
+                   "Species"] <- "Blue tit (Parus caeruleus)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[24],
+                   "Species"] <- "Human (Homo sapien)"
+Word_table_cleaned[Word_table_cleaned$Species == check_species[28],
+                   "Species"] <- "Striped plateau lizard (Sceloporus virgatus)"
+
+# Fill in missing species values.
+for (i in 2:114) {
+  if (Word_table_cleaned$Species[i] == "") {
+    Word_table_cleaned$Species[i] <- Word_table_cleaned$Species[i - 1]
+  }
+}
+
+# Duplicate some doubled-up rows.
+# Row 94 is doubled up.
+dupl_row94 <- Word_table_cleaned[94, ]
+
+# Row 112 is doubled up.
+dupl_row112 <- Word_table_cleaned[112, ]
+
+# Row 113 is quadrupled up.
+dupl_row113 <- Word_table_cleaned[113, ]
+
+# Drop the empty row at the end.
+Word_table_cleaned <- Word_table_cleaned[1:113, ]
+
+# Add Row 112 once, and 113 four times to the end of rows 1:112.
+Word_table_cleaned <- rbind(Word_table_cleaned[1:112, ],
+                            dupl_row112,
+                            dupl_row113, dupl_row113, dupl_row113, dupl_row113)
+
+# Add Row 94 once, in the correct location.
+Word_table_cleaned <- rbind(Word_table_cleaned[1:94, ],
+                            dupl_row94,
+                            Word_table_cleaned[95:117, ])
+
+# Clean trait.
+Word_table_cleaned[1:4, "Trait"] <- "Adoption of calling strategy"
+Word_table_cleaned[24:28, "Trait"] <- "Comb length"
+Word_table_cleaned[42:44, "Trait"] <- Word_table_cleaned[42, "Trait"]
+Word_table_cleaned[42:44, "Trait"] <- Word_table_cleaned[42, "Trait"]
+Word_table_cleaned[45:47, "Trait"] <- Word_table_cleaned[45, "Trait"]
+Word_table_cleaned[48:50, "Trait"] <- Word_table_cleaned[48, "Trait"]
+Word_table_cleaned[51:53, "Trait"] <- Word_table_cleaned[51, "Trait"]
+Word_table_cleaned[54:56, "Trait"] <- Word_table_cleaned[54, "Trait"]
+Word_table_cleaned[59:61, "Trait"] <- "Brightness of ventral phaeomelanic plumage"
+Word_table_cleaned[63:64, "Trait"] <- "Red and black plumage coverage"
+Word_table_cleaned[80:83, "Trait"] <- "Chroma of yellow plumage"
+Word_table_cleaned[90:94, "Trait"] <- "Female preference for male faces"
+Word_table_cleaned[95, "Trait"] <- "Male preference for female faces"
+Word_table_cleaned[113, "Trait"] <- "Size of orange ovulatory throat patch"
+Word_table_cleaned[114, "Trait"] <- "Orange colouration of throat patch (principal component)"
+Word_table_cleaned[115, "Trait"] <- "Size of orange ovulatory throat patch"
+Word_table_cleaned[116, "Trait"] <- "Mean reflectance of throat patch"
+Word_table_cleaned[117, "Trait"] <- "Orange colouration of throat patch (principal component 1)"
+Word_table_cleaned[118, "Trait"] <- "Orange colouration of throat patch (principal component 2)"
+
+# Clean Sex.
+Word_table_cleaned[1:9, "Sex"] <- "M"
+Word_table_cleaned[11:17, "Sex"] <- "M"
+Word_table_cleaned[18, "Sex"] <- "F"
+Word_table_cleaned[21:33, "Sex"] <- "M"
+Word_table_cleaned[34:35, "Sex"] <- "F"
+Word_table_cleaned[37:61, "Sex"] <- "M"
+Word_table_cleaned[63:78, "Sex"] <- "M"
+Word_table_cleaned[90:94, "Sex"] <- "M"
+Word_table_cleaned[95, "Sex"] <- "F"
+Word_table_cleaned[98:112, "Sex"] <- "M"
+Word_table_cleaned[113:118, "Sex"] <- "F"
+
+# Clean N.
+Word_table_cleaned[11:12, "N"] <- "29"
+Word_table_cleaned[13:14, "N"] <- "68"
+Word_table_cleaned[15, "N"] <- "30"
+Word_table_cleaned[16, "N"] <- "29"
+Word_table_cleaned[17, "N"] <- "30"
+Word_table_cleaned[18, "N"] <- "20"
+Word_table_cleaned[21:23, "N"] <- "48"
+Word_table_cleaned[37:39, "N"] <- "31"
+Word_table_cleaned[40:41, "N"] <- "52"
+Word_table_cleaned[42:56, "N"] <- "23"
+Word_table_cleaned[59:61, "N"] <- "90"
+Word_table_cleaned[74:77, "N"] <- "24"
+Word_table_cleaned[94, "N"] <- "74"
+Word_table_cleaned[95, "N"] <- "52"
+Word_table_cleaned[99:106, "N"] <- "31"
+Word_table_cleaned[107:112, "N"] <- "29"
+Word_table_cleaned[113:118, "N"] <- "45"
+
+# Clean Stress.measure.
+Word_table_cleaned[1:2, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[3:4, "Stress.measure"] <- "ECORT"
+Word_table_cleaned[11:12, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[13:14, "Stress.measure"] <- "ECORT"
+Word_table_cleaned[15:18, "Stress.measure"] <- "H:L"
+Word_table_cleaned[24:28, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[29:31, "Stress.measure"] <- "FeathCORT"
+Word_table_cleaned[32:35, "Stress.measure"] <- "H:L"
+Word_table_cleaned[37:39, "Stress.measure"] <- "FeathCORT"
+Word_table_cleaned[40:41, "Stress.measure"] <- "H:L"
+Word_table_cleaned[57:58, "Stress.measure"] <- "FecCORT"
+Word_table_cleaned[65:67, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[68:70, "Stress.measure"] <- "PCORT"
+Word_table_cleaned[71:73, "Stress.measure"] <- "PCORT-BCORT"
+Word_table_cleaned[74:75, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[76:77, "Stress.measure"] <- "PCORT"
+Word_table_cleaned[90:95, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[113:114, "Stress.measure"] <- "BCORT"
+Word_table_cleaned[115:118, "Stress.measure"] <- "ECORT"
+
+# Clean Covariates.
+Word_table_cleaned[32:35, "Covariates"] <- "Date and time"
+Word_table_cleaned[37:39, "Covariates"] <- "Body size"
+Word_table_cleaned[57:58, "Covariates"] <- "Date of arrival at breeding grounds body condition HSP60 age"
+Word_table_cleaned[59:61, "Covariates"] <- "Site date body mass timing of sunset"
+Word_table_cleaned[63:64, "Covariates"] <- "Date and testosterone"
+Word_table_cleaned[90, "Covariates"] <- ""
+Word_table_cleaned[92:93, "Covariates"] <- "Testosterone"
+Word_table_cleaned[107:112, "Covariates"] <- "Moult status colour alleles and number of ingested larvae"
+Word_table_cleaned[113:114, "Covariates"] <- "Estradial progesterone testosterone"
+Word_table_cleaned[115:118, "Covariates"] <- "Body mass reproductive state"
+
+# Clean df.
+Word_table_cleaned[13:14, "df"] <- "68"
+Word_table_cleaned[15, "df"] <- "29"
+Word_table_cleaned[16, "df"] <- "28"
+Word_table_cleaned[17, "df"] <- "29"
+Word_table_cleaned[18, "df"] <- "19"
+Word_table_cleaned[21:23, "df"] <- "43"
+Word_table_cleaned[37:39, "df"] <- "30"
+Word_table_cleaned[40:41, "df"] <- "40"
+Word_table_cleaned[42:56, "df"] <- "23"
+Word_table_cleaned[59:61, "df"] <- "87"
+Word_table_cleaned[74:77, "df"] <- "24"
+Word_table_cleaned[99:106, "df"] <- "30"
+Word_table_cleaned[107:112, "df"] <- "28"
+Word_table_cleaned[94, "df"] <- "73"
+Word_table_cleaned[95, "df"] <- "52"
+Word_table_cleaned[113:114, "df"] <- "45"
+Word_table_cleaned[115:118, "df"] <- "42"
+
+# Clean Zr.
+Word_table_cleaned[94, "Zr"] <- "-0.172"
+Word_table_cleaned[95, "Zr"] <- "-0.405"
+Word_table_cleaned[113, "Zr"] <- "-0.427"
+Word_table_cleaned[114, "Zr"] <- "-0.47"
+Word_table_cleaned[115, "Zr"] <- "-0.253"
+Word_table_cleaned[116, "Zr"] <- "0.152"
+Word_table_cleaned[117, "Zr"] <- "-0.134"
+Word_table_cleaned[118, "Zr"] <- "-0.374"
+
+# Clean var.
+Word_table_cleaned[94, "var"] <- "0.014"
+Word_table_cleaned[95, "var"] <- "0.02"
+Word_table_cleaned[113:118, "var"] <- "0.024"
+
+# Clean Study.
+Word_table_cleaned[94, "Study"] <- "Rantala et al. 2012"
+Word_table_cleaned[95, "Study"] <- "Rantala et al. 2013"
+Word_table_cleaned[113:118, "Study"] <- "Weiss et al. 2013"
+
+# Check for issues with double spacing, or other artifacts preventing the same
+# study from having the same value.
+check_study <- unique(Word_table_cleaned$Study)
+print(length(check_study))
+
+Word_table_cleaned[which(Word_table_cleaned$Study == "Perez-Rodriguez and  Viñuela 2008"),
+                   "Study"] <- "Perez-Rodriguez and Viñuela 2008"
+
+check_study <- unique(Word_table_cleaned$Study)
+print(length(check_study))
+
+# Convert the type of some columns.
+Word_table_cleaned$N <- as.integer(Word_table_cleaned$N)
+Word_table_cleaned$df <- as.integer(Word_table_cleaned$df)
+Word_table_cleaned$Zr <- as.numeric(Word_table_cleaned$Zr)
+Word_table_cleaned$var <- as.numeric(Word_table_cleaned$var)
+
+# Recode the species names.
+Word_table_cleaned[Word_table_cleaned$Species == "Great plains toad (Bufo cognatus)",
+                   "Species"] <- "Bufo_cognatus"
+Word_table_cleaned[Word_table_cleaned$Species == "Woodhouse’s toad (Bufo Woodhousii)",
+                   "Species"] <- "Bufo_woodhousii"
+Word_table_cleaned[Word_table_cleaned$Species == "Smith frog (Hypiboas faber)",
+                   "Species"] <- "Hypsiboas_faber"
+Word_table_cleaned[Word_table_cleaned$Species == "Green tree frog (Litoria caerulea)",
+                   "Species"] <- "Litoria_caerulea"
+Word_table_cleaned[Word_table_cleaned$Species == "Red legged partridge (Alectoris rufa)",
+                   "Species"] <- "Alectoris_rufa"
+Word_table_cleaned[Word_table_cleaned$Species == "Grey partridge (Perdix perdix)",
+                   "Species"] <- "Perdix_perdix"
+Word_table_cleaned[Word_table_cleaned$Species == "Red junglefowl (Gallus gallus)",
+                   "Species"] <- "Gallus_gallus"
+Word_table_cleaned[Word_table_cleaned$Species == "Red grouse (Lagopus lagopus scoticus)",
+                   "Species"] <- "Lagopus_lagopus"
+Word_table_cleaned[Word_table_cleaned$Species == "Northern cardinal (Cardinalis cardinalis)",
+                   "Species"] <- "Cardinalis_cardinalis"
+Word_table_cleaned[Word_table_cleaned$Species == "Greenfinch (Carduelis chloris)",
+                   "Species"] <- "Carduelis_chloris"
+Word_table_cleaned[Word_table_cleaned$Species == "House finch (Carpodacus mexicanus)",
+                   "Species"] <- "Carpodacus_mexicanus"
+Word_table_cleaned[Word_table_cleaned$Species == "Red bishop (Euplectes orix)",
+                   "Species"] <- "Euplectes_orix"
+Word_table_cleaned[Word_table_cleaned$Species == "Collared flycatcher (Ficedula albicollis)",
+                   "Species"] <- "Ficedula_albicollis"
+Word_table_cleaned[Word_table_cleaned$Species == "Pied flycatcher (Ficedula hypoleuca)",
+                   "Species"] <- "Ficedula_hypoleuca"
+Word_table_cleaned[Word_table_cleaned$Species == "Barn swallow (Hirundo rusitca)",
+                   "Species"] <- "Hirundo_rustica"
+Word_table_cleaned[Word_table_cleaned$Species == "Red backed fairy wren (Malarus melodicus)",
+                   "Species"] <- "Malurus_melanocephalus"
+Word_table_cleaned[Word_table_cleaned$Species == "Song sparrow (Melospiza melodia)",
+                   "Species"] <- "Melospiza_melodia"
+Word_table_cleaned[Word_table_cleaned$Species == "Brown headed cow bird (Molothrus ater)",
+                   "Species"] <- "Molothrus_ater"
+Word_table_cleaned[Word_table_cleaned$Species == "Blue tit (Parus caeruleus)",
+                   "Species"] <- "Parus_caeruleus"
+Word_table_cleaned[Word_table_cleaned$Species == "Red Winged blackbird (Agelaius phoeniceus)",
+                   "Species"] <- "Agelaius_phoeniceus"
+Word_table_cleaned[Word_table_cleaned$Species == "Human (Homo sapien)",
+                   "Species"] <- "Homo_sapiens"
+Word_table_cleaned[Word_table_cleaned$Species == "Mandrill (Madrillus sphinx)",
+                   "Species"] <- "Mandrillus_sphinx"
+Word_table_cleaned[Word_table_cleaned$Species == "Rock hyrax (Procavia capensis)",
+                   "Species"] <- "Procavia_capensis"
+Word_table_cleaned[Word_table_cleaned$Species == "Common lizard (Lacerta vivipara)",
+                   "Species"] <- "Lacerta_vivipara"
+Word_table_cleaned[Word_table_cleaned$Species == "Striped plateau lizard (Sceloporus virgatus)",
+                   "Species"] <- "Sceloporus_virgatus"
+
+# Clean up.
+rm(list = c("check_species", "check_study", "i", "non_subheader_rows",
+            "dupl_row94", "dupl_row112", "dupl_row113", "Word_doc", "Word_table"))
+
+# Create the data object with the name and format expected by the original
+# code.
+data <- as.data.frame(Word_table_cleaned)
+names(data)[names(data) == "Study"] <- "study"
+names(data)[names(data) == "Trait"] <- "trait"
+names(data)[names(data) == "Species"] <- "species"
+names(data)[names(data) == "Zr"] <- "zr"
+
+# Because original data import call would have automatically converted all
+# strings to factors, convert all string columns to factors.
+data$species <- as.factor(data$species)
+data$trait <- as.factor(data$trait)
+data$Sex <- as.factor(data$Sex)
+data$Stress.measure <- as.factor(data$Stress.measure)
+data$Covariates <- as.factor(data$Covariates)
+data$study <- as.factor(data$study)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Perform required data formatting.
+sourceLines(orig_source, 20, 22)
+
+# Import manually created tree file.
+tree <- read.tree(file = here::here("original", "MA145_recreated_all_species_cladogram.txt"))
+
+# Check tree file (summarise and plot the tree).
+sourceLines(orig_source, 26, 27)
+
+# Set priors.
+sourceLines(orig_source, 37, 39)
+
+# Set a random seed to ensure reproducibility of results.
+set.seed(145)
+
+# Run the three-random-effects model.
+# (Use custom code only to set the option verbose=FALSE to make output
+# shorter.)
+meta2 <- MCMCglmm(zr~1, random= ~study + species + animal, mev=data$var, data=data,
+nitt=3000000, thin=2000, burnin=2000000, pr=TRUE, prior=prior3, pedigree=tree, verbose = FALSE)
+#sourceLines(orig_source, 48, 49)
+
+# Get a summary of the model.
+# Custom code because the original code only prints this to screen, and doesn't
+# capture the model summary object.
+meta2_sum <- summary(meta2)
+print(meta2_sum)
+
+repro_result_df <- data.frame(ID = "MA145",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = round(meta2_sum$solutions[1], 2),
+                             hpdi_lower = round(meta2_sum$solutions[2], 2),
+                             hpdi_upper = round(meta2_sum$solutions[3], 2),
+                             n = meta2$Random$nrl[4],
+                             n_studies = meta2$Random$nrl[1],
+                             n_species = meta2$Random$nrl[2])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "hpdi_lower", "hpdi_upper",
+                                              "n",
+                                              "n_studies", "n_species"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA145_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

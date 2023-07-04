@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA081","mean","slope parameter","point_est",1.3,1.3,0,"Original and reproduced values match exactly"
+"MA081","mean","slope parameter","ci_lower",0.95,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA081","mean","slope parameter","ci_upper",1.66,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA081","mean","slope parameter","n",1296,1296,0,"Original and reproduced values match exactly"

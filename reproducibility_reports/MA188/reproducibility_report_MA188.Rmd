@@ -1,0 +1,139 @@
+---
+title: "Reproducibility Report for MA188"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Senior, A. M., Nakagawa, S., Lihoreau, M., Simpson, S. J., & Raubenheimer, D. (2015). An Overlooked Consequence of Dietary Mixing: A Varied Diet Reduces Interindividual Variance in Fitness. _The American Naturalist_, _186_(5), 649–659. https://doi.org/10.1086/683182
+
+# Result to be reproduced
+
+> REMA of lnRR estimated a negative statistically significant effect (REMA est., CI for lnRR = -0.363, -0.408 to -0.318; fig. 2), which exponentiates to a ratio of mean of fitness-related traits on single-food diets to mixed diets of 0.700; that is, mean fitness is 30% lower on single foods. (Senior et al., 2015, p.653)
+
+Earlier on p.653, the article states that there were 818 estimates of lnRR, so the sample size is 818.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA188",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Log response ratio",
+                             point_est = -0.363,
+                             ci_lower = -0.408,
+                             ci_upper = -0.318,
+                             n = 818)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Senior, A. M., Nakagawa, S., Lihoreau, M., Simpson, S. J., & Raubenheimer, D. (2015). _Data from: An overlooked consequence of dietary mixing: A varied diet reduces interindividual variance in fitness._ Dryad Digital Repository. https://doi.org/10.5061/dryad.9hc76
+
+* Code.R
+* Data.Objects.Rdata
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The usage notes on the Dryad repository web page make things very clear: there is only one data file (`Data.Objects.Rdata`) which contains all data relevant to the article analyses. Further, the usage notes mention that the code file `Code.R` contains comments/instructions about accessing the data. The code file does contain a codebook describing all the components within the data file, as well as an additional codebook describing the columns found in the "main" data component `Effect.Sizes`.
+
+## Code
+The usage notes on the Dryad repository web page are very straightforward: the file `Code.R` contains all code to recreate the analyses in the article. The code file is extensively documented throughout with comments which makes identifying the relevant sections of code to execute straightforward.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library("metafor")
+library("MCMCglmm")
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Code.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+load(here::here("original", "Data.Objects.Rdata"))
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Fit random-effects meta-analysis (REMA) model for the difference in mean
+# fitness.
+sourceLines(orig_source, 53, 60)
+
+#model_summary <- summary(REMA.lnRR)
+
+repro_result_df <- data.frame(ID = "MA188",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "log response ratio",
+                             point_est = round(REMA.lnRR$beta, 3),
+                             ci_lower = round(REMA.lnRR$ci.lb, 3),
+                             ci_upper = round(REMA.lnRR$ci.ub, 3),
+                             n = REMA.lnRR$k)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA188_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

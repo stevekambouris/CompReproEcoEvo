@@ -1,0 +1,223 @@
+---
+title: "Reproducibility Report for MA062"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Grueber, C. E., Gray, L. J., Morris, K. M., Simpson, S. J., & Senior, A. M. (2018). Intergenerational effects of nutrition on immunity: A systematic review and meta-analysis. _Biological Reviews_, _93_(2), 1108–1124. https://doi.org/10.1111/brv.12387
+
+# Result to be reproduced
+
+>  Considering our data set as a whole, we observed that dietary manipulation in parents led to a small, but non-statistically significant decrease in adaptive, B-cell-associated traits (MLMA _d_ = 0.205, 95% CI = -0.444 - 0.035; _N_ = 37;
+Fig. 3A). (Grueber et al., 2018, p.1115)
+
+Note: From the context, it looks like there is a typographical error in the article, and the point estimate "0.205" should in fact be "-0.205" (this is the only way the confidence interval would make sense). The result will be taken to be "-0.205".
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA062",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Hedges' d",
+                             point_est = -0.205,
+                             ci_lower = -0.444,
+                             ci_upper = 0.035,
+                             n = 37)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://onlinelibrary.wiley.com/doi/full/10.1111/brv.12387):
+
+* brv12387-sup-0001-AppendixS1.xlsx
+* brv12387-sup-0002-AppendixS2.R
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+Section VIII (Supporting information) in the article mentions that Appendix S1 online contains the data extracted from the studies included in the meta-analysis.
+
+An inspection of the data file (brv12387-sup-0001-AppendixS1.xlsx) confirmed that the data was at least nominally relevant to the results reported in the article.
+
+The code (see below) also explicitly mentions that codes requires the data from the Appendix S1 file.
+
+## Code
+Section VIII (Supporting information) in the article mentions that Appendix S2 online contains the R code used for the analyses. The code file itself (brv12387-sup-0002-AppendixS2.R) is well structured and documented with comments throughout. It was possible to follow the comments through the code to determine which sections of code needed to be run to obtain the desired model outputs.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+library(xlsx)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(plyr)
+library(metafor)
+library(corpcor)
+library(ade4)
+library(mice)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "brv12387-sup-0002-appendixs2.r")
+```
+
+# Import and clean data
+```{r importdata}
+imported_xlsx <- read.xlsx(here::here("original",
+                                      "brv12387-sup-0001-appendixs1.xlsx"),
+                           2)
+
+# The object name "data" is specifically used by the code.
+data <- imported_xlsx
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Set the working directory for this script.
+# (This is important because the script as written writes data to file.)
+setwd(here::here())
+sourceLines(orig_source, 6, 7)
+
+# Set include missing flag.
+# (Custom code is required because the script as written sets this object to
+# FALSE.)
+# A code comment on line 15 of the script states that "include.missing" should
+# be set to TRUE in order to calculate the results from the article's main text
+# (setting it to FALSE calculates results from the supplemental material).
+include.missing <- TRUE
+
+# Load custom functions.
+sourceLines(orig_source, 34, 139)
+
+# Format the data.
+sourceLines(orig_source, 151, 152)
+
+# drop some na's from sample size.
+# (Custom code is required because original command drops all rows)
+data <- data[which(is.na(data$off_n_treat) == FALSE), ]
+
+# Format the data.
+sourceLines(orig_source, 157, 175)
+
+# Set random seed before imputing values.
+set.seed(62)
+
+# Get the imputed values.
+sourceLines(orig_source, 179, 232)
+
+# Do the analyses.
+sourceLines(orig_source, 236, 237)
+
+# Loop through the created datasets.
+for (m in 1:ms) {
+  sourceLines(orig_source, 242, 310)
+  
+  # This loops through the different treatments, but this result is for the first
+  # treatment only, "Adaptive-B-cell associated", so index is fixed at 1.
+  for (i in 1:1) {
+    sourceLines(orig_source, 315, 319)
+    
+    # Drop an outlier.
+    # (Custom code needed to drop an outlier due to typo in treatment name in the
+    # original code.)
+    if (treatments[i] == "Adaptive-B-cell associated") {
+     subset<-subset[-which(subset$lnRR < -8), ]
+    }
+    
+    sourceLines(orig_source, 326, 463)
+  }
+  
+  sourceLines(orig_source, 469, 500)
+
+}
+
+# Step 5
+sourceLines(orig_source, 509, 529)
+for (m in 1:ms) {
+  sourceLines(orig_source, 534, 547)
+}
+
+sourceLines(orig_source, 575, 575)
+
+sourceLines(orig_source, 581, 581)
+
+sourceLines(orig_source, 587, 592)
+
+sourceLines(orig_source, 596, 596)
+
+for (m in 1:ms) {
+  sourceLines(orig_source, 605, 611)
+}
+
+sourceLines(orig_source, 647, 647)
+
+sourceLines(orig_source, 654, 654)
+
+sourceLines(orig_source, 660, 669)
+
+repro_result_df <- data.frame(ID = "MA062",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Hedges' d",
+                             point_est = round(MA.ns$Est[1], 3),
+                             ci_lower = round(MA.ns$LCL[1], 3),
+                             ci_upper = round(MA.ns$UCL[1], 3),
+                             n = results$N_d[1])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA062_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

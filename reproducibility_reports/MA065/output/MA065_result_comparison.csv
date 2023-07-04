@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA065","mean","Hedges' g","point_est",-8.42,-8.87,5.34,"Original and reproduced values differ by less than 10%"
+"MA065","mean","Hedges' g","ci_lower",-10.73,-10.85,1.12,"Original and reproduced values differ by less than 10%"
+"MA065","mean","Hedges' g","ci_upper",-6.63,-6.68,0.75,"Original and reproduced values differ by less than 10%"
+"MA065","mean","Hedges' g","n",703,703,0,"Original and reproduced values match exactly"

@@ -1,0 +1,190 @@
+---
+title: "Reproducibility Report for MA092"
+author: "Steven Kambouris"
+date: "25/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Xu, X., Medvigy, D., Powers, J. S., Becknell, J. M., & Guan, K. (2016). Diversity in plant hydraulic traits explains seasonal and inter-annual variations of vegetation dynamics in seasonally dry tropical forests. _New Phytologist_, _212_(1), 80–95. https://doi.org/10.1111/nph.14009
+
+# Result to be reproduced
+
+> Our meta-analysis reveals substantial interspecific variation in the functional traits related to plant water use (Fig. 3)... The statistical analysis results are summarized in Table 1. In the global dataset, both WD [wood density] and SLA [specific leaf area] were accepted ($P < 0.001$, $R^{2}_{adj} = 0.32$) as predictive variables for TLP [turgor loss point] in a step-wise regression analysis. (Xu et al., 2016, pp.84-85)
+
+Table 1 reports the model regression coefficients, _n_, _R_-squared and RMSE for the linear regression model containing log(SLA) and log(WD) as predictive variables, based on all data. Here, the result to be reproduced will be the model outputs reported in Table 1 for the specific model mentioned in the quote above and in Table 1. The methods section mentions that WD and SLA were log-transformed for normality.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA092",
+                             source = "original",
+                             result_type = "model output",
+                             es_type = "N/A",
+                             r_squared_adj = 0.32,
+                             rmse = 0.55,
+                             intercept = -4.67,
+                             coeff_log_sla = 0.725,
+                             coeff_log_wd = -0.937,
+                             n = 68)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://nph.onlinelibrary.wiley.com/doi/full/10.1111/nph.14009):
+
+* nph14009-sup-0002-tables1.xls
+* nph14009-sup-0003-notess2.gz
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+According to the description of the supporting information included with the article, Table S1 lists "Species and functional traits in the meta-analysis" (p.95). This seems to correspond to the file `nph14009-sup-0002-tables1.xls`.
+
+The metadata and documentation provided within the Excel file confirms that it is relevant to the meta-analysis, and includes the data necessary to reproduce the result selected for reproduction (i.e. the data variables can be clearly identified as TLP, WS, and SLA).
+
+Overall, the data required for reproducing the meta-analysis results does seem to have been shared.
+
+## Code
+According to the description of the supporting information included with the article, Notes S2 contains "Computer source codes and model input for the updated Ecosystem Demography model 2 (ED2) model." (p.95)
+
+This corresponds to the file `nph14009-sup-0003-notess2.gz`, which is a compressed folder containing FORTRAN code. The FORTRAN code is purely for the ED2 model, and is not relevant to the meta-analysis component of the article (the results of the meta-analysis were used to parameterise the plant hydraulic module which was added to the ED2 model).
+
+Although some code was shared, there was no code shared which performed the meta-analysis part of the article.
+
+**There are no code files applicable to reproducing the selected result.**
+
+**This means that the reproduction of results can't proceed via the re-running of code, but completely new code will need to be written to attempt to reproduce the result.**
+
+**This result reproduction attempt is proceeding without any meta-analysis code shared by the authors, and is relying on the description of the step-wise regression analysis provided in the methods section of the article to create analysis code from scratch.**
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+library(readxl)
+library(dplyr)
+library(magrittr)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+# (Not applicable.)
+
+# Set the path to the original code file(s).
+# (Not applicable.)
+```
+
+# Import and clean data
+```{r importdata}
+
+# Read in the TLP/SLA/WD data from the provided .xls spreadsheet.
+raw_data <- readxl::read_xls(path = here::here("original", 
+  "nph14009-sup-0002-tables1.xls"),
+  sheet = "TLP",
+  range = "A30:F98",
+  col_names = TRUE)
+
+# Clean the variable names and also log transform SLA and WD as indicated in
+# the article methods.
+clean_data <- raw_data %>% 
+  rename(wd = `WD (g cm-3)`, sla = `SLA(m2 kg-1)`, tlp = `TLP(MPa)`) %>% 
+  mutate(log_sla = log(sla), log_wd = log(wd)) %>% 
+  select(tlp, log_sla, log_wd)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Conduct a stepwise linear regression analysis, starting with the intercept-
+# only model then adding predictor variables.
+intercept_only <- lm(tlp ~ 1, data = clean_data)
+
+# Model with both SLA and WD included.
+all <- lm(tlp ~ ., data = clean_data)
+
+# Conduct a stepwise regression with moves "forward" from the intercept-only
+# model.
+forward <- step(intercept_only,
+                direction = "forward",
+                scope = formula(all),
+                trace = 0)
+
+# Show the improvement as predictor variables are added, as a general
+# reproduction of the authors' claim.
+print(forward$anova)
+
+# Get the final model summary.
+ms <- summary(forward)
+print(ms)
+
+repro_result_df <- data.frame(ID = "MA092",
+                              source = "repro",
+                              result_type = "model output",
+                              es_type = "N/A",
+                              r_squared_adj = round(ms$adj.r.squared, 2),
+                              rmse = round(ms$sigma, 2),
+                              intercept = round(ms$coefficients["(Intercept)",
+                                                                1], 2),
+                              coeff_log_sla = round(ms$coefficients["log_sla",
+                                                                1], 3),
+                              coeff_log_wd = round(ms$coefficients["log_wd",
+                                                                1], 3),
+                              n = ms$df[1] + ms$df[2])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("r_squared_adj",
+                                              "rmse", "intercept",
+                                              "coeff_log_sla",
+                                              "coeff_log_wd",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA092_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

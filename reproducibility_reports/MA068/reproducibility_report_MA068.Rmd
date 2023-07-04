@@ -1,0 +1,248 @@
+---
+title: "Reproducibility Report for MA068"
+author: "Steven Kambouris"
+date: "28/06/2022"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Ronget, V., Gaillard, J., Coulson, T., Garratt, M., Gueyffier, F., Lega, J., & Lemaître, J. (2017). Causes and consequences of variation in offspring body mass: Meta‐analyses in birds and mammals. _Biological Reviews_, _93_(1), 1–27. https://doi.org/10.1111/brv.12329
+
+# Result to be reproduced
+
+> In mammals, we extracted 75 effect sizes from 60 published papers... In mammals, offspring mass positively influenced offspring survival with a meta-analysis mean of 1.82. This effect was statistically significant because the highest posterior density interval of the odds ratio did not overlap 1 [HPDI=(1.37; 2.41)] (Fig. 3A). (Ronget et al., 2017, p.14)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA068",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "odds ratio",
+                             point_est = 1.82,
+                             hpdi_lower = 1.37,
+                             hpdi_upper = 2.41,
+                             n = 75)
+
+knitr::kable(x = orig_result_df,
+             caption = "Original result reported in article")
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://onlinelibrary.wiley.com/doi/full/10.1111/brv.12329):
+
+* brv12329-sup-0001-AppendixS1.csv
+* brv12329-sup-0002-AppendixS2.csv
+* brv12329-sup-0003-AppendixS3.csv
+* brv12329-sup-0004-AppendixS4.r
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+Part VIII (Supporting Information) of the article states that Appendix S1 contains "Data used for the analysis of the relationship between offspring body mass and offspring survival in mammals" (p.27), which matches the result selected for reproduction. This means that file `brv12329-sup-0001-AppendixS1.csv` at least nominally contains the data necessary for reproducing the selected result. Note that Table 1 (pp.7-8) also contains the data used for analysing the relationship between offspring body mass and offspring survival in mammals - in theory, the data presented in the table and the data presented in the shared CSV file should be the same.
+
+The method section of the article indicates that the multi-level meta-analysis took phylogenetic relatedness into account using phylogenetic trees (p.6). The phylogenetic tree for the mammals included in the study is shown in the article in Figure 2A (p.15). However, the phylogenetic tree data (e.g. in Newick/New Hampshire tree format) that was used is _not_ provided as one of the shared data files. It would be in principle possible to recreate the tree from the provided figure, making the assumption that the branch lengths depicted in the figure were all shown at the correct scale. However, this would be time-consuming to do and the end result would still be relatively inaccurate, so this was not attempted.
+
+Overall, this means that the full data required to reproduce the result was not provided, although all information was provided in principle (phylogenetic tree data displayed graphically in a figure rather than provided as numeric branch lengths).
+
+## Code
+Part VIII (Supporting Information) of the article states that Appendix S4 contains "R code for the extraction of the effect size for the relationship between offspring mass and offspring survival" (p.27). This corresponds to file `brv12329-sup-0004-AppendixS4.r`.
+
+Although the contents of the code file has relevance to the result selected for reproduction, the code comments (and the methods section of the article, see p.5 and below) make clear that the code provided is only for the extraction of effect sizes from the primary literature when critical results (e.g. standard error) were not reported but could be obtained indirectly through simulation.
+
+Overall, this means that although some code was shared, the code used to calculate the meta-analysis results reported in the article (including the specific result selected for reproduction) was not shared. Therefore, reproduction of the chosen result using the original code and data cannot proceed.
+
+**There are no code files applicable to reproducing the selected result.**
+
+# Alternative result to be reproduced
+
+So then, let us turn to what the code does do. From the article:
+
+> When only the slope of the relationship was reported, the standard error could still be estimated when both the mean and the standard deviation of the offspring body mass were provided. We thus obtained the standard error by first simulating the survival data for each individual body mass using the published logistic relationship and then re-running a logistic regression (see R code in online Appendix S4). (p.5)
+
+>  Occasionally, especially in old papers, the only results reported were the distributions of body mass with the mean and the standard deviation of the mass of dead and alive individuals. In such cases, we assumed that the masses of the dead individuals and of the live individuals were normally distributed and we simulated
+two normal distributions (one for each group) and ran a logistic regression. We replicated the procedure 10000 times and retained the mean slope and standard error of this slope (see R code in online Appendix S4). (p.5)
+
+The shared code file `brv12329-sup-0004-AppendixS4.r` provides two examples of this:
+
+1. Calculates the standard error for a logistic regression slope reported in primary study Rödel et al. (2004), reported in Table 1 (p.8)
+2. Calculates (i) the logistic regression slope and (ii) standard error for results reported in primary study Barber-Meyer, Mech & White (2008), reported in Table 1 (p.7)
+
+Full references for these two primary studies:
+
+* Barber-Meyer, S. M., Mech, L. D. & White, P. J. (2008). Elk calf survival and mortality following wolf restoration to Yellowstone National Park. _Wildlife Monographs_ 169, 1–30.
+* Rödel, H. G., Bora, A., Kaetzke, P., Khaschei, M., Hutzelmeyer, H. & Von Holst, D. (2004). Over-winter survival in subadult European rabbits: weather effects, density dependence, and the impact of individual characteristics. _Oecologia_ 140, 566–576.
+
+The results of these calculations as reported in Table 1 (pp.7-8) of the article are shown below. These are the results to reproduce on the basis of being relevant to the shared code.
+
+```{r orig-result-alt}
+
+orig_alt1_result_df <- data.frame(ID = "MA068",
+                                  source = "original",
+                                  result_type = "logistic regression model (Rödel)",
+                                  es_type = "slope parameter",
+                                  point_est = NA_real_,
+                                  se = 0.001,
+                                  stringsAsFactors = FALSE)
+
+orig_alt2_result_df <- data.frame(ID = "MA068",
+                                  source = "original",
+                                  result_type = "logistic regression model (Barber-Meyer)",
+                                  es_type = "slope parameter",
+                                  point_est = -0.001,
+                                  se = 0.113,
+                                  stringsAsFactors = FALSE)
+
+knitr::kable(x = orig_alt1_result_df,
+             caption = "Alternative result reported in article: Simulation of standard error based on Rödel et al. (2004)")
+knitr::kable(x = orig_alt2_result_df,
+             caption = "Alternative result reported in article: Simulation of slope and standard error based on Barber-Meyer et al. (2008)")
+
+```
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+# (None required.)
+
+# Set the path to the original code file(s).
+orig_source <- here("original", "brv12329-sup-0004-appendixs4.r")
+```
+
+# Import and clean data
+```{r importdata}
+# (Not applicable.)
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Set a random seed.
+set.seed(68)
+
+# Run the first simulation for the Rödel et al. (2004) result.
+sourceLines(orig_source, 5, 27)
+
+# Run the second simulation for the Barber-Meyer, Mech & White (2008) result.
+sourceLines(orig_source, 30, 56)
+
+
+repro_alt1_result_df <- data.frame(ID = "MA068",
+                                   source = "repro",
+                                   result_type = "logistic regression model (Rödel)",
+                                   es_type = "slope parameter",
+                                   point_est = NA_real_,
+                                   se = round(SE1, 3),
+                                   stringsAsFactors = FALSE)
+rownames(repro_alt1_result_df) <- NULL
+
+repro_alt2_result_df <- data.frame(ID = "MA068",
+                                   source = "repro",
+                                   result_type = "logistic regression model (Barber-Meyer)",
+                                   es_type = "slope parameter",
+                                   point_est = round(slope, 3),
+                                   se = round(SE, 3),
+                                   stringsAsFactors = FALSE)
+rownames(repro_alt2_result_df) <- NULL
+
+knitr::kable(x = repro_alt1_result_df)
+knitr::kable(x = repro_alt2_result_df)
+
+```
+
+# Compare original and reproduced result (original target result)
+```{r compare-orig}
+
+repro_result_df <- data.frame(ID = "MA068",
+                              source = "original",
+                              result_type = "mean",
+                              es_type = "odds ratio",
+                              point_est = NA_real_,
+                              hpdi_lower = NA_real_,
+                              hpdi_upper = NA_real_,
+                              n = NA_real_)
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                               df_repro = repro_result_df,
+                               checkvars = c("point_est", "hpdi_lower",
+                                             "hpdi_upper", "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of original target result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values (for original target result)")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA068_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# Compare original and reproduced result (alternative target results)
+```{r compare-alt}
+
+result_alt1_compare <- compare_vars(df_orig = orig_alt1_result_df,
+                                    df_repro = repro_alt1_result_df,
+                                    checkvars = c("point_est",
+                                                  "se"))
+
+result_alt2_compare <- compare_vars(df_orig = orig_alt2_result_df,
+                                    df_repro = repro_alt2_result_df,
+                                    checkvars = c("point_est",
+                                                  "se"))
+
+knitr::kable(x = orig_alt1_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of first alternative result")
+
+knitr::kable(x = result_alt1_compare,
+             caption = "Comparison of original and reproduced values (for first alternative result)")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of second alternative result")
+
+knitr::kable(x = result_alt2_compare,
+             caption = "Comparison of original and reproduced values (for second alternative result)")
+
+# Write results comparison to file.
+out1 <- orig_alt1_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_alt1_compare, row.names = NULL)
+out3 <- orig_alt2_result_df[1, c("ID", "result_type", "es_type")]
+out4 <- cbind(out3, result_alt2_compare, row.names = NULL)
+out5 <- rbind(out2, out4)
+write.csv(x = out5, file = here::here("output", "MA068_alt_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

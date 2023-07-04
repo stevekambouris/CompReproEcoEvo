@@ -1,0 +1,444 @@
+---
+title: "Reproducibility Report for MA212"
+author: "Steven Kambouris"
+date: "19/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Valls, A., Coll, M., & Christensen, V. (2015). Keystone species: Toward an operational concept for marine biodiversity conservation. _Ecological Monographs_, _85_(1), 29–47. https://doi.org/10.1890/14-0306.1
+
+# Result to be reproduced
+
+Despite being identified as a meta-analysis, this paper does not report what might be considered a straightforward result (e.g. an estimate from a random-effects meta-analysis model). In this article, the first reported result (after an initial description of the data set used in the study) is the following:
+
+> _Balance in the contributions of IC [impact component] and BC [biomass component] to the KS [keystoneness] indices:_ The comparison between the groups ordered by keystoneness and by trophic impact and biomass, applied to the 101 Ecopath models and for each KS index, shows that three of the KS indices out of the 12 seem to be balanced: KS3, KS7, and KS12 (Table 2). (Valls et al., 2015, pp.37-38)
+
+The caption for Table 2 reads "Results from the comparison between groups ordered by keystoneness, and by trophic impact or biomass, for each KS index, over all selected models" (Valls et al., 2015, pp.38). The methods section of this article makes it clear that this table is the result of calculating twelve KS (keystoneness) indices for 101 data sets corresponding to particular Ecopath models from the EcoBase, and then comparing each KS index to impact and biomass indices. The results in Table 2 are counts of the number of "matches" (defined by rules set out in the methods section) among these comparisons.
+
+The quoted result is a statement which can be found to be matched or found to be not matched, without scope to see how close the reproduced result might have been to the reported result. Therefore, the entire table of count data, and the accompanying categorisation of each row based on the pattern of the counts, will be taken as the result to be reproduced. Each cell in the table will be compared separately; the count data will be assessed in terms of percent error, while the categorisation in the "overall match" column will be assessed as a simple binary consistent/inconsistent check.
+
+```{r orig-result}
+orig_result_df <- data.frame(ks_index = c("KS1", "KS2", "KS3", "KS4", "KS5",
+                                          "KS6", "KS7", "KS8", "KS9", "KS10",
+                                          "KS11", "KS12"),
+                             match_impact = c(91, 5, 50, 25, 86, 0, 32, 11, 91,
+                                              25, 71, 46),
+                             match_biomass = c(10, 81, 28, 54, 12, 94, 35, 70,
+                                               10, 54, 20, 39),
+                             no_match = c(0, 15, 23, 22, 3, 7, 34, 20, 0, 22,
+                                          10, 16),
+                             overall_match = c("match impact", "match biomass",
+                                               "(none)", "match biomass",
+                                               "match impact", "match biomass",
+                                               "(none)", "match biomass",
+                                               "match impact", "match biomass",
+                                               "match impact", "(none)"),
+                             stringsAsFactors = FALSE)
+
+knitr::kable(x = orig_result_df,
+             caption = "Original reported values for Table 2")
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Figshare:
+
+Valls, A., Coll, M., & Christensen, V.. (2016). _Keystone species: toward an operational concept for marine biodiversity conservation (Version 1)._ Wiley. https://doi.org/10.6084/m9.figshare.c.3309894.v1
+
+* Rcode.R
+* InputData.rar
+    + 13.txt
+    + 14.txt
+    + 28.txt
+    + 29.txt
+    + 34.txt
+    + 35.txt
+    + 40.txt
+    + 41.txt
+    + 48.txt
+    + 49.txt
+    + 50.txt
+    + 51.txt
+    + 55.txt
+    + 56.txt
+    + 66.txt
+    + 96.txt
+    + 97.txt
+    + 98.txt
+    + 107.txt
+    + 108.txt
+    + 115.txt
+    + 124.txt
+    + 135.txt
+    + 136.txt
+    + 137.txt
+    + 145.txt
+    + 182.txt
+    + 194.txt
+    + 195.txt
+    + 196.txt
+    + 197.txt
+    + 202.txt
+    + 205.txt
+    + 207.txt
+    + 208.txt
+    + 227.txt
+    + 239.txt
+    + 251.txt
+    + 252.txt
+    + 254.txt
+    + 271.txt
+    + 272.txt
+    + 276.txt
+    + 277.txt
+    + 293.txt
+    + 294.txt
+    + 295.txt
+    + 297.txt
+    + 311.txt
+    + 312.txt
+    + 324.txt
+    + 328.txt
+    + 400.txt
+    + 401.txt
+    + 402.txt
+    + 407.txt
+    + 410.txt
+    + 412.txt
+    + 413.txt
+    + 418.txt
+    + 419.txt
+    + 420.txt
+    + 421.txt
+    + 427.txt
+    + 429.txt
+    + 433.txt
+    + 434.txt
+    + 435.txt
+    + 442.txt
+    + 444.txt
+    + 450.txt
+    + 451.txt
+    + 452.txt
+    + 454.txt
+    + 457.txt
+    + 458.txt
+    + 462.txt
+    + 472.txt
+    + 474.txt
+    + 475.txt
+    + 482.txt
+    + 483.txt
+    + 485.txt
+    + 487.txt
+    + 488.txt
+    + 490.txt
+    + 491.txt
+    + 494.txt
+    + 495.txt
+    + 497.txt
+    + 499.txt
+    + 500.txt
+    + 501.txt
+    + 502.txt
+    + 503.txt
+    + 504.txt
+    + 505.txt
+    + 506.txt
+    + 507.txt
+    + 508.txt
+    + 522.txt
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The [explanatory description](https://figshare.com/articles/dataset/Supplement_1_Text_files_of_the_input_data_for_the_101_Ecopath_models_and_R_code_for_Spearman_correlation_tests_/3568704) of the files found at the Figshare site states that `InputData.rar` contains a text data file for each of the 101 Ecopath models taken from the EcoBase, where the name of each text file refers to the number of the model in the EcoBase. Each data file consists of a "matrix of the mixed trophic impact". It is clear from p.32 of the article that these matrix data files for the 101 Ecopath models are the input data for the calculation of keystoneness (KS) indices.
+
+The results in Table 2 (which taken as a whole is the result chosen for reproduction) are based on the calculation of the twelve different KS indices considered in the article. Therefore, the data files supplied are relevant to the chosen result.
+
+## Code
+The [explanatory description](https://figshare.com/articles/dataset/Supplement_1_Text_files_of_the_input_data_for_the_101_Ecopath_models_and_R_code_for_Spearman_correlation_tests_/3568704) of the files found at the Figshare site states that `Rcode.R` contains "the R code used to run the Spearman rank correlation tests". The code file itself contains seven lines of code which appear to be an excerpt from a larger code base - for example, the code refers to an R object named "counter" which indicates that the Spearman correlation calculations were iterated over a number of data sets, but there is no code to indicate precisely how the data, etc. was set up to use this code snippet.
+
+The results that are based on Spearman rank correlation tests appear in Table 3 in the article. Since the chosen result is Table 2, which does not have anything to do with Spearman rank correlations, the supplied code is not relevant to reproducing the chosen result.
+
+**There are no code files applicable to reproducing the selected result.**
+
+**This means that the reproduction of results can't proceed via the re-running of code, but completely new code, based on the methods described in the article, will need to be written to attempt to reproduce the result.**
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (Not applicable.)
+
+# Set the path to the original code file(s).
+# (Not applicable.)
+```
+
+# Import and clean data
+```{r importdata}
+
+# Get a vector of all the Ecopath model data files.
+ecopath_model_files <- list.files(path = here("original"),
+                                  pattern = "*.txt")
+
+# Actual data file import is incorporated into functions in next section.
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# (All code that follows is custom, none is from shared code files.)
+
+
+
+# Function to check the match type (one of "match biomass", "match impact", or
+# "no match") of a given Ecopath model file.
+determine_match_type <- function(full_path, ks_index = "KS1") {
+  
+  # Check the KS index is valid.
+  stopifnot(ks_index %in% c("KS1", "KS2", "KS3", "KS4", "KS5", "KS6", "KS7",
+                            "KS8", "KS9", "KS10", "KS11", "KS12"))
+  
+  # Function to calculate epsilon.
+  calc_epsilon <- function(x) {
+    x2 <- x^2
+    sumx2 <- sum(x2, na.rm = TRUE)
+    return(sqrt(sumx2))
+  }
+  
+  # Import the data.
+  outdata <- read.delim(file = full_path)
+  
+  # Calculate epsilon.
+  outdata$epsilon <- apply(outdata[, grep("X", names(outdata))],
+                           1,
+                           calc_epsilon)
+  
+  # Calculate p.
+  outdata$p <- outdata$Biomass/sum(outdata$Biomass)
+  
+  # Calculate KS index.
+  if (ks_index == "KS1") {
+    outdata$KS <- log(outdata$epsilon*(1 - outdata$p))
+  } else if (ks_index == "KS2") {
+    outdata$KS <- log(outdata$epsilon*(1/outdata$p))
+  } else if (ks_index == "KS3") {
+    outdata$KS <- log(outdata$epsilon*rank(-outdata$Biomass, ties.method = "min"))
+  } else if (ks_index == "KS4") {
+    outdata$KS <- log(outdata$epsilon*(1/sqrt(outdata$Biomass)))
+  } else if (ks_index == "KS5") {
+    outdata$KS <- log(rank(outdata$epsilon, ties.method = "min")*(1 - outdata$p))
+  } else if (ks_index == "KS6") {
+    outdata$KS <- log(rank(outdata$epsilon, ties.method = "min")*(1/outdata$p))
+  } else if (ks_index == "KS7") {
+    outdata$KS <- log(rank(outdata$epsilon, ties.method = "min")*rank(-outdata$Biomass, ties.method = "min"))
+  } else if (ks_index == "KS8") {
+    outdata$KS <- log(rank(outdata$epsilon, ties.method = "min")*(1/sqrt(outdata$Biomass)))
+  } else if (ks_index == "KS9") {
+    outdata$KS <- log(outdata$epsilon^2*(1 - outdata$p))
+  } else if (ks_index == "KS10") {
+    outdata$KS <- log(outdata$epsilon^2*(1/outdata$p))
+  } else if (ks_index == "KS11") {
+    outdata$KS <- log(outdata$epsilon^2*rank(-outdata$Biomass, ties.method = "min"))
+  } else if (ks_index == "KS12") {
+    outdata$KS <- log(outdata$epsilon^2*(1/sqrt(outdata$Biomass)))
+  }
+  
+  # Calculate ranks of KS index, trophic impact (epsilon), biomass
+  outdata$rank_KS <- rank(-outdata$KS, ties.method = "min")
+  outdata$rank_epsilon <- rank(-outdata$epsilon, ties.method = "min")
+  outdata$rank_biomass <- rank(outdata$Biomass, ties.method = "min")
+  
+  # Get the highest KS index value.
+  highest_KS <- outdata[outdata$rank_KS == 1,
+                        c("rank_KS", "rank_epsilon", "rank_biomass")]
+  
+  if (nrow(highest_KS) > 1) {
+    cat(paste0(nrow(highest_KS), " ", ks_index, " ", full_path, "\n"))
+  }
+  
+  # Determine whether the highest-ranked KS index contains either the highest-
+  # ranked epsilon or biomass, or none.
+  match_impact <- 0
+  match_biomass <- 0
+  no_match <- 0
+  
+  # Method descriptions prioritises biomass over epsilon (in that if a highest
+  # KS group is ranked 1-3 in epsilon and 1-3 in biomass, then it is classified
+  # as biomass).
+  if (highest_KS$rank_biomass %in% c(1, 2, 3)) {
+    match_biomass <- 1
+  } else if (highest_KS$rank_epsilon %in% c(1, 2, 3)) {
+    match_impact <- 1
+  } else {
+    no_match <- 1
+  }
+  
+  return(data.frame(ecopath_model = full_path,
+              match_impact = match_impact,
+              match_biomass = match_biomass,
+              no_match = no_match,
+              stringsAsFactors = FALSE))
+}
+
+
+
+# Function to check the match types (one of "match biomass", "match impact", or
+# "no match") of all the 101 Ecopath model files for a given KS index, and
+# return a count of each type found across all the model files.
+check_all_models <- function(ks_index, file_paths) {
+  temp1 <- lapply(file_paths,
+                  determine_match_type,
+                  ks_index = ks_index)
+  
+  temp2 <- do.call(rbind.data.frame, temp1)
+
+  return(data.frame(ks_index = ks_index,
+                    match_impact = sum(temp2$match_impact),
+                    match_biomass = sum(temp2$match_biomass),
+                    no_match = sum(temp2$no_match)))
+}
+
+
+
+# Create a vector of all the KS indices to test.
+ks_indices <- c("KS1", "KS2", "KS3", "KS4", "KS5", "KS6", "KS7",
+                "KS8", "KS9", "KS10", "KS11", "KS12")
+
+# Check all KS indices over all Ecopath models.
+temp_result <- lapply(ks_indices, check_all_models,
+                      file_paths = here("original", ecopath_model_files))
+
+# Convert result into a data frame.
+repro_result_df <- do.call(rbind.data.frame, temp_result)
+
+# Add the "Overall match" column to the reproduced table.
+get_overall_match <- function(indf) {
+  if (indf[2] > 50) {
+    return("match impact")
+  } else if (indf[3] > 50) {
+    return("match biomass")
+  } else {
+    return("(none)")
+  }
+}
+repro_result_df$overall_match <- apply(repro_result_df, 1, get_overall_match)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df,
+             caption = "Reproduced values for Table 2")
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+# Split the tables by column, in order to compare each column at a time.
+extract_col <- function(indf, var_name) {
+  temp1 <- indf[, var_name]
+  temp_names <- indf$ks_index
+  temp2 <- as.data.frame(t(temp1))
+  names(temp2) <- temp_names
+  temp2$column_name <- var_name
+  return(temp2)
+}
+
+orig_result_df1 <- extract_col(orig_result_df, "match_impact")
+orig_result_df2 <- extract_col(orig_result_df, "match_biomass")
+orig_result_df3 <- extract_col(orig_result_df, "no_match")
+orig_result_df4 <- extract_col(orig_result_df, "overall_match")
+
+repro_result_df1 <- extract_col(repro_result_df, "match_impact")
+repro_result_df2 <- extract_col(repro_result_df, "match_biomass")
+repro_result_df3 <- extract_col(repro_result_df, "no_match")
+repro_result_df4 <- extract_col(repro_result_df, "overall_match")
+
+result_details_df <- data.frame(ID = "MA212",
+                                result_type = "Table 2",
+                                es_type = "N/A",
+                                stringsAsFactors = FALSE)
+
+result_compare1 <- compare_vars(df_orig = orig_result_df1,
+                                df_repro = repro_result_df1,
+                                checkvars = ks_indices)
+result_compare1a <- cbind(data.frame(column_name = "match_impact",
+                                     stringsAsFactors = FALSE),
+                          result_compare1)
+
+result_compare2 <- compare_vars(df_orig = orig_result_df2,
+                                df_repro = repro_result_df2,
+                                checkvars = ks_indices)
+result_compare2a <- cbind(data.frame(column_name = "match_impact",
+                                     stringsAsFactors = FALSE),
+                          result_compare2)
+
+result_compare3 <- compare_vars(df_orig = orig_result_df3,
+                                df_repro = repro_result_df3,
+                                checkvars = ks_indices)
+result_compare3a <- cbind(data.frame(column_name = "match_impact",
+                                     stringsAsFactors = FALSE),
+                          result_compare3)
+
+result_compare4 <- compare_char_vars(df_orig = orig_result_df4,
+                                     df_repro = repro_result_df4,
+                                    checkvars = ks_indices)
+result_compare4a <- cbind(data.frame(column_name = "match_impact",
+                                     stringsAsFactors = FALSE),
+                          result_compare4)
+
+knitr::kable(x = result_details_df,
+             caption = "Details of result")
+
+knitr::kable(x = result_compare1,
+             caption = "Comparison of original and reproduced values, column Match impact of Table 2")
+
+knitr::kable(x = result_compare2,
+             caption = "Comparison of original and reproduced values, column Match biomass of Table 2")
+
+knitr::kable(x = result_compare3,
+             caption = "Comparison of original and reproduced values, column No match of Table 2")
+
+knitr::kable(x = result_compare4,
+             caption = "Comparison of original and reproduced values, column Overall match of Table 2")
+
+# Write results comparison to file.
+out1 <- result_details_df
+out2 <- rbind(result_compare1a, result_compare2a, result_compare3a)
+out3 <- cbind(out1, out2, row.names = NULL)
+out4 <- cbind(out1, result_compare4a, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA212_result_comparison.csv"),
+          row.names = FALSE)
+write.csv(x = out4, file = here::here("output", "MA212_result_char_comparison.csv"),
+          row.names = FALSE)
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

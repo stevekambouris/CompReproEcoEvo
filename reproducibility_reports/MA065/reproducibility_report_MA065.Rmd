@@ -1,0 +1,209 @@
+---
+title: "Reproducibility Report for MA065"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Noble, D. W. A., Stenhouse, V., & Schwanz, L. E. (2018). Developmental temperatures and phenotypic plasticity in reptiles: A systematic review and meta‐analysis. _Biological Reviews_, _93_(1), 72–97. https://doi.org/10.1111/brv.12333
+
+# Result to be reproduced
+
+> As predicted, there was a significant negative weighted mean effect size of incubation temperature on incubation duration (_g_ = −8.42, 95% CI = −10.73 to −6.63, _N_ = 703). (Noble et al., 2018, p.80)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA065",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Hedges' g",
+                             point_est = -8.42,
+                             ci_lower = -10.73,
+                             ci_upper = -6.63,
+                             n = 703)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on OSF:
+
+Noble, D. W., & Schwanz, L. (2018, June 13). _Developmental temperatures and phenotypic plasticity in reptiles: A systematic review and meta-analysis._ https://doi.org/10.17605/OSF.IO/ZBGSS
+
+Noble, D. W. (2018, July 23). _Data._ Retrieved from osf.io/yd8gs 
+
+Noble, D. W. (2017, April 18). _Code._ Retrieved from osf.io/fgkv9 
+
+Noble, D. W. (2018, May 10). _Additional Files._ Retrieved from osf.io/mvvhs 
+
+* inc.csv
+* tincdat_fin.csv
+* tincNoInc.csv
+* analysis_TincMeta.R
+* explore_analysis.R
+* figures_final.R
+* func.R
+* phylo_matrices
+* SensitivityAnalysis_Matrices.Rdata
+* Sinv_matrices
+* tree_fin.txt
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+There were two separate OSF modules containing "data" files: the _Data_ module and the _Additional Files_ module. For the purposes of reproducing the selected result regarding incubation duration, the data file `inc.csv` in the _Data_ module was determined to be the file to use (based on comments in the code file `analysis_TincMeta.R`): the file was referred to directly by name. Additional comments in the same code file indicated that the phylogenetic tree data file `tree_fin.txt` from the _Additional Files_ module was required as well (again, the code referred to the specific file name).
+
+The files `phylo_matrices`, `SensitivityAnalysis_Matrices.Rdata`, and `Sinv_matrices` contain R objects which can be imported to immediately provide the intermediate-stage R objects (phylogenetic correlation and sampling error matrices) required for running the meta-analysis models, and thus save some computation time. However, since it appears that these intermediate-stage objects are not strictly required (the code file `analysis_TincMeta.R` can calculate them from scratch), these R objects will not be used in this result reproduction attempt.
+
+## Code
+All four R script files are very clearly structured and have extensive commenting throughout. It was clear from inspection that the code file `analysis_TincMeta.R` (titled "Clean Analysis Code") was the file containing the code to run the meta-analysis models. This file sourced code from the auxiliary code file `func.R` (titled "Functions used throughout analyses and processing of script").
+
+**Note: This version of the reproducibility report does _not_ use the pre-generated data objects (the phylogenetic correlation and sampling error matrices).**
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(MCMCglmm)
+library(plyr)
+library(car)
+library(ape)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "analysis_TincMeta.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+# Full data set - includes incubation duration
+#tincdat_fin <- read.csv(here::here("original", "tincdat_fin.csv"))
+
+# Trait data set - excludes incubation duration
+#tincNoInc <- read.csv(here::here("original", "tincNoInc.csv"))
+
+# Incubation duration dataset
+inc <- read.csv(here::here("original", "inc.csv"))
+
+# Import the phylogeny and create phylogenetic correlation matrix
+phylo <- read.tree(file = here::here("original", "tree_fin.txt"))
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Load func.R file
+# (Custom code due to path differences)
+source(here::here("original", "func.R"))
+
+# Phylogenetic correlation matrices
+
+# Format the imported tree
+sourceLines(orig_source, 44, 47)
+
+# Prune the tree for the incubation-only dataset
+sourceLines(orig_source, 54, 56)
+
+# Create correlation matrices
+#sourceLines(orig_source, 59, 59)
+sourceLines(orig_source, 61, 61)
+
+# Check trees are ultrametric
+#sourceLines(orig_source, 64, 64)
+sourceLines(orig_source, 66, 66)
+
+# Calculate inverse of matrices
+#sourceLines(orig_source, 69, 69)
+sourceLines(orig_source, 71, 71)
+
+# Sampling error matrices
+
+# Full dataset
+#sourceLines(orig_source, 78, 79)
+
+# Incubation-only dataset
+sourceLines(orig_source, 86, 87)
+
+# Meta-analytic models
+
+# Set MCMC parameters and priors.
+sourceLines(orig_source, 106, 112)
+
+# Run model for incubation duration.
+set.seed(65)
+sourceLines(orig_source, 121, 123)
+
+# Extract summary stats from model (pooled estimate, HPD bounds).
+sourceLines(orig_source, 186, 189)
+
+# (Get sample size, it is just the number of rows in the dataset passed to the
+# model on line 123.)
+
+repro_result_df <- data.frame(ID = "MA065",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Hedges' g",
+                             point_est = round(inc_esPool, 2),
+                             ci_lower = round(inc_esPoolL, 2),
+                             ci_upper = round(inc_esPoolU, 2),
+                             n = nrow(inc))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA065_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

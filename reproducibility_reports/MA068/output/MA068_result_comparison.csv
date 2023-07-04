@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA068","mean","odds ratio","point_est",1.82,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA068","mean","odds ratio","hpdi_lower",1.37,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA068","mean","odds ratio","hpdi_upper",2.41,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA068","mean","odds ratio","n",75,NA,NA,"Cannot calculate result, invalid value(s)"

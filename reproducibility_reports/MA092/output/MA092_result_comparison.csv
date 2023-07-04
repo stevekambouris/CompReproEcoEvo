@@ -1,0 +1,7 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA092","model output","N/A","r_squared_adj",0.32,0.33,3.13,"Original and reproduced values differ by less than 10%"
+"MA092","model output","N/A","rmse",0.55,0.55,0,"Original and reproduced values match exactly"
+"MA092","model output","N/A","intercept",-4.67,-4.18,10.49,"Original and reproduced values differ by at least 10%"
+"MA092","model output","N/A","coeff_log_sla",0.725,0.73,0.69,"Original and reproduced values differ by less than 10%"
+"MA092","model output","N/A","coeff_log_wd",-0.937,-0.98,4.59,"Original and reproduced values differ by less than 10%"
+"MA092","model output","N/A","n",68,68,0,"Original and reproduced values match exactly"

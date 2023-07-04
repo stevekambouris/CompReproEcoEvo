@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA071","mean","response ratio","point_est",-0.26,-0.27,3.85,"Original and reproduced values differ by less than 10%"
+"MA071","mean","response ratio","ci_lower",-1.02,-1.03,0.98,"Original and reproduced values differ by less than 10%"
+"MA071","mean","response ratio","ci_upper",0.51,0.49,3.92,"Original and reproduced values differ by less than 10%"
+"MA071","mean","response ratio","n",50,50,0,"Original and reproduced values match exactly"

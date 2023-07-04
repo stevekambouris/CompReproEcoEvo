@@ -1,0 +1,166 @@
+---
+title: "Reproducibility Report for MA060"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Winternitz, J., Abbate, J. L., Huchard, E., Havlíček, J., & Garamszegi, L. Z. (2017). Patterns of MHC-dependent mate selection in humans and nonhuman primates: A meta-analysis. _Molecular Ecology_, _26_(2), 668–688. https://doi.org/10.1111/mec.13920
+
+# Result to be reproduced
+
+> The mean effect size calculated over all studies (excluding contraceptive pill users) indicated no significant correlation between MHC dissimilarity and mating
+outcome (intercept-only posterior mean Zr (95% HPD) = 0.044 (-0.174 to 0.289), _N_ = 37). (Winternitz et al., 2017, p.674)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA060",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = 0.044,
+                             hpdi_lower = -0.174,
+                             hpdi_upper = 0.289,
+                             n = 37)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Winternitz, J., Abbate, J., Huchard, E., Havlíček, J., & Garamszegi, L. Z. (2016). _Data from: Patterns of MHC-dependent mate selection in humans and non-human primates: a meta-analysis (Version 1, p. 731116 bytes) [Data set]._ Dryad. https://doi.org/10.5061/DRYAD.5003G
+
+* primate_tree.nex
+* Winternitz_et_al_Rcode_MHCDissimilarity.R
+* human.primate.matechoice.csv
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+
+The code file `Winternitz_et_al_Rcode_MHCDissimilarity.R` is very well documented. It explicitly mentions in Section 1 ("Loading and visualizing data") that the two data files required are `human.primate.matechoice.csv` and `primate_tree.nex`, both of which are shared on Dryad under those file names. Therefore, it seems very reasonable to conclude that these two shared data files are applicable to reproducing the selected result.
+
+## Code
+
+The code file `Winternitz_et_al_Rcode_MHCDissimilarity.R` is very well documented. The extensive code-comment preamble in the file states "This R file contains examples for our MHC dissimilarity analyses". The selected result to be reproduced is identified in the article as a result from the MHC dissimilarity analysis. Therefore, it seems very reasonable to conclude that this code file is applicable to reproducing the selected result.
+
+# Set up
+
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (none required)
+
+# Load packages required by the code to run.
+library(MCMCglmm)
+library(ape)
+
+# Set the path to the original code file(s).
+orig_source <- here("original", "Winternitz_et_al_Rcode_MHCDissimilarity.R")
+```
+
+# Import and clean data
+```{r importdata}
+# Import data file.
+# (Custom due to file path.)
+Data <- read.csv(here("original", "human.primate.matechoice.csv"),
+                 header = TRUE)
+
+# Import phylogenetic tree.
+# (Custom due to file path.)
+tr <- read.nexus(here("original", "primate_tree.nex"))[[1]]
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+# Format data.
+sourceLines(orig_source, 50, 58)
+sourceLines(orig_source, 70, 98)
+sourceLines(orig_source, 101, 101)
+
+# Format the phylogenetic tree.
+sourceLines(orig_source, 65, 65)
+
+# Invert the phylogenetic covariance matrix.
+sourceLines(orig_source, 319, 319)
+
+# Restrict the data set to those studies without the pill.
+# (Custom because this line is commented out in original code.)
+Dataset<-subset(Dataset, Dataset$Pill!="Pill")
+
+# Set a random seed for reproducibility of these results.
+set.seed(60)
+
+# Set priors and run intercept-only model which includes study and phylogeny as
+# random factors.
+sourceLines(orig_source, 343, 346)
+
+# Get model summary which includes the posterior mean and HPD interval.
+# (Custom because the original code does not explicitly do this.)
+model4_summary <- summary(model4)
+# posterior mean = model4_summary$solutions[1]
+# 95% HPD lower = model4_summary$solutions[2]
+# 95% HPD upper = model4_summary$solutions[3]
+
+repro_result_df <- data.frame(ID = "MA060",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = round(model4_summary$solutions[1], 3),
+                             hpdi_lower = round(model4_summary$solutions[2], 3),
+                             hpdi_upper = round(model4_summary$solutions[3], 3),
+                             n = nrow(Dataset))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "hpdi_lower", "hpdi_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA060_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

@@ -1,0 +1,186 @@
+---
+title: "Reproducibility Report for MA229"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Gamfeldt, L., Lefcheck, J. S., Byrnes, J. E. K., Cardinale, B. J., Duffy, J. E., & Griffin, J. N. (2015). Marine biodiversity and ecosystem functioning: What’s known and what’s next? _Oikos_, _124_(3), 252–265. https://doi.org/10.1111/oik.01549
+
+# Result to be reproduced
+
+> Across all marine systems and trophic groups, the most species-rich polyculture had higher levels of production, higher consumption, and higher biogeochemical fluxes than the average monoculture ($\textrm{LR}_{\textrm{net}}$) was significantly positive for all three function categories based on 95% confidence intervals, Fig. 3). (Gamfeldt et al., 2015, p.256)
+
+The summary effect of $\textrm{LR}_{\textrm{net}}$ for the "production" function category was chosen as the result to reproduce, being the top-left result displayed in Figure 3 (p.256) of the article. The point estimate and confidence interval were displayed graphically only, while the sample size (number of experimental results being summarised) was shown numerically. The entire page of the article PDF containing the figure was extracted as a PNG image file at 300 dpi using ImageMagick 7.0.8-64 for Windows:
+
+> `magick convert -density 300 MA229.pdf[4] MA229_p5_300.png`
+
+This image was used to extract the numerical values of the point estimate and confidence interval limits using WebPlotDigitizer 4.2 for Windows. The calibration results were recorded in a JSON file output by WebPlotDigitizer:
+
+> {"version":[4,2],"axesColl":[{"name":"Bar","type":"BarAxes","isLog":false,"isRotated":false,"calibrationPoints":[{"px":1582.3701298701296,"py":1008.1655844155845,"dx":0,"dy":"-1","dz":null},{"px":1825.8116883116884,"py":1008.1655844155845,"dx":0,"dy":"2","dz":null}]}],"datasetColl":[{"name":"summary_effect","axesName":"Bar","metadataKeys":["Label"],"data":[{"x":1696.1525974025974,"y":415.43831168831167,"metadata":["point_est"],"value":[0.40217391304347916]},{"x":1682.922077922078,"y":415.43831168831167,"metadata":["CI_lower"],"value":[0.23913043478261065]},{"x":1706.7370129870133,"y":415.4383116883117,"metadata":["CI_upper"],"value":[0.532608695652178]}],"autoDetectionData":null}],"measurementColl":[]}
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA229",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "log response ratio",
+                             point_est = 0.40,
+                             ci_lower = 0.24,
+                             ci_upper = 0.53,
+                             n = 57)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (http://www.oikosjournal.org/appendix/oik-01549):
+
+* Appendix_oik.01549editnew.pdf
+* gamfeldt appendix 1ny.txt
+* gamfeldt appendix 2ny.txt
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+The documentation in `Appendix_oik.01549editnew.pdf` indicates that `gamfeldt appendix 2ny.txt` is the data file, although it does not mention the file by this exact name; the file name "oik.01549_appendix_2" is provided instead. The documentation mentions the data is provided as a .txt file, which matches. The data in the file appears to be delimited by tab characters.
+
+The code file (see below) does refer to `gamfeldt appendix 2ny.txt` by that exact name when importing data, so it is safe to conclude that this is the correct data file.
+
+## Code
+The documentation in `Appendix_oik.01549editnew.pdf` indicates that `gamfeldt appendix 1ny.txt` is the data file ("R code for data handling, analyses and figure plotting") but doesn't refer to the file with the exact file name, instead referring to  oik.01549_appendix_1. However, like for the data file above, it is reasonable to assume that `gamfeldt appendix 1ny.txt` is what is being referred to.
+
+The extension of the code file is .txt, but an inspection of the file indicates that the file is actually in rich text format (.rtf). Converting the file from rich text format to plain text does reveal a very well commented and structured R code file - there is extensive documentation within the code file indicating the function of each part of the code. It is straightforward to navigate the (converted) code file to locate the relevant parts of code to run to reproduce the selected result.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(car) #Calls: recode
+library(ggplot2) #Calls: ggplot
+library(gridExtra) #Calls: grid.arrange
+library(MuMIn) #Calls: AICc
+library(nlme) #Calls: lme
+library(plyr) #Calls: ddply
+library(reshape2) #Calls: melt, dcast
+library(metafor)
+
+# Use the striprtf package.
+library(striprtf)
+
+# Extract the text (R code) from the RTF.
+extracted_code <- read_rtf(here::here("original", "gamfeldt appendix 1ny.txt"),
+                           verbose = FALSE)
+
+# Save the extracted R code to a file.
+file_cnxn <- file(here::here("gamfeldt appendix 1ny_converted.R"))
+writeLines(extracted_code, file_cnxn)
+close(file_cnxn)
+
+# Clean up intermediary conversion objects.
+rm(list=c("extracted_code", "file_cnxn"))
+
+# Set the path to the original code file(s).
+orig_source <- here::here("gamfeldt appendix 1ny_converted.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+marine=read.delim(file = here::here("original", "gamfeldt appendix 2ny.txt"),
+                  header=T)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format the data.
+sourceLines(orig_source, 39, 61)
+
+# Recalculate log response ratios.
+sourceLines(orig_source, 63, 90)
+
+# Transform some variables.
+sourceLines(orig_source, 95, 108)
+
+# Remove some rows of data (reason in the code: "because the expected direction
+# of the diversity effect is not clear from theory")
+sourceLines(orig_source, 115, 115)
+
+# Calculate the means and CIs of log response ratios, by categories.
+sourceLines(orig_source, 219, 241)
+
+# Custom code to extract the values for the selected result.
+# Select the appropriate row from the output list rawLR.list:
+# where Log.ratio is LR_net and Ycat is Production
+custom_data <- rawLR.list$Ycat[rawLR.list$Ycat$Ycat == "Production"
+                               & rawLR.list$Ycat$Log.ratio == "LRnet", ]
+
+repro_result_df <- data.frame(ID = "MA229",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "log response ratio",
+                             point_est = round(custom_data$Value, 2),
+                             ci_lower = round(custom_data$ci.lb, 2),
+                             ci_upper = round(custom_data$ci.ub, 2),
+                             n = custom_data$n.expt)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA229_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

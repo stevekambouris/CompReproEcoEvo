@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA060","mean","Fisher z-transformation of correlation","point_est",0.044,0.043,2.27,"Original and reproduced values differ by less than 10%"
+"MA060","mean","Fisher z-transformation of correlation","hpdi_lower",-0.174,-0.194,11.49,"Original and reproduced values differ by at least 10%"
+"MA060","mean","Fisher z-transformation of correlation","hpdi_upper",0.289,0.268,7.27,"Original and reproduced values differ by less than 10%"
+"MA060","mean","Fisher z-transformation of correlation","n",37,37,0,"Original and reproduced values match exactly"

@@ -1,0 +1,22 @@
+title,data_sharing_req,source,is_jdap,latex_string
+Animal Behaviour,N,\textcite{caetano_forgotten_2014},N,Animal Behaviour & N & N & \textcite{caetano_forgotten_2014} \\
+Behavioral Ecology,N,\textcite{mislan_elevating_2016},N,Behavioral Ecology & N & N & \textcite{mislan_elevating_2016} \\
+Behavioral Ecology and Sociobiology,N,\textcite{mislan_elevating_2016},N,Behavioral Ecology and Sociobiology & N & N & \textcite{mislan_elevating_2016} \\
+Biological Reviews,N,journal website,N,Biological Reviews & N & N & journal website \\
+Ecological Applications,Y,\textcite{mislan_elevating_2016},N,Ecological Applications & N & Y & \textcite{mislan_elevating_2016} \\
+Ecological Monographs,Y,\textcite{mislan_elevating_2016},N,Ecological Monographs & N & Y & \textcite{mislan_elevating_2016} \\
+Ecology,Y,\textcite{mislan_elevating_2016},N,Ecology & N & Y & \textcite{mislan_elevating_2016} \\
+Ecology Letters,Y,\textcite{mislan_elevating_2016},N,Ecology Letters & N & Y & \textcite{mislan_elevating_2016} \\
+Evolution,Y,\textcite{mislan_elevating_2016},Y,Evolution & Y & Y & \textcite{mislan_elevating_2016} \\
+Evolutionary Ecology,N,\textcite{mislan_elevating_2016},N,Evolutionary Ecology & N & N & \textcite{mislan_elevating_2016} \\
+Functional Ecology,Y,\textcite{mislan_elevating_2016},Y,Functional Ecology & Y & Y & \textcite{mislan_elevating_2016} \\
+Journal of Animal Ecology,Y,\textcite{mislan_elevating_2016},Y,Journal of Animal Ecology & Y & Y & \textcite{mislan_elevating_2016} \\
+Journal of Applied Ecology,Y,\textcite{mislan_elevating_2016},Y,Journal of Applied Ecology & Y & Y & \textcite{mislan_elevating_2016} \\
+Journal of Ecology,Y,\textcite{mislan_elevating_2016},Y,Journal of Ecology & Y & Y & \textcite{mislan_elevating_2016} \\
+Journal of Evolutionary Biology,Y,\textcite{mislan_elevating_2016},Y,Journal of Evolutionary Biology & Y & Y & \textcite{mislan_elevating_2016} \\
+Molecular Ecology,Y,\textcite{mislan_elevating_2016},Y,Molecular Ecology & Y & Y & \textcite{mislan_elevating_2016} \\
+New Phytologist,N,\textcite{magee_dawn_2014},N,New Phytologist & N & N & \textcite{magee_dawn_2014} \\
+Oecologia,N,\textcite{mislan_elevating_2016},N,Oecologia & N & N & \textcite{mislan_elevating_2016} \\
+Oikos,Y,\textcite{mislan_elevating_2016},N,Oikos & N & Y & \textcite{mislan_elevating_2016} \\
+The American Naturalist,Y,\textcite{mislan_elevating_2016},Y,The American Naturalist & Y & Y & \textcite{mislan_elevating_2016} \\
+The Quarterly Review of Biology,N,journal website,N,The Quarterly Review of Biology & N & N & journal website \\

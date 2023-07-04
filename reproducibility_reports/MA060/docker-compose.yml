@@ -1,0 +1,10 @@
+version: "3.9"
+services: 
+  web:
+    image: rpmaecoevo/reprorpt:MA060
+    ports: 
+      - "8787:8787"
+    environment: 
+      PASSWORD: hunter2
+    volumes: 
+      - ./output:/home/rstudio/output

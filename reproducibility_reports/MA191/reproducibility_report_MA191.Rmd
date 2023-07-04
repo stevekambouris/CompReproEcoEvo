@@ -1,0 +1,184 @@
+---
+title: "Reproducibility Report for MA191"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Voje, K. L. (2015). Scaling of Morphological Characters across Trait Type, Sex, and Environment: A Meta-analysis of Static Allometries. _The American Naturalist_, _187_(1), 89–98. https://doi.org/10.1086/684159
+
+# Result to be reproduced
+
+> Meta-analysis
+>
+> Parameter estimates from the linear mixed-effect models are reported in table 2. The expected baseline static allometric slope estimated from the intercept-only model is 0.86 (95% CI, 0.77–0.94). (Voje, 2015, p.92)
+
+Table 2 (p.94) in the article also reports that the sample size relevant to the above result is 553.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA191",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "allometric slope parameter",
+                             point_est = 0.86,
+                             ci_lower = 0.77,
+                             ci_upper = 0.94,
+                             n = 553)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Voje, K. L. (2015). _Data from: Scaling of morphological characters across trait type, sex and environment: A meta-analysis of static allometries._ Dryad Digital Repository. https://doi.org/10.5061/dryad.d78c5
+
+* allometry_data.xlsx
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+The following data and code files were shared as supporting information on the web page for the article (https://www.journals.uchicago.edu/doi/suppl/10.1086/684159):
+
+* R_script.zip
+    + analyses and figure1 and figure 4.txt
+    + Figures 2 and 3.txt
+    + running all models in table 2.txt
+* Table_S1.zip
+    + Table_S1.xls
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+The usage notes on the Dryad repository web page are minimal, but the article itself mentions that "The data reported in this article have been deposited in the Dryad Digital Repository" (Voje, 2015, p.90). There is only a single file in the Dryad repository, which by default can be considered the relevant data file.
+
+This is given further weight by considering that the relevant code (see below) refers to a file named `allometry_data.txt`; although the shared data file is a Microsoft Excel spreadsheet file, it contains a sheet named "data" that could be reformatted into a format suitable for analysis. (The Excel file also contains a sheet named "Sources" which lists the bibliographic details of the papers whose data is included in the data set.)
+
+## Code
+The code related to the analyses in this article are not included with the data file in Dryad, but are included separately on the web page for the article. The documentation on the journal web page for the shared code is also minimal, but the names of the individual code files provides guidance to their relevance. Here, the file named `running all models in table 2.txt` provides a clear indication that this contains the code relevant to the result selected to be reproduced.
+
+The code file contains sufficient comments throughout to be able to identify which parts of the code need to be run in order to reproduce the selected result.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+library(xlsx)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(lme4)
+library(effects)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "running all models in table 2.txt")
+```
+
+# Import and clean data
+```{r importdata}
+
+imported_xlsx <- read.xlsx(here::here("original", "allometry_data.xlsx"), 1)
+
+temp_df <- imported_xlsx
+
+# Format the data as necessary to make it work with the original code.
+temp_df$se_slope <- as.numeric(levels(temp_df$se_slope))[temp_df$se_slope]
+temp_df$r_square <- as.numeric(levels(temp_df$r_square))[temp_df$r_square]
+temp_df$N <- as.numeric(levels(temp_df$N))[temp_df$N]
+names(temp_df)[names(temp_df) == "species"] <- "species_2"
+
+# Create the data object expected by the original code.
+indata <- temp_df
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis, error=TRUE}
+
+# Perform data preparation.
+sourceLines(orig_source, 10, 35)
+
+# Fit the baseline model and print summary.
+sourceLines(orig_source, 37, 40)
+
+# Calculate CI around estimate.
+sourceLines(orig_source, 42, 42)
+
+# The original code uses package "effects" to calculate CIs, but this produces
+# an error when run as originally written.
+# The R help page for `effect` (which is called by the original code) mentions
+# that for a model of object class `merMod` (`baseline_static_slope` is object
+# class `lmerMod`, which is of the `merMod` class), confidence intervals are
+# calculated using the normal distribution. This sounds the same as using the
+# Wald method to calculate confidence intervals.
+
+# Alternative: use the confint() function using Wald method to calculate
+# confidence intervals.
+# Custom code:
+CI_baseline_static_slope <- confint(baseline_static_slope, method = "Wald")
+
+# Custom code: save summary of baseline model as object, for result extraction.
+model_summary <- summary(baseline_static_slope)
+
+repro_result_df <- data.frame(ID = "MA191",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "allometric slope parameter",
+                             point_est = round(model_summary$coefficients[1], 2),
+                             ci_lower = round(CI_baseline_static_slope["(Intercept)", "2.5 %"], 2),
+                             ci_upper = round(CI_baseline_static_slope["(Intercept)", "97.5 %"], 2),
+                             n = model_summary$devcomp$dims[["N"]])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA191_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+```{r rsession}
+devtools::session_info()
+```

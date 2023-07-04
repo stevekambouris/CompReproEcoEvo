@@ -1,0 +1,156 @@
+---
+title: "Reproducibility Report for MA202"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Mehrabi, Z., & Tuck, S. L. (2015). Relatedness is a poor predictor of negative plant–soil feedbacks. _New Phytologist_, _205_(3), 1071–1075. https://doi.org/10.1111/nph.13238
+
+# Result to be reproduced
+
+> Whilst there was a moderately negative plant–soil feedback effect observed on average (-0.330; 95% CI: lower = -0.503, upper = -0.156, _n_ = 329), variation in magnitude of this effect could not be explained by phylogenetic distance between species pairs in plant–soil feedback interactions. (Mehrabi & Tuck, 2015, p.1072-1073)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA202",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Hedges' d",
+                             point_est = -0.330,
+                             ci_lower = -0.503,
+                             ci_upper = -0.156,
+                             n = 329)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://nph.onlinelibrary.wiley.com/doi/10.1111/nph.13238):
+
+* nph13238-sup-0001-TableS1.xlsx
+* nph13238-sup-0004-NotesS2.R
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+The metadata provided on the journal article web page for file `nph13238-sup-0001-TableS1.xlsx` is minimal but clear enough: "Study dataset".
+
+This Microsoft Excel file contains a very informative readme sheet (sheet "README"). In additional to providing a codebook describing each of the variables found in the dataset(s), it contains a note specifying that to _reproduce the results in the article_, use the data in sheet "SupportingInformationTableS1_1" in conjunction with the supplied R code (see below). But, the readme goes on to say that for the purposes of any future work based on this meta-analysis, the data in sheet "SupportingInformationTableS1_2" should be used instead. This is because sheet "SupportingInformationTableS1_2" contains some small corrections to the data in "SupportingInformationTableS1_1" which were only corrected post publication.
+
+Therefore, for the purposes of this reproduction of results, the data in "SupportingInformationTableS1_1" will be used.
+
+## Code
+There is only one code file shared on the journal article web page (with metadata description "R code"), `nph13238-sup-0004-NotesS2.R`. The readme in the data file (see above) refers to the accompanying R code (although not by file name), plus the comments in the code file provide indicators and guidance about which parts of the code should be run to reproduce the selected result.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metahdep)
+library(ggplot2)
+library(meta)
+library(xlsx)
+library(matrixcalc)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "nph13238-sup-0004-notess2.r")
+```
+
+# Import and clean data
+```{r importdata}
+
+# Custom code required due to path differences and difference in sheet order.
+ps.meta.dat <- read.xlsx(here::here("original", "nph13238-sup-0001-tables1.xlsx"),
+                         sheetIndex = 2)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format the imported data.
+sourceLines(orig_source, 16, 24)
+
+# Calculate variables needed for meta-analysis (pooled SD, Hedge's d/g, 
+# sampling variance, var-cov matrix).
+sourceLines(orig_source, 26, 60)
+
+# Create hierarchical dependence groups for data.
+sourceLines(orig_source, 63, 68)
+
+# Fit the intercept model and calculate SE and confidence intervals for the
+# point estimate of the intercept.
+sourceLines(orig_source, 72, 81)
+
+# (Model output does not report number of studies, so this is obtained by
+# getting the length of the vector of effect sizes used as input into the
+# function metahdep.HBLM(), i.e. ps.meta.dat$hedges.d.)
+
+repro_result_df <- data.frame(ID = "MA202",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Hedges' d",
+                             point_est = round(ps.mod.int$beta.hats[[1]], 3),
+                             ci_lower = round(grandmean.ci[1, "lower"], 3),
+                             ci_upper = round(grandmean.ci[1, "upper"], 3),
+                             n = length(ps.meta.dat$hedges.d))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA202_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

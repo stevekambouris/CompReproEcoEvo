@@ -1,0 +1,7 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA145","mean","Fisher z-transformation of correlation","point_est",-0.08,-0.08,0,"Original and reproduced values match exactly"
+"MA145","mean","Fisher z-transformation of correlation","hpdi_lower",-0.22,-0.21,4.55,"Original and reproduced values differ by less than 10%"
+"MA145","mean","Fisher z-transformation of correlation","hpdi_upper",0.03,0.05,66.67,"Original and reproduced values differ by at least 10%"
+"MA145","mean","Fisher z-transformation of correlation","n",118,118,0,"Original and reproduced values match exactly"
+"MA145","mean","Fisher z-transformation of correlation","n_studies",38,38,0,"Original and reproduced values match exactly"
+"MA145","mean","Fisher z-transformation of correlation","n_species",25,25,0,"Original and reproduced values match exactly"

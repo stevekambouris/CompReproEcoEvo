@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA074","correlation","Pearson's r","point_est",0.183,0.185,1.09,"Original and reproduced values differ by less than 10%"
+"MA074","correlation","Pearson's r","ci_lower",0.089,0.089,0,"Original and reproduced values match exactly"
+"MA074","correlation","Pearson's r","ci_upper",0.274,0.281,2.55,"Original and reproduced values differ by less than 10%"
+"MA074","correlation","Pearson's r","n",43,43,0,"Original and reproduced values match exactly"

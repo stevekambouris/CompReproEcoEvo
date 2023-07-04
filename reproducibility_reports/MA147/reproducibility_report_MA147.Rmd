@@ -1,0 +1,214 @@
+---
+title: "Reproducibility Report for MA147"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Holman, L. (2016). Bet hedging via multiple mating: A meta-analysis. _Evolution_, _70_(1), 62–71. https://doi.org/10.1111/evo.12822
+
+# Result to be reproduced
+
+> Figure 2 shows the estimated increase in fitness (in percentage points) experienced by a multiple-mating genotype relative to a single-mating genotype ($\Delta_{W}$), assuming that multiple mating has no direct costs or benefits ($\mu_{\textrm{Single}} = \mu_{\textrm{Multiple}}$), and that the effective population size is small ($N_{e} = 10$). The consensus estimate of $\Delta_{Wp=0}$ from meta-analysis was 0.13% (SE = 0.030, 95% CIs: 0.074–0.19)... (Holman, 2016, pp.66-69)
+
+Earlier on p.66, the article states that there were estimates of $\Delta_{Wp=0}$ from 49 studies, implying the sample size is 49.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA147",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "percentage",
+                             point_est = 0.13,
+                             se = 0.030,
+                             ci_lower = 0.074,
+                             ci_upper = 0.19,
+                             n = 49)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Holman, L. (2015). _Data from: Bet hedging via multiple mating: A meta-analysis._ Dryad Digital Repository. https://doi.org/10.5061/dryad.b6d75
+
+* Dataset info.csv
+* Holman bet hedging - functions.R
+* Holman bet hedging - open this one to run the analysis.R
+* README.txt
+* Varying N analyses.zip
+* Varying p analyses.zip
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The Dryad repository web page contains Usage Notes, and the respository includes a readme file (`README.txt`). The usage notes and readme file indicate that the data files relevant to the selected result (i.e. when there is a fixed effective population size) are the 147 CSV files contained within the archive `Varying N analyses.zip`.
+
+## Code
+The usage notes and readme file indicate that the helpfully-named file `Holman bet hedging - open this one to run the analysis.R` is the code file to use to reproduce the results in the article. The file contains a large number of comments providing instructions on how to run the analysis, including specifically the selected result. (This code file invokes the file `Holman bet hedging - functions.R` which contains custom functions required for running the analysis.)
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metafor)
+library(reshape2)
+library(truncnorm)
+library(boot)
+library(ggplot2)
+library(lme4)
+
+# Set the path to the original code file(s).
+orig_source1 <- here::here("original",
+"Holman_bet_hedging_-_open_this_one_to_run_the_analysis.R")
+orig_source2 <- here::here("original", 
+                           "Holman_bet_hedging_-_functions.R")
+
+# The original script assumes a very specific folder structure that has been
+# recreated within the folder "original". The code makes reference to a
+# variable "main.directory", which is the base folder containing this
+# structure. This needs to be set explicitly in order for the code to run as
+# intended (the value provided in the original code is the author's own
+# computing environment).
+main.directory <- "original"
+
+```
+
+# Import and clean data
+```{r importdata}
+
+# The original script assumes a very specific folder structure that has been
+# recreated here: the "Varying N" CSV files are presumed to be at the following
+# location:
+# <working directory>/Results of analyses/Varying N analyses/
+#
+# The code that imports the 147 CSV files from the above folder can be run
+# if the variable "main.directory" is set to the folder which contains the
+# base folder.
+sourceLines(orig_source1, 53, 53)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Load all custom functions included in Holman_bet_hedging_-_functions.R, with
+# the exception of the "meta.analysis" function.
+sourceLines(orig_source2, 1, 338)
+sourceLines(orig_source2, 409, 426)
+
+# Create a customised version of the function meta.analysis, to correct an
+# issue with a path variable that doesn't exist, correct a difference in file
+# names between the code and the shared data files, and also to return a
+# meta-analysis model object.
+
+# Read in the entire source of the "functions" code file.
+temp_code <- readLines(con = orig_source2)
+
+# Extract the code for the meta.analysis function.
+temp_mafn <- temp_code[340:407]
+
+# Update the line of code which refers to "main.directory" to fix the folder
+# location, and also rename the file.
+temp_mafn[4] <- sub(pattern = "main.directory",
+                    replacement = "\"original\"",
+                    x = temp_mafn[4],
+                    fixed = TRUE)
+temp_mafn[4] <- sub(pattern = "Dataset info.csv",
+                    replacement = "Dataset_info.csv",
+                    x = temp_mafn[4],
+                    fixed = TRUE)
+
+# Update the line of code which prints the model object (in the case of no
+# moderators) to instead return the model object when there are 3 moderators.
+temp_mafn[34] <- sub(pattern = "if(length(moderators) == 0) print(x0)",
+                     replacement = "if(length(moderators) == 3) return(x0)",
+                     x = temp_mafn[34],
+                     fixed = TRUE)
+
+# Write the updated function to a temporary file.
+cat(temp_mafn, file = "MA147_temp_function.R", sep = "\n")
+
+# Read in the function that was just written.
+sourceLines("MA147_temp_function.R", 1, 68)
+
+# Run the meta-analysis for the condition "Varying N" when the fitness exponent
+# is 1.0, and Ne is set to 10, and with no moderators.
+# Custom code is required because the analysis code calls the meta.analysis
+# function without directing the output to an object in the environment (the
+# original function essentially just printed to console/plots).
+x0_result <- meta.analysis(varyingN[varyingN$Fitness.exponent == 1, ],
+                           "Rel.fitness.polyandry",
+                           "N",
+                           10,
+                           moderators = c("sex", "taxon", "trait.type"))
+
+repro_result_df <- data.frame(ID = "MA147",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "percentage",
+                             point_est = round(x0_result$b, 2),
+                             se = round(x0_result$se, 3),
+                             ci_lower = round(x0_result$ci.lb, 3),
+                             ci_upper = round(x0_result$ci.ub, 2),
+                             n = x0_result$k)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est", "se",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA147_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

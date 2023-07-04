@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA091","mean","Cohen's d","point_est",0.56,0.56,0,"Original and reproduced values match exactly"
+"MA091","mean","Cohen's d","ci_lower",0.42,0.42,0,"Original and reproduced values match exactly"
+"MA091","mean","Cohen's d","ci_upper",0.69,0.69,0,"Original and reproduced values match exactly"
+"MA091","mean","Cohen's d","n",65,65,0,"Original and reproduced values match exactly"

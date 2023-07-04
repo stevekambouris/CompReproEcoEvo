@@ -1,0 +1,239 @@
+---
+title: "Reproducibility Report for MA129"
+author: "Steven Kambouris"
+date: "19/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Crouzeilles, R., & Curran, M. (2016). Which landscape size best predicts the influence of forest cover on restoration success? A global meta-analysis on the scale of effect. _Journal of Applied Ecology_, _53_(2), 440–448. https://doi.org/10.1111/1365-2664.12590
+
+# Result to be reproduced
+
+> Overall Forest Cover
+>
+> In general, for all taxonomic groups and measures of vegetation structure, the null model was considered among the most plausible models ($\Delta_{i} < 2$) to explain the mean response ratio ($w_{i}$ always $\ge 0.10$) (Table 1A–J) and response ratio variance ($w_{i}$ always $\ge 0.08$) (Table 1L–W). (Crouzeilles & Curran, 2016, pp.443-444)
+>
+> ...
+>
+> Table 1. Performance of models predicting either mean response ratio or response ratio variance as a function of percentage of overall forest cover derived from eight different buffer sizes of radius 5–200 km. Analyses were carried out separately for each taxonomic group and measure of vegetation structure. Buffer = km radius, $\Delta_{i} = \textrm{AICc}_{i} - \textrm{minimum AICc}$ and $w_{i}$ = Akaike weight. $R^2$ = generalized for mean response ratio and adjusted for response ratio variance. $R^2$ was omitted when the null model was among the most plausible models ($\Delta_{i} < 2$). In parentheses, the number of study landscapes = sample size. In bold are the plausible models ($\Delta_{i} < 2$). (Crouzeilles & Curran, 2016, p.444)
+
+The results presented in this article are not reducible to the straightforward reporting of a summary effect. The caption for Table 1 describe the primary results reported in the article. The result to reproduce will be the result in Table 1A, which compares eight models of mean response ratio measures of overall forest cover with different buffer sizes, for the plants taxonomic group, based on 78 study landscapes. R-squared was not reported for this set of model comparisons. (This will involve the fitting of all models listed in Table 1A.)
+
+```{r orig-result}
+orig_result_df <- data.frame(buffer = c("Null", "50", "25", "75", "200", "150",
+                                        "10", "100", "5"),
+                             delta.AICc = c(0.00, 0.96, 0.98, 1.17, 1.34, 1.56,
+                                            1.56, 1.61, 1.70),
+                             w.AICc = c(0.20, 0.12, 0.12, 0.11, 0.10,
+                                        0.09, 0.09, 0.09, 0.08),
+                             stringsAsFactors = FALSE)
+
+row.names(orig_result_df) <- paste0("rank", 1:nrow(orig_result_df))
+
+knitr::kable(x = orig_result_df,
+             caption = "Original reported values for Table 1 (A)")
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Crouzeilles, R., & Curran, M. (2016). _Data from: Which landscape size best predicts the influence of forest cover on restoration success? – A global meta-analysis on the scale of effect._ Dryad Digital Repository. https://doi.org/10.5061/dryad.v1r34
+
+* Biomass_Contiguous_forest_areas.txt
+* Biomass_Forest_areas.txt
+* Birds_Contiguous_forest_areas.txt
+* Birds_Forest_areas.txt
+* Cover_Contiguous_forest_areas.txt
+* Cover_Forest_areas.txt
+* Density_Contiguous_forest_areas.txt
+* Density_Forest_areas.txt
+* Height_Contiguous_forest_areas.txt
+* Height_Forest_areas.txt
+* Herpeto_Contiguous_forest_areas.txt
+* Herpeto_Forest_areas.txt
+* Invertebrates_Contiguous_forest_areas.txt
+* Invertebrates_Forest_areas.txt
+* Litter_Contiguous_forest_areas.txt
+* Litter_Forest_areas.txt
+* Mammals_Contiguous_forest_areas.txt
+* Mammals_Forest_areas.txt
+* Plants_Contiguous_forest_areas.txt
+* Plants_Forest_areas.txt
+* Script_Contiguous forest areas.R
+* Script_Forest areas.R
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The format of data file names are structured to indicate their relevance. The file name ending `Forest_areas` appears in ten data file names, indicating that they are relevant to the results of Table 1. The file name ending `Contiguous_forest_areas` appears in the other ten data file names, indicating that they are relevant to the results of Table 2.
+
+The prefix of each file name appears to indicate the taxanomic group that the file contains data for. There are ten different file name prefixes, which match up with the ten different taxanomic groups that are reported in Tables 1 and 2.
+
+Table 1 (A) contains results for the plants taxanomic group in the analysis of total forest cover (rather than contiguous forest cover), so it nominally appears that file `Plants_Forest_areas.txt` is the data file relevant to reproducing the chosen result.
+
+## Code
+The Dryad repository contains only two R script files, and the same file name ending conventions used for the data files are used for the code files. Hence, file `Script_Forest areas.R` nominally would contain the relevant analysis code for reproducing the results in Table 1 (A).
+
+The code file is clearly laid out, so it is straightforward to identify which section of the code is relevant to reproducing the results of Table 1 (A).
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(MuMIn)
+library(ggplot2)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Script_Forest areas.R")
+```
+
+# Import and clean data
+```{r importdata}
+# Custom code required to import data file due to path differences.
+# Original code: dados<-read.table("Plants_Forest_areas.txt", header=T, sep="\t")
+dados <- read.table(file = here::here("original", "Plants_Forest_areas.txt"),
+                    header=T,
+                    sep="\t")
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Load function for calculating model AICc.
+sourceLines(orig_source, 3, 13)
+
+# Run models for predicting mean response ratio as a percentage of overall
+# forest cover derived from eight different buffer radii, for the plants
+# taxanomic group.
+# Models run in this order: null, 200km buffer, 150km buffer, 100km buffer,
+# 75km buffer, 50km buffer, 25km buffer, 10km buffer, 5km buffer.
+sourceLines(orig_source, 77, 85)
+
+# Rank the models by AICc
+sourceLines(orig_source, 87, 87)
+
+# To be able to compare, create buffer names.
+buffer_names <- data.frame(name = 1:9,
+                           buffer = c("Null", "200", "150", "100", "75", "50",
+                                      "25", "10", "5"),
+                           stringsAsFactors = FALSE)
+
+# Merge the buffer names 
+merged_data <- merge(ranks, buffer_names, by = "name")
+
+repro_result_df <- merged_data[order(merged_data$delta.AICc),
+                                     c("buffer", "delta.AICc", "w.AICc")]
+repro_result_df$delta.AICc <- round(repro_result_df$delta.AICc, 2)
+repro_result_df$w.AICc <- round(repro_result_df$w.AICc, 2)
+
+row.names(repro_result_df) <- paste0("rank", 1:nrow(repro_result_df))
+
+knitr::kable(x = repro_result_df,
+             caption = "Reproduced values for Table 1 (A)")
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+# Split the tables by column, in order to compare each column at a time.
+extract_col <- function(indf, var_name) {
+  temp1 <- indf[, var_name]
+  temp_names <- row.names(indf)
+  temp2 <- as.data.frame(t(temp1))
+  names(temp2) <- temp_names
+  temp2$column_name <- var_name
+  return(temp2)
+}
+
+# Column names
+table_ranks <- paste0("rank", 1:nrow(repro_result_df))
+
+result_details_df <- data.frame(ID = "MA129",
+                                result_type = "Table 1 (A)",
+                                es_type = "N/A",
+                                stringsAsFactors = FALSE)
+
+orig_result_df1 <- extract_col(orig_result_df, "buffer")
+orig_result_df2 <- extract_col(orig_result_df, "delta.AICc")
+orig_result_df3 <- extract_col(orig_result_df, "w.AICc")
+
+repro_result_df1 <- extract_col(repro_result_df, "buffer")
+repro_result_df2 <- extract_col(repro_result_df, "delta.AICc")
+repro_result_df3 <- extract_col(repro_result_df, "w.AICc")
+
+result_compare1 <- compare_char_vars(df_orig = orig_result_df1,
+                                df_repro = repro_result_df1,
+                                checkvars = table_ranks)
+result_compare1a <- cbind(data.frame(column_name = "buffer",
+                                     stringsAsFactors = FALSE),
+                          result_compare1)
+
+result_compare2 <- compare_vars(df_orig = orig_result_df2,
+                                df_repro = repro_result_df2,
+                                checkvars = table_ranks)
+result_compare2a <- cbind(data.frame(column_name = "delta.AICc",
+                                     stringsAsFactors = FALSE),
+                          result_compare2)
+
+result_compare3 <- compare_vars(df_orig = orig_result_df3,
+                                df_repro = repro_result_df3,
+                                checkvars = table_ranks)
+result_compare3a <- cbind(data.frame(column_name = "w.AICc",
+                                     stringsAsFactors = FALSE),
+                          result_compare3)
+
+knitr::kable(x = result_details_df,
+             caption = "Details of result")
+
+knitr::kable(x = result_compare1,
+             caption = "Comparison of original and reproduced values, column buffer of Table 1 (A)")
+
+knitr::kable(x = result_compare2,
+             caption = "Comparison of original and reproduced values, column delta.AICc of Table 1 (A)")
+
+knitr::kable(x = result_compare3,
+             caption = "Comparison of original and reproduced values, column w.AICc of Table 1 (A)")
+
+# Write results comparison to file.
+out1 <- result_details_df
+out2 <- rbind(result_compare2a, result_compare3a)
+out3 <- cbind(out1, out2, row.names = NULL)
+out4 <- cbind(out1, result_compare1a, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA129_result_comparison.csv"),
+          row.names = FALSE)
+write.csv(x = out4, file = here::here("output", "MA129_result_char_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

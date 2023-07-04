@@ -1,0 +1,140 @@
+SearchID,status_nom_sharing,status_act_sharing,DatasetsURL,data_location
+MA001,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.1756f,Dryad
+MA003,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA005,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.s1432,Dryad
+MA006,nom_shared_data_only,act_shared_data_only,https://zenodo.org/record/854700,Zenodo
+MA009,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA010,nom_shared_data_only,act_shared_data_only,https://figshare.com/articles/Salt_marsh_grazing_meta-analysis_dataset/4641073,Figshare
+MA011,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.37hh4,Dryad
+MA014,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA015,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.b3k81,Dryad
+MA016,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA017,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.559cs,Dryad
+MA018,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA021,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA022,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.22t16,Dryad
+MA023,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA024,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA025,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA026,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA027,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA029,nom_shared_data_only,act_shared_data_only,NA,Table(s) in article
+MA031,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.58bm7,Dryad
+MA035,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA036,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.g551v,Dryad
+MA038,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA040,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.1hj46,Dryad
+MA041,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.mb4nd,Dryad
+MA042,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.td771,Dryad
+MA044,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA045,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA048,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.t8g60,Dryad
+MA049,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA053,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.2ng06,Dryad
+MA054,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA056,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA057,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.382k1,Dryad
+MA057,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.382k1,Journal website
+MA059,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.4mv7h,Dryad
+MA060,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.5003g,Dryad
+MA062,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA063,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.f5r3k,Dryad
+MA064,nom_shared_data_only,act_shared_data_only,https://figshare.com/s/9d26bab8eb7f70abf6b1,Figshare
+MA065,nom_shared_both_code_data,act_shared_both_code_data,https://osf.io/yd8gs/,OSF
+MA067,nom_shared_both_code_data,act_shared_both_code_data,https://zenodo.org/record/1001820,Zenodo
+MA068,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA069,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.f6r60,Journal website
+MA069,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.f6r60,Dryad
+MA070,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA071,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA074,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.qv000,Dryad
+MA074,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.qv000,Journal website
+MA076,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.6rn80,Dryad
+MA077,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA079,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA080,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.9ht4g,Dryad
+MA081,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA082,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA090,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.r47tm,Dryad
+MA091,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA092,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA094,nom_shared_both_code_data,act_shared_both_code_data,http://www.oikosjournal.org/appendix/oik-03404,Journal website
+MA095,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.701q8,Dryad
+MA096,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.mb65n,Dryad
+MA099,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.538f8,Dryad
+MA101,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA102,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA103,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.fc07k,Dryad
+MA106,nom_shared_data_only,act_shared_data_only,https://figshare.com/articles/Data_from_Carbon_content_and_climate_variability_drive_global_soil_bacterial_diversity_patterns_/1490056,Figshare
+MA107,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA108,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA109,nom_shared_data_only,act_shared_data_only,http://www.oikosjournal.org/appendix/oik-02372,Dryad
+MA110,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.d191r,Dryad
+MA111,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.7t18j,Dryad
+MA112,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA117,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA118,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA119,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.h13vg,Dryad
+MA121,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA125,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA126,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA128,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA129,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.v1r34,Dryad
+MA130,nom_shared_data_only,act_shared_data_only,https://easy.dans.knaw.nl/ui/datasets/id/easy-dataset:62424,DANS
+MA135,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA138,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA140,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA145,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA146,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA147,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.b6d75,Dryad
+MA148,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA149,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.kh6j6,Dryad
+MA150,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA152,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA155,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.m3685,Dryad
+MA157,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA158,nom_shared_data_only,act_shared_data_only,https://figshare.com/collections/Down-regulation_of_tissue_N_P_ratios_in_terrestrial_plants_by_elevated_CO_sub_2_sub_/3308202,Figshare
+MA160,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.g9049,Dryad
+MA162,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.71r6q,Dryad
+MA163,nom_shared_data_only,act_shared_data_only,http://www.oikosjournal.org/appendix/oik-02430,Journal website
+MA164,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA169,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA170,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA171,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA179,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA180,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA181,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA182,nom_shared_data_only,act_shared_data_only,https://figshare.com/collections/Interactions_among_multiple_invasive_animals/3307848,Figshare
+MA184,nom_shared_data_only,act_shared_data_only,https://figshare.com/articles/Time_series_to_accompany_Top_down_and_bottom_up_forces_interact_at_thermal_range_extremes_on_American_lobster_/1226921,Figshare
+MA185,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.7613f,Journal website
+MA185,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.7613f,Dryad
+MA186,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA187,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA188,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.9hc76,Dryad
+MA190,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA191,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.d78c5,Dryad
+MA191,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.d78c5,Journal website
+MA193,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.744fb,Dryad
+MA194,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.q8r53,Dryad
+MA195,nom_shared_data_only,act_shared_data_only,https://figshare.com/collections/Relative_effects_of_landscape-scale_wetland_amount_and_landscape_matrix_quality_on_wetland_vertebrates_a_meta-analysis/3296801,Figshare
+MA197,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA198,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.38c1g,Dryad
+MA201,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA202,nom_shared_both_code_data,act_shared_both_code_data,NA,Journal website
+MA204,nom_shared_data_only,act_shared_data_only,http://www.oikosjournal.org/appendix/oik-02512; https://datadryad.org/resource/doi:10.5061/dryad.dn151,Journal website
+MA204,nom_shared_data_only,act_shared_data_only,http://www.oikosjournal.org/appendix/oik-02512; https://datadryad.org/resource/doi:10.5061/dryad.dn151,Dryad
+MA205,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA206,nom_shared_data_only,act_shared_data_only,https://datadryad.org/resource/doi:10.5061/dryad.8fp98,Dryad
+MA207,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA208,nom_shared_data_only,act_shared_data_only,https://figshare.com/articles/Stem_herbivory_meta_analysis/1134246,Figshare
+MA211,nom_shared_both_code_data,act_shared_both_code_data,https://figshare.com/collections/Negative_effects_of_fertilization_on_plant_nutrient_resorption/3307422,Figshare
+MA212,nom_shared_both_code_data,act_shared_both_code_data,https://figshare.com/collections/Keystone_species_toward_an_operational_concept_for_marine_biodiversity_conservation/3309894,Figshare
+MA213,nom_shared_both_code_data,act_shared_both_code_data,https://datadryad.org/resource/doi:10.5061/dryad.gt678,Dryad
+MA214,nom_shared_data_only,act_shared_data_only,https://figshare.com/collections/Egg_boons_central_components_of_marine_fatty_acid_food_webs/3307419,Figshare
+MA217,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA218,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA220,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA222,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA223,nom_shared_data_only,act_shared_data_only,NA,Journal website
+MA226,nom_shared_data_only,act_shared_data_only,https://datadryad.org/stash/dataset/doi:10.5061/dryad.j7737,Dryad
+MA229,nom_shared_both_code_data,act_shared_both_code_data,http://www.oikosjournal.org/appendix/oik-01549,Journal website

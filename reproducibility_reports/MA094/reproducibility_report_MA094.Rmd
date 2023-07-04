@@ -1,0 +1,595 @@
+---
+title: "Reproducibility Report for MA094"
+author: "Steven Kambouris"
+date: "30/06/2022"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Turney, S., & Buddle, C. M. (2016). Pyramids of species richness: The determinants and distribution of species diversity across trophic levels. _Oikos_, _125_(9), 1224–1232. https://doi.org/10.1111/oik.03404
+
+# Result to be reproduced
+
+> Our meta-analysis included 72 published food webs from 24 different studies... The
+webs had a mean species richness of 90.21 (SD = 31.27) with a range from 50 to 209 species. (Turney & Buddle, 2016, p.1227)
+
+> Ordination analysis of the proportions of species richness at each trophic level of published, random, cascade, and niche food webs revealed a significant effect of food web type ($R^2 = 0.494$, $p < 0.0001$). (Turney & Buddle, 2016, p.1227)
+
+This article does not report a straightforward meta-analysis summary effect, although there is a simple summary mean and SD of the species richness of the published food webs. The first reported result after the summary statistics is the coefficient of determination (R-squared) and related p-value for the ordination analysis.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA094",
+                             source = "original",
+                             result_type = "model output",
+                             es_type = "N/A",
+                             r_squared = 0.494,
+                             p_value = 0.0001,
+                             stringsAsFactors = FALSE)
+
+knitr::kable(x = orig_result_df,
+             caption = "Original result reported in article")
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (http://www.oikosjournal.org/appendix/oik-03404):
+
+* oik-03404.zip
+    + food_web_data.csv
+    + null_models (1).R
+    + null_models.R
+
+There is no licencing information available for these files.
+
+Note that in the supplied zip file, the R code file has been duplicated. Metadata for the shared data and code indicates that there should have been an R code file called `hierarchy_measure.R` included in the zip file. This file could not be found.
+
+# Applicability of shared data and code files
+
+## Data
+The single data file supplied is `food_web_data.csv`. As alluded to in the article (p.1225), this file contains the reference details of the 72 published food webs used in this study, along with variables calculated from the webs. (Note the food webs themselves are not included in this data file.)
+
+The data in this file would be necessary for the analyses performed in the article, i.e. including the ordination analysis, but is not sufficient. Analogous data files for the three simulated food web models would also be required; their simulated nature means that it is potentially possible to recalculate this data, but also that we cannot know the exact values that the original authors obtained for these food web models.
+
+## Code
+
+As noted above, the metadata indicates that there ought to have been two code files included in the supplement, but in fact only one code file was shared (twice): `null_models.R` (shared again as `null_models (1).R`).
+
+There is no code in `null_models.R` that runs the ordination analysis itself, or any other analysis conducted in the article.
+
+The code file `null_models.R` contains functions for creating model food webs using the random, cascade, and niche models. As outlined in the article, these functions essentially simulate food webs given the inputs of the total number of species and the number of food web links. These functions are clearly necessary for simulating the food webs which are part of the ordination analysis, but the code for that greater analysis is not provided.
+
+**There are no code files applicable to reproducing the selected result.**
+
+**The code shared for this article is not complete, i.e. there are analyses in the article for which no code is shared, despite the article methods section making clear that R was used for all analyses.**
+
+**Any analysis code to reproduce results from this article, apart from the model food web creation functions, will need to be custom written based on descriptions in the methods section.**
+
+# Alternative result to be reproduced
+
+So then, let us turn to what the available data and code does do. From the article:
+
+> The differences in species richness distribution across trophic levels are visible in Fig. 1: published food webs have a bottom-rich top-poor structure which is not found in the model food webs. (Turney & Buddle, 2016, p.1227)
+
+> Figure 1. The average proportion of species present at basal, herbivore, intermediate trophic level for (A) the published food webs (n = 72), and the corresponding (B) random, (C) cascade, and (D) niche model food webs. The model food webs correspond to the published food webs in regards to their number of species and links. The length of each line flanking the bars is the SE/2. (Turney & Buddle, 2016, p.1227)
+
+(Figure 1 shows the average fraction of species richness at each trophic level for the four types of food webs, one based on published data and the other three based on simulation. The fractions are displayed as bars of different widths. There are no axes, so the fractions are being represented by the relative widths of the bars.)
+
+It appears that the data file is sufficient for calculating (i) the mean and SD of the species richness of the 72 published food webs and (ii) the average fractions of species richness within each trophic level for the published food webs.
+
+The code file enables the simulation of the model food webs (random, cascade, niche), the output from which can be used to calculate average fractions of species richness within each trophic level.
+
+So, an alternative pair of results that could be reproduced using data and code is (i) the summary statistics of species richness, and (ii) the average fractions of species richness at each trophic level for the four types of food webs from Figure 1.
+
+The lack of axes or scales in Figure 1 means that absolute values of the average fractions cannot be directly extracted from the figure. So, to start, the widths of the sixteen bars were calculated in pixels. The entire page of the article PDF containing the figure was extracted as a PNG image file at 600 dpi using ImageMagick 7.0.8-64 for Windows:
+
+> `magick convert -density 600 MA094.pdf[3] MA094_p4_600.png`
+
+This image was used to extract the pixel coordinates of the left- and rightmost boundaries of each bar using WebPlotDigitizer 4.4 for Windows. Pixel coordinates were extracted for the food webs in the following order: A (published food webs), B (random food webs), C (cascade food webs), D (niche food webs). Within each food web, pixel coordinates were extracted for the trophic levels in the following order: top, intermediate, herbivore, basal. Within each trophic level, the pixel coordinates were extracted for the leftmost boundary of the bar, followed by the rightmost boundary. The image extraction results were recorded in a JSON file output by WebPlotDigitizer:
+
+> {"version":[4,2],"axesColl":[{"name":"Image","type":"ImageAxes"}],"datasetColl":[{"name":"MA094_A","axesName":"Image","metadataKeys":[],"colorRGB":[200,100,100,255],"data":[{"x":2099.7569444444443,"y":3888.2291666666665,"value":[2099.7569444444443,3888.2291666666665]},{"x":2314.8263888888887,"y":3888.2291666666665,"value":[2314.8263888888887,3888.2291666666665]},{"x":1969.5833333333333,"y":4080.659722222222,"value":[1969.5833333333333,4080.659722222222]},{"x":2445,"y":4080.659722222222,"value":[2445,4080.659722222222]},{"x":1992.2222222222222,"y":4267.430555555556,"value":[1992.2222222222222,4267.430555555556]},{"x":2422.361111111111,"y":4267.430555555557,"value":[2422.361111111111,4267.430555555557]},{"x":1929.9652777777776,"y":4459.861111111111,"value":[1929.9652777777776,4459.861111111111]},{"x":2478.958333333333,"y":4459.86111111111,"value":[2478.958333333333,4459.86111111111]}],"autoDetectionData":null},{"name":"MA094_B","axesName":"Image","metadataKeys":[],"colorRGB":[100,100,200,255],"data":[{"x":3078.8888888888887,"y":3888.2291666666665,"value":[3078.8888888888887,3888.2291666666665]},{"x":3667.5,"y":3888.2291666666665,"value":[3667.5,3888.2291666666665]},{"x":3112.847222222222,"y":4080.6597222222213,"value":[3112.847222222222,4080.6597222222213]},{"x":3633.5416666666665,"y":4080.659722222222,"value":[3633.5416666666665,4080.659722222222]},{"x":3350.5555555555557,"y":4267.430555555555,"value":[3350.5555555555557,4267.430555555555]},{"x":3401.4930555555557,"y":4267.430555555555,"value":[3401.4930555555557,4267.430555555555]},{"x":3322.2569444444453,"y":4459.861111111111,"value":[3322.2569444444453,4459.861111111111]},{"x":3429.7916666666665,"y":4459.86111111111,"value":[3429.7916666666665,4459.86111111111]}],"autoDetectionData":null},{"name":"MA094_C","axesName":"Image","metadataKeys":[],"colorRGB":[100,200,100,255],"data":[{"x":2173.333333333333,"y":4935.277777777777,"value":[2173.333333333333,4935.277777777777]},{"x":2252.5694444444443,"y":4935.277777777778,"value":[2252.5694444444443,4935.277777777778]},{"x":1748.8541666666665,"y":5122.048611111111,"value":[1748.8541666666665,5122.048611111111]},{"x":2682.708333333333,"y":5122.048611111109,"value":[2682.708333333333,5122.048611111109]},{"x":2133.715277777778,"y":5314.479166666666,"value":[2133.715277777778,5314.479166666666]},{"x":2292.1875,"y":5314.479166666666,"value":[2292.1875,5314.479166666666]},{"x":2105.4166666666665,"y":5506.909722222223,"value":[2105.4166666666665,5506.909722222223]},{"x":2326.145833333333,"y":5506.909722222221,"value":[2326.145833333333,5506.909722222221]}],"autoDetectionData":null},{"name":"MA094_D","axesName":"Image","metadataKeys":[],"colorRGB":[200,100,200,255],"data":[{"x":3152.465277777778,"y":4940.9375,"value":[3152.465277777778,4940.9375]},{"x":3593.9236111111113,"y":4940.937499999999,"value":[3593.9236111111113,4940.937499999999]},{"x":3169.4444444444443,"y":5133.368055555556,"value":[3169.4444444444443,5133.368055555556]},{"x":3576.9444444444443,"y":5133.368055555557,"value":[3576.9444444444443,5133.368055555557]},{"x":3322.2569444444443,"y":5320.13888888889,"value":[3322.2569444444443,5320.13888888889]},{"x":3424.1319444444443,"y":5320.138888888887,"value":[3424.1319444444443,5320.138888888887]},{"x":3180.7638888888887,"y":5512.569444444444,"value":[3180.7638888888887,5512.569444444444]},{"x":3565.625,"y":5512.5694444444425,"value":[3565.625,5512.5694444444425]}],"autoDetectionData":null}],"measurementColl":[]}
+
+The horizontal widths of the bars in pixels can be determined from the above extracted data. As noted above, the absence of any cues about the horizontal scale being used in Figure 1 means that the pixel width of the bars may as well be the unit used for this result. Even though the output from WebPlotDigitizer expresses pixel positions to 13 decimal places, the pixel widths of the bars will only be recorded to the nearest whole number.
+
+```{r orig-result-alt}
+
+orig_alt1_result_df <- data.frame(ID = "MA094",
+                                  source = "original",
+                                  result_type = "mean",
+                                  es_type = "species richness",
+                                  point_est = 90.21,
+                                  std_dev = 31.27,
+                                  minimum = 50,
+                                  maximum = 209,
+                                  n = 72,
+                                  stringsAsFactors = FALSE)
+
+orig_alt2_bar_widths <- data.frame(food_web_type = c("published", "published",
+                                                     "published", "published",
+                                                     "random", "random", "random",
+                                                     "random",
+                                                     "cascade", "cascade", "cascade",
+                                                     "cascade",
+                                                     "niche", "niche", "niche",
+                                                     "niche"),
+                                   trophic_level = c("top", "intermediate",
+                                                     "herbivore", "basal",
+                                                     "top", "intermediate",
+                                                     "herbivore", "basal",
+                                                     "top", "intermediate",
+                                                     "herbivore", "basal",
+                                                     "top", "intermediate",
+                                                     "herbivore", "basal"),
+                                   left_boundary = c(2099.75694, 1969.58333,
+                                                     1992.22222, 1929.96528,
+                                                     3078.88889, 3112.84722,
+                                                     3350.55556, 3322.25694,
+                                                     2173.33333, 1748.85417,
+                                                     2133.71528, 2105.41667,
+                                                     3152.46528, 3169.44444,
+                                                     3322.25694, 3180.76389),
+                                   right_boundary = c(2314.82639, 2445.00000,
+                                                      2422.36111, 2478.95833,
+                                                      3667.50000, 3633.54167,
+                                                      3401.49306, 3429.79167,
+                                                      2252.56944, 2682.70833,
+                                                      2292.18750, 2326.14583,
+                                                      3593.92361, 3576.94444,
+                                                      3424.13194, 3565.62500),
+                                   width_pixels = c(215.06944, 475.41667,
+                                                    430.13889, 548.99306,
+                                                    588.61111, 520.69444,
+                                                    50.93750, 107.53472,
+                                                    79.23611, 933.85417,
+                                                    158.47222, 220.72917,
+                                                    441.45833, 407.50000,
+                                                    101.87500, 384.86111),
+                                   stringsAsFactors = FALSE)
+
+orig_alt2_result_df <- data.frame(ID = "MA094",
+                                  source = "original",
+                                  result_type = "average proportion of species present",
+                                  es_type = "pixel width",
+                                  published_top = 215,
+                                  published_intermediate = 475,
+                                  published_herbivore = 430,
+                                  published_basal = 549,
+                                  random_top = 589,
+                                  random_intermediate = 521,
+                                  random_herbivore = 51,
+                                  random_basal = 108,
+                                  cascade_top = 79,
+                                  cascade_intermediate = 934,
+                                  cascade_herbivore = 158,
+                                  cascade_basal = 221,
+                                  niche_top = 441,
+                                  niche_intermediate = 408,
+                                  niche_herbivore = 102,
+                                  niche_basal = 385,
+                                  stringsAsFactors = FALSE)
+
+knitr::kable(x = orig_alt1_result_df,
+             caption = "Alternative result reported in article: summary statistics result reported in article")
+
+knitr::kable(x = orig_alt2_bar_widths,
+             caption = "Alternative result reported in article: the left and right positions (in pixels) of the bars plotted in Figure 1, along with the derived width of each bar, in pixels")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "published_top", "published_intermediate", "published_herbivore", "published_basal")],
+             caption = "Alternative results to be reproduced: bar widths for published food webs, in pixels")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "random_top", "random_intermediate", "random_herbivore", "random_basal")],
+             caption = "Alternative results to be reproduced: bar widths for random food webs, in pixels")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "cascade_top", "cascade_intermediate", "cascade_herbivore", "cascade_basal")],
+             caption = "Alternative results to be reproduced: bar widths for cascade food webs, in pixels")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "niche_top", "niche_intermediate", "niche_herbivore", "niche_basal")],
+             caption = "Alternative results to be reproduced: bar widths for niche food webs, in pixels")
+
+```
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+# (None required.)
+
+# Load any other packages required to reproduce the result (relevant in
+# situations where additional custom analysis code is used).
+library(foodweb)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "null_models.R")
+```
+
+# Import and clean data
+```{r importdata}
+# Import food web data from csv file.
+food_web_data <- read.csv(file = here("original", "food_web_data.csv"))
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+################################################################################
+# Original target result
+
+# Unable to reproduce result, so produce a default reproduced result data frame,
+# with values set to NA.
+repro_result_df <- data.frame(ID = "MA094",
+                             source = "repro",
+                             result_type = "model output",
+                             es_type = "N/A",
+                             r_squared = NA_real_,
+                             p_value = NA_real_,
+                             stringsAsFactors = FALSE)
+
+################################################################################
+# Alternative target result 1: Summary statistics.
+
+# Calculate summary statistics for species richness (mean and SD).
+sr_mean <- mean(food_web_data$Species.richness)
+sr_sd <- sd(food_web_data$Species.richness)
+sr_min <- min(food_web_data$Species.richness)
+sr_max <- max(food_web_data$Species.richness)
+sr_n <- length(food_web_data$Species.richness)
+
+repro_alt1_result_df <- data.frame(ID = "MA094",
+                                   source = "repro",
+                                   result_type = "mean",
+                                   es_type = "species richness",
+                                   point_est = round(sr_mean, 2),
+                                   std_dev = round(sr_sd, 2),
+                                   minimum = sr_min,
+                                   maximum = sr_max,
+                                   n = sr_n,
+                                   stringsAsFactors = FALSE)
+rownames(repro_alt1_result_df) <- NULL
+
+################################################################################
+# Alternative target result 2: width of horizontal bars in Figure 1 indicating
+# average proportions of species.
+
+# Calculate the average of the proportions of top, intermediate, herbivore, and
+# basal species for the 72 published food webs, the data for which is in the
+# shared data file, food_web_data.csv.
+avg_prop_published <- data.frame(ap_top = mean(food_web_data$Frac.top),
+                                 ap_int = mean(food_web_data$Frac.intermediate),
+                                 ap_her = mean(food_web_data$Frac.herbiv),
+                                 ap_bas = mean(food_web_data$Frac.basal))
+
+# For the purposes of calibrating the average proportions to pixel widths, use
+# the derived pixel widths for the average proportions of published wood webs
+# from Figure 1 to calculate the pixel/proportion ratio, based on the published
+# food web results.
+#
+# Take the average of the four pixel ratios to use as a single ratio.
+pixel_ratios <- c(orig_alt2_result_df$published_top/avg_prop_published$ap_top,
+                  orig_alt2_result_df$published_intermediate/avg_prop_published$ap_int,
+                  orig_alt2_result_df$published_herbivore/avg_prop_published$ap_her,
+                  orig_alt2_result_df$published_basal/avg_prop_published$ap_bas)
+pixel_ratio <- mean(pixel_ratios)
+
+# Calculate the reproduced bar widths for the published food webs, using the
+# average pixel ratio.
+widths_published <- data.frame(wd_top = round(avg_prop_published$ap_top*pixel_ratio, 0),
+                               wd_int = round(avg_prop_published$ap_int*pixel_ratio, 0),
+                               wd_her = round(avg_prop_published$ap_her*pixel_ratio, 0),
+                               wd_bas = round(avg_prop_published$ap_bas*pixel_ratio, 0))
+
+# Run the entirety of the shared code file to load the functions for creating
+# the random, cascade, and niche food web models.
+source(file = orig_source)
+
+# Set a random seed.
+set.seed(94)
+
+# For each food web model (random, cascade, niche), generate 25 replicates
+# of each published food web, using the published food web's values for species
+# richness and total links.
+#
+# Write the replicates to file, because of how the package foodweb wants the
+# input.
+for (i in 1:nrow(food_web_data)) {
+  
+  # Get the ID of the current published food web.
+  current_id <- substr(food_web_data[i, "Web.ID"], 1, 10)
+  
+  # Get the species richness and total links from the current published food
+  # web.
+  current_S <- food_web_data[i, "Species.richness"]
+  current_L <- food_web_data[i, "Total.Links"]  
+  
+  # Create 25 random food webs based on the current published food web.
+  current_random <- Random.model(current_S, current_L, 25)
+  
+  # Create 25 cascade food webs based on the current published food web.
+  current_cascade <- Cascade.model(current_S, current_L, 25)
+
+  # Create 25 niche food webs based on the current published food web.
+  current_niche <- niche.model(current_S, current_L, 25)
+  
+  for (j in 1:25) {
+    random_csvname <- paste0(current_id, "_random", sprintf("%02d", j), ".csv")
+    cascade_csvname <- paste0(current_id, "_cascade", sprintf("%02d", j), ".csv")
+    niche_csvname <- paste0(current_id, "_niche", sprintf("%02d", j), ".csv")
+    
+    # Write each replicate to a CSV file.
+    write.table(x = current_random[[j]],
+                file = random_csvname,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = ",")
+    write.table(x = current_cascade[[j]],
+                file = cascade_csvname,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = ",")
+    write.table(x = current_niche[[j]],
+                file = niche_csvname,
+                row.names = FALSE,
+                col.names = FALSE,
+                sep = ",")
+    
+    # Make use of the foodweb package to calculate the required proportions of
+    # species from the generated random, cascade, and niche food webs.
+    # Try to analyse the foodweb from the CSV file.
+    if (class(try(foodweb::analyse.single(filename = random_csvname))) == "try-error") {
+      # Do nothing.
+    } else {
+      # Do nothing.
+    }
+    if (class(try(foodweb::analyse.single(filename = cascade_csvname))) == "try-error") {
+      # Do nothing.
+    } else {
+      # Do nothing.
+    }
+    if (class(try(foodweb::analyse.single(filename = niche_csvname))) == "try-error") {
+      # Do nothing.
+    } else {
+      # Do nothing.
+    }
+    
+    # Delete the generated web CSV files; they are not needed.
+    if (file.exists(random_csvname)) {
+      file.remove(random_csvname)
+    }
+    if (file.exists(cascade_csvname)) {
+      file.remove(cascade_csvname)
+    }
+    if (file.exists(niche_csvname)) {
+      file.remove(niche_csvname)
+    }
+  }
+}
+
+# Import and format the successful analysed food webs for each model type.
+filelist_random <- list.files(pattern = "^Results-foodweb\\d{3}_random\\d{2}.csv")
+filelist_cascade <- list.files(pattern = "^Results-foodweb\\d{3}_cascade\\d{2}.csv")
+filelist_niche <- list.files(pattern = "^Results-foodweb\\d{3}_niche\\d{2}.csv")
+
+all_random <- lapply(filelist_random, read.csv, stringsAsFactors = FALSE)
+all_cascade <- lapply(filelist_cascade, read.csv, stringsAsFactors = FALSE)
+all_niche <- lapply(filelist_niche, read.csv, stringsAsFactors = FALSE)
+
+df_random <- do.call(rbind, all_random)
+df_cascade <- do.call(rbind, all_cascade)
+df_niche <- do.call(rbind, all_niche)
+
+df_random$published_foodweb <- substr(df_random$Web.ID, 1, 10)
+df_cascade$published_foodweb <- substr(df_cascade$Web.ID, 1, 10)
+df_niche$published_foodweb <- substr(df_niche$Web.ID, 1, 10)
+
+# Count the number of replicate food webs that were able to be analysed
+# successfully.
+counts_random <- table(df_random$published_foodweb)
+counts_cascade <- table(df_cascade$published_foodweb)
+counts_niche <- table(df_niche$published_foodweb)
+
+counts_random_df <- data.frame(published_foodweb = names(counts_random),
+                               n_random_webs = as.vector(counts_random),
+                               stringsAsFactors = FALSE)
+counts_cascade_df <- data.frame(published_foodweb = names(counts_cascade),
+                               n_cascade_webs = as.vector(counts_cascade),
+                               stringsAsFactors = FALSE)
+counts_niche_df <- data.frame(published_foodweb = names(counts_niche),
+                               n_niche_webs = as.vector(counts_niche),
+                              stringsAsFactors = FALSE)
+
+temp_df <- merge(x = counts_random_df, y = counts_cascade_df,
+                 by = "published_foodweb", all = TRUE)
+counts_all_df <- merge(x = temp_df, y = counts_niche_df,
+                       by = "published_foodweb", all = TRUE)
+
+counts_all_df$n_random_webs[is.na(counts_all_df$n_random_webs)] <- 0
+counts_all_df$n_cascade_webs[is.na(counts_all_df$n_cascade_webs)] <- 0
+counts_all_df$n_niche_webs[is.na(counts_all_df$n_niche_webs)] <- 0
+
+# Calculate the average of the proportions of top, intermediate, herbivore, and
+# basal species for the random, cascade, and niche model replicates.
+avg_prop_random <- data.frame(ap_top = mean(df_random$Frac.top),
+                              ap_int = mean(df_random$Frac.intermediate),
+                              ap_her = mean(df_random$Frac.herbiv),
+                              ap_bas = mean(df_random$Frac.basal))
+
+avg_prop_cascade <- data.frame(ap_top = mean(df_cascade$Frac.top),
+                              ap_int = mean(df_cascade$Frac.intermediate),
+                              ap_her = mean(df_cascade$Frac.herbiv),
+                              ap_bas = mean(df_cascade$Frac.basal))
+
+avg_prop_niche <- data.frame(ap_top = mean(df_niche$Frac.top),
+                              ap_int = mean(df_niche$Frac.intermediate),
+                              ap_her = mean(df_niche$Frac.herbiv),
+                              ap_bas = mean(df_niche$Frac.basal))
+
+# Calculate the reproduced bar widths for the random, cascade, and niche food
+# webs, using the average pixel ratio.
+widths_random <- data.frame(wd_top = round(avg_prop_random$ap_top*pixel_ratio, 0),
+                            wd_int = round(avg_prop_random$ap_int*pixel_ratio, 0),
+                            wd_her = round(avg_prop_random$ap_her*pixel_ratio, 0),
+                            wd_bas = round(avg_prop_random$ap_bas*pixel_ratio, 0))
+
+widths_cascade <- data.frame(wd_top = round(avg_prop_cascade$ap_top*pixel_ratio, 0),
+                            wd_int = round(avg_prop_cascade$ap_int*pixel_ratio, 0),
+                            wd_her = round(avg_prop_cascade$ap_her*pixel_ratio, 0),
+                            wd_bas = round(avg_prop_cascade$ap_bas*pixel_ratio, 0))
+
+widths_niche <- data.frame(wd_top = round(avg_prop_niche$ap_top*pixel_ratio, 0),
+                            wd_int = round(avg_prop_niche$ap_int*pixel_ratio, 0),
+                            wd_her = round(avg_prop_niche$ap_her*pixel_ratio, 0),
+                            wd_bas = round(avg_prop_niche$ap_bas*pixel_ratio, 0))
+
+repro_alt2_result_df <- data.frame(ID = "MA094",
+                                  source = "repro",
+                                  result_type = "average proportion of species present",
+                                  es_type = "pixel width",
+                                  published_top = widths_published$wd_top,
+                                  published_intermediate = widths_published$wd_int,
+                                  published_herbivore = widths_published$wd_her,
+                                  published_basal = widths_published$wd_bas,
+                                  random_top = widths_random$wd_top,
+                                  random_intermediate = widths_random$wd_int,
+                                  random_herbivore = widths_random$wd_her,
+                                  random_basal = widths_random$wd_bas,
+                                  cascade_top = widths_cascade$wd_top,
+                                  cascade_intermediate = widths_cascade$wd_int,
+                                  cascade_herbivore = widths_cascade$wd_her,
+                                  cascade_basal = widths_cascade$wd_bas,
+                                  niche_top = widths_niche$wd_top,
+                                  niche_intermediate = widths_niche$wd_int,
+                                  niche_herbivore = widths_niche$wd_her,
+                                  niche_basal = widths_niche$wd_bas,
+                                  stringsAsFactors = FALSE)
+rownames(repro_alt2_result_df) <- NULL
+
+knitr::kable(x = repro_alt1_result_df,
+             caption = "Reproduced alternative result: Summary statistics")
+
+knitr::kable(x = counts_all_df,
+             caption = "The number of random, cascade, and niche model replicates that were able to be successfully generated for each published food web (according to the methods section of the article, 25 replicates per published web were generated)")
+
+knitr::kable(x = repro_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "published_top", "published_intermediate", "published_herbivore", "published_basal")],
+             caption = "Reproduced alternative result: bar widths for published food webs, in pixels")
+
+knitr::kable(x = repro_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "random_top", "random_intermediate", "random_herbivore", "random_basal")],
+             caption = "Reproduced alternative result: bar widths for random food webs, in pixels")
+
+knitr::kable(x = repro_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "cascade_top", "cascade_intermediate", "cascade_herbivore", "cascade_basal")],
+             caption = "Reproduced alternative result: bar widths for cascade food webs, in pixels")
+
+knitr::kable(x = repro_alt2_result_df[, c("ID", "source", "result_type", "es_type",
+                                         "niche_top", "niche_intermediate", "niche_herbivore", "niche_basal")],
+             caption = "Reproduced alternative result: bar widths for niche food webs, in pixels")
+
+```
+
+# Compare original and reproduced result (original target result)
+```{r compare-orig}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                               df_repro = repro_result_df,
+                               checkvars = c("r_squared", "p_value"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of original target result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values (for original target result)")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA094_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# Compare original and reproduced result (alternative target results)
+```{r compare-alt}
+
+result_alt1_compare <- compare_vars(df_orig = orig_alt1_result_df,
+                                    df_repro = repro_alt1_result_df,
+                                    checkvars = c("point_est",
+                                                  "std_dev",
+                                                  "minimum",
+                                                  "maximum",
+                                                  "n"))
+
+result_alt2_compare <- compare_vars(df_orig = orig_alt2_result_df,
+                                    df_repro = repro_alt2_result_df,
+                                    checkvars = c("published_top",
+                                                  "published_intermediate",
+                                                  "published_herbivore",
+                                                  "published_basal",
+                                                  "random_top",
+                                                  "random_intermediate",
+                                                  "random_herbivore",
+                                                  "random_basal",
+                                                  "cascade_top",
+                                                  "cascade_intermediate",
+                                                  "cascade_herbivore",
+                                                  "cascade_basal",
+                                                  "niche_top",
+                                                  "niche_intermediate",
+                                                  "niche_herbivore",
+                                                  "niche_basal"))
+
+knitr::kable(x = orig_alt1_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of first alternative result")
+
+knitr::kable(x = result_alt1_compare,
+             caption = "Comparison of original and reproduced values (for first alternative result)")
+
+knitr::kable(x = orig_alt2_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of second alternative result")
+
+knitr::kable(x = result_alt2_compare,
+             caption = "Comparison of original and reproduced values (for second alternative result)")
+
+# Write results comparison to file.
+out1 <- orig_alt1_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_alt1_compare, row.names = NULL)
+
+out3 <- orig_alt2_result_df[1, c("ID", "result_type", "es_type")]
+out4 <- cbind(out3, result_alt2_compare, row.names = NULL)
+
+out5 <- rbind(out2, out4)
+
+write.csv(x = out5, file = here::here("output", "MA094_alt_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

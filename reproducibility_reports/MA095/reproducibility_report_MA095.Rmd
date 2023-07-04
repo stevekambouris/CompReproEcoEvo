@@ -1,0 +1,193 @@
+---
+title: "Reproducibility Report for MA095"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Gibert, A., Gray, E. F., Westoby, M., Wright, I. J., & Falster, D. S. (2016). On the link between functional traits and growth rate: Meta-analysis shows effects change with plant size, as predicted. _Journal of Ecology_, _104_(5), 1488–1503. https://doi.org/10.1111/1365-2745.12594
+
+# Result to be reproduced
+
+> For SLA [specific leaf area], the correlation between relative growth rate and the trait changed significantly with plant size in the manner expected (Fig. 3a). (Gibert et al., 2016, p.1495)
+
+Figure 3a shows the summary effect sizes for SLA for plants at three different stages (seedling, sapling, adult), each for two different datasets (the entire dataset, and the conservative dataset which is a subset based on additional restrictions). The result chosen to be reproduced was the effect size (Fisher's z-transformed) for seedling plants based on the conservative dataset. The point estimate and confidence interval were shown graphically, but the sample size was reported numerically. The entire page of the article PDF containing the figure was extracted as a PNG image file at 300 dpi using ImageMagick 7.0.8-64 for Windows:
+
+> `magick convert -density 300 MA095.pdf[8] MA095_p9_300.png`
+
+This image was used to extract the numerical values of the point estimate and confidence interval limits using WebPlotDigitizer 4.2 for Windows. The calibration results were recorded in a JSON file output by WebPlotDigitizer:
+
+> {"version":[4,2],"axesColl":[{"name":"Bar","type":"BarAxes","isLog":false,"isRotated":false,"calibrationPoints":[{"px":480.58547430830043,"py":738.5839920948617,"dx":0,"dy":"-1","dz":null},{"px":821.2109683794467,"py":738.5839920948616,"dx":0,"dy":"1","dz":null}]}],"datasetColl":[{"name":"summary_effect","axesName":"Bar","metadataKeys":["Label"],"data":[{"x":780.7406126482214,"y":666.074604743083,"metadata":["point_est"],"value":[0.7623762376237622]},{"x":755.4466403162056,"y":666.074604743083,"metadata":["CI_lower"],"value":[0.6138613861386137]},{"x":806.0345849802371,"y":666.074604743083,"metadata":["CI_upper"],"value":[0.9108910891089104]}],"autoDetectionData":null}],"measurementColl":[]}
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA095",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = 0.76,
+                             ci_lower = 0.61,
+                             ci_upper = 0.91,
+                             n = 25)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and files were shared on Dryad:
+
+Gibert, A., Gray, E. F., Westoby, M., Wright, I. J., & Falster, D. S. (2016). _Data from: On the link between functional traits and growth rate: Meta-analysis shows effects change with plant size, as predicted._ Dryad Digital Repository. https://doi.org/10.5061/dryad.701q8
+
+* CompileData.csv (md5: 49578522de209b1f76a3b452d431b69e)
+* README_for_CompileData.csv (md5: 127712eca3039952f7a929dfaee77dcc)
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+The following code files were shared on GitHub:
+
+Gibert, A. (2015). _Plant species traits and growth rates meta-analysis._ GitHub repository. https://github.com/AnaisGibert/Growth_trait_metaanalysis
+
+* analysis.R
+* build.R 
+* data_processing.R
+* figures.R
+* model.R
+* plots.R
+* utils.R
+
+The GitHub repository also included the data files:
+
+* CompileData.csv (md5: 49578522de209b1f76a3b452d431b69e)
+* CompileData_meta.csv (md5: 127712eca3039952f7a929dfaee77dcc)
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+
+The "Data accessibility" section of the article mentions that the data is available in both a Dryad repository and a GitHub repository. The data file `CompileData.csv` was identically named in both repositories, but the readme/metadata file accompanying the data file was named slightly differently. A comparison of md5 hashes (mentioned above) determined that the two sets of data and metadata files were identical, so it does not matter which repository the data file comes from.
+
+The [README.md file in the GitHub repository](https://github.com/AnaisGibert/Growth_trait_metaanalysis#readme) explicitly states that `CompileData.csv` contains "raw data, needed to run the analyses". From inspection of the file and metadata, it indeed looks like this file contains effect size data extracted from individual studies. Thus, it is at least nominally clear that the data to reproduce the chosen result has been shared.
+
+## Code
+The code shared in the GitHub repository is very well set out. The README.md file in the GitHub repository states that `analysis.R` is the main script that calls functions and runs code from other R script files to re-run the entire meta-analysis, and also generate all figures and tables presented in the article.
+
+The function of auxiliary code files (e.g. `build.R`, `data_processing.R`, ... ,`utils.R`) called by `analysis.R` could be determined from their file names and code comments within.
+
+The code relevant to the result to be reproduced could be found by starting at the function `figure_3` in `figures.R` that produces Figure 3 of the article, then working backwards to determine which other parts of the code were required to be run.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metafor)
+library(lme4)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "analysis.R")
+orig_source_build <- here::here("original", "build.R")
+orig_source_data <- here::here("original", "data_processing.R")
+orig_source_figs <- here::here("original", "figures.R")
+orig_source_model <- here::here("original", "model.R")
+orig_source_plots <- here::here("original", "plots.R")
+orig_source_utils <- here::here("original", "utils.R")
+
+```
+
+# Import and clean data
+```{r importdata}
+# Data processing is performed by custom functions.
+
+# Load custom functions.
+source(orig_source_utils)
+source(orig_source_data)
+
+# Import the data (custom code needed due to path differences).
+AllData <- clean_raw_data("original/CompileData.csv")
+
+# Clean and standardise data sets.
+sourceLines(orig_source, 27, 30)
+
+# Subset the data.
+sourceLines(orig_source, 32, 32)
+sourceLines(orig_source, 34, 34)
+sourceLines(orig_source, 37, 37)
+sourceLines(orig_source, 39, 39)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Load the custom functions from file model.R.
+source(orig_source_model)
+
+# Load function to fit models for Figure 3.
+sourceLines(orig_source_figs, 112, 122)
+
+repro_result_df <- data.frame(ID = "MA095",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = round(fits$SLA$model[1, 3], 2),
+                             ci_lower = round(fits$SLA$model[1, 6], 2),
+                             ci_upper = round(fits$SLA$model[1, 5], 2),
+                             n = as.integer(fits$SLA$model[1, 7]))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA095_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

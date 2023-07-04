@@ -1,0 +1,177 @@
+---
+title: "Reproducibility Report for MA067"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Risely, A., Klaassen, M., & Hoye, B. J. (2017). Migratory animals feel the cost of getting sick: A meta‐analysis across species. _Journal of Animal Ecology_, _87_(1), 301–314. https://doi.org/10.1111/1365-2656.12766
+
+# Result to be reproduced
+
+> The null model predicting the effect of infection status on overall performance across observations (_n_ = 52) predicted an overall Hedges’ _g_ of −0.21 ± 0.07 SE (_Z_ = −2.7, _p_ = .006). (Risely et al., 2017, p.306)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA067",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Hedges' g",
+                             point_est = -0.21,
+                             se = 0.07,
+                             z_value = -2.7,
+                             p_value = 0.006,
+                             n = 52)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Zenodo:
+
+Alice Risely. (2017). _Riselya/Infection-and-Migration-metaanalysis: Risely et al. 2017 Meta-analysis._ Zenodo. https://doi.org/10.5281/zenodo.1001820
+
+* Infection-and-Migration-metaanalysis-v1.0.1.zip
+    + Rcode.R
+    + Rcode_markdown.html
+    + README.md
+    + Supplementary file 3.csv
+
+The licence for these files is stated as "Other (Open)".
+
+# Applicability of shared data and code files
+
+## Data
+The file archive hosted on Zenodo contains a readme file (`README.md`) which identifies `Supplementary file 3.csv` as the data file. Inspection of the code file `Rcode.R` confirmed that this file name is explicitly imported as part of the script.
+
+## Code
+The file archive hosted on Zenodo contains a readme file (`README.md`) which identifies `Rcode.R` as containing all code used for the analyses presented in the article. The code file is well commented throughout, and inspection of the code and comments identified the code parts relevant to reproducing the result.
+
+(Since the code file seemed to contain all required for reproducing the result, the Rmarkdown output file `Rcode_markdown.html` was not used.)
+
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metafor)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+library(glmulti)
+library(rotl)
+library(ape)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Rcode.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+all_data <- read.csv(here::here("original", "Supplementary file 3.csv"))
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format data.
+sourceLines(orig_source, 76, 85)
+
+# Get phylogenetic tree.
+sourceLines(orig_source, 93, 119)
+sourceLines(orig_source, 125, 125)
+sourceLines(orig_source, 136, 160)
+
+# Subset observations, remove non-independent data points.
+sourceLines(orig_source, 169, 169)
+sourceLines(orig_source, 178, 184)
+sourceLines(orig_source, 190, 194)
+sourceLines(orig_source, 213, 216)
+sourceLines(orig_source, 227, 227)
+
+# create phylogentic correlation matrix to control for phylogeny.
+sourceLines(orig_source, 258, 282)
+sourceLines(orig_source, 289, 289)
+sourceLines(orig_source, 296, 296)
+
+# Correct the species name in the correlation matrix.
+# (Custom code required due to unknown issue in phylogenetic tree creation.)
+rowindex_om <- which(rownames(corr_matrix) == "Oncorhynchus_mykiss_(species_in_domain_Eukaryota)_ott165368")
+colindex_om <- which(colnames(corr_matrix) == "Oncorhynchus_mykiss_(species_in_domain_Eukaryota)_ott165368")
+rownames(corr_matrix)[rowindex_om] <- "Oncorhynchus_mykiss_ott165368"
+colnames(corr_matrix)[colindex_om] <- "Oncorhynchus_mykiss_ott165368"
+
+set.seed(67)
+sourceLines(orig_source, 346, 346)
+model_summary <- summary(null.model)
+
+repro_result_df <- data.frame(ID = "MA067",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Hedges' g",
+                             point_est = round(model_summary$b[1], 2),
+                             se = round(model_summary$se, 2),
+                             z_value = round(model_summary$zval, 1),
+                             p_value = round(model_summary$pval, 3),
+                             n = model_summary$k)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "se",
+                                              "z_value",
+                                              "p_value",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA067_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

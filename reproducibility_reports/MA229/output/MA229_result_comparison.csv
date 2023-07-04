@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA229","mean","log response ratio","point_est",0.4,0.39,2.5,"Original and reproduced values differ by less than 10%"
+"MA229","mean","log response ratio","ci_lower",0.24,0.26,8.33,"Original and reproduced values differ by less than 10%"
+"MA229","mean","log response ratio","ci_upper",0.53,0.53,0,"Original and reproduced values match exactly"
+"MA229","mean","log response ratio","n",57,57,0,"Original and reproduced values match exactly"

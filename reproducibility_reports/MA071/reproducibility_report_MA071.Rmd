@@ -1,0 +1,168 @@
+---
+title: "Reproducibility Report for MA071"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Sievers, M., Hale, R., Parris, K. M., & Swearer, S. E. (2017). Impacts of human‐induced environmental change in wetlands on aquatic animals. _Biological Reviews_, _93_(1), 529–554. https://doi.org/10.1111/brv.12358
+
+# Result to be reproduced
+
+> Grand means (i.e. all taxa combined) for the three community-level measures (Shannon diversity, richness and evenness) were largely comparable between impacted and reference wetlands (Fig. 3A). (Sievers et al., 2017, p.536)
+
+Figure 3A is on p.538 of the article. The top-left result in Figure 3A is the point estimate (identified as a log response ratio) and 95% confidence interval for the grand mean of the Shannon diversity community-level measure for urban wetlands. This was the result chosen to be reproduced.
+
+The figure contains no numeric results, only graphical results. The entire page of the article PDF containing the figure was extracted as a PNG image file at 300 dpi using ImageMagick 7.0.8-64 for Windows:
+
+> `magick convert -density 300 MA071.pdf[9] MA071_p10_300.png`
+
+This image was used to extract the numerical values of the point estimate and confidence interval limits using WebPlotDigitizer 4.2 for Windows. The calibration results were recorded in a JSON file output by WebPlotDigitizer:
+
+>{"version":[4,2],"axesColl":[{"name":"Bar","type":"BarAxes","isLog":false,"isRotated":false,"calibrationPoints":[{"px":770.2597402597403,"py":890.6128246753248,"dx":0,"dy":"-1","dz":null},{"px":986.8952922077922,"py":890.6128246753248,"dx":0,"dy":"1","dz":null}]}],"datasetColl":[{"name":"summary_effect","axesName":"Bar","metadataKeys":["Label"],"data":[{"x":850.4951298701299,"y":390.4788961038961,"metadata":["point_est"],"value":[-0.2592592592592594]},{"x":767.5852272727273,"y":390.4788961038961,"metadata":["CI_lower"],"value":[-1.0246913580246917]},{"x":933.4050324675325,"y":390.47889610389615,"metadata":["CI_upper"],"value":[0.5061728395061729]}],"autoDetectionData":null}],"measurementColl":[]}
+
+Extracted values have been recorded to two decimal places.
+
+The sample size (number of response ratio results making up the grand mean) looks to be given in Table 2 of the article on p.537. The number of response ratio results making up the grand mean for the community metric for urban wetlands is reported as 50.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA071",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "response ratio",
+                             point_est = -0.26,
+                             ci_lower = -1.02,
+                             ci_upper = 0.51,
+                             n = 50)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://onlinelibrary.wiley.com/doi/full/10.1111/brv.12358):
+
+* brv12358-sup-0001-AppendixS1.xls
+* brv12358-sup-0002-AppendixS2_MS.R
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+There is only one "data" file included in the online supporting information, `brv12358-sup-0001-AppendixS1.xls`. Upon inspection, this Excel spreadsheet contained two sheets, one named "Info" and one named "Data.csv". The "Info" sheet contained a codebook describing the variables found on sheet "Data.csv". The fact that the second sheet is named "Data.csv" indicates that this is intended to be the data for this study.
+
+## Code
+The single code file `brv12358-sup-0002-AppendixS2_MS.R` has enough commenting and informative variable names to discern which parts of the code need to be run to reproduce the selected result. The code imports a data file named `Data.csv`: this matches the name of the second sheet in `brv12358-sup-0001-AppendixS1.xls`, although the data file formats are not the same.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+library(readxl)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(lmerTest)
+library(AICcmodavg)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "brv12358-sup-0002-appendixs2_ms.r")
+```
+
+# Import and clean data
+```{r importdata}
+
+imported_xls <- read_xls(path = here::here("original",
+                                           "brv12358-sup-0001-appendixs1.xls"),
+                         sheet = 2)
+Data <- imported_xls
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format and subset data.
+# Recast variable MSRef as a factor.
+sourceLines(orig_source, 7, 7)
+
+# Subset the data into categories, in particular to get the community-level subset.
+# (Custom code is needed because the original code has misspelled "Evenness" as "Eveness".)
+Comm <- subset(Data, MSMeasureRed=='Shannon Diversity' | MSMeasureRed=='Richness' | MSMeasureRed=='Evenness')
+
+# Further subset the community-level data to just contain the urbanisation driver
+sourceLines(orig_source, 19, 19)
+
+# Run the model for the Community-level, Urbanisation subset.
+sourceLines(orig_source, 114, 114)
+
+# Custom code is needed to summarise the data and calculate confidence intervals, because there seems to be an error with the way the original code does it using the lsmeansLT function.
+sourceLines(orig_source, 115, 115)
+
+model_summary <- summary(CUGrand)
+model_cis <- confint(CUGrand,
+                     parm = "MSMeasureRedShannon Diversity",
+                     method = "Wald")
+
+repro_result_df <- data.frame(ID = "MA071",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "response ratio",
+                             point_est = round(model_summary$coefficients["MSMeasureRedShannon Diversity", "Estimate"], 2),
+                             ci_lower = round(model_cis[1, "2.5 %"], 2),
+                             ci_upper = round(model_cis[1, "97.5 %"], 2),
+                             n = model_summary$devcomp$dims[["N"]])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA071_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

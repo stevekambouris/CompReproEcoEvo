@@ -1,0 +1,160 @@
+---
+title: "Reproducibility Report for MA198"
+author: "Steven Kambouris"
+date: "25/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Paz‐Vinas, I., Loot, G., Stevens, V. M., & Blanchet, S. (2015). Evolutionary processes driving spatial patterns of intraspecific genetic diversity in river ecosystems. _Molecular Ecology_, _24_(18), 4586–4604. https://doi.org/10.1111/mec.13345
+
+# Result to be reproduced
+
+> We calculated a global coefficient of correlation (i.e. $\textrm{meta-COR}_{\textrm{AR}}$) of -0.41 (95% CI: -0.55 to -0.27), indicating that – overall – DIGD [downstream increase in genetic diversity] is actually a significant and general spatial pattern of genetic diversity in rivers (Fig. 2A). (Paz‐Vinas et al., 2015, p.4595)
+
+Note that the sample size relevant to this result is not specified at this point in the article, but it is mentioned in the Materials and Methods section of the article on p.4589 that the literature search for the meta-analysis led to 79 studies. This is reinforced in Table S1 of the Supporting Information, which lists 79 values of $\textrm{COR}_{\textrm{AR}}$ obtained from the literature.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA198",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = -0.41,
+                             ci_lower = -0.55,
+                             ci_upper = -0.27,
+                             n = 79)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Paz-Viñas, I., Loot, G., Stevens, V. M., & Blanchet, S. (2015). _Data from: Evolutionary processes driving spatial patterns of intra-specific genetic diversity in river ecosystems._ Dryad Digital Repository. https://doi.org/10.5061/dryad.38c1g
+
+* Scripts_meta-analyses_v2.zip
+    + data_meta_analyse_global.txt
+    + meta_analysis_fish.txt
+    + meta_analysis_fst.txt
+    + script_Meta_Analysis_global.R
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The usage notes on the Dryad repository web page clearly indicates the archive `Scripts_meta-analyses_v2.zip` as containing "Scripts and data for meta-analyses". The comments in the code file (see below) make it clear that the data files `data_meta_analyse_global.txt`, `meta_analysis_fish.txt`, and `meta_analysis_fst.txt` are used in the calculation of the meta-analysis results.
+
+## Code
+The archive `Scripts_meta-analyses_v2.zip` contains only one helpfully-named code file, `script_Meta_Analysis_global.R`. The comments in this file make clear that its code is directly relevant to calculating the meta-analysis results presented in the article.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(MCMCglmm)
+library(MuMIn)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "script_Meta_Analysis_global.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+# Custom code required due to file path.
+data <- read.table(here::here("original", "data_meta_analyse_global.txt"), h=T)
+
+# Edit the data frame - rename "Author" variable to "study" to match the
+# original code.
+names(data)[names(data) == "Author"] <- "study"
+
+# Attach the data frame.
+sourceLines(orig_source, 5, 6)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Set a random seed ahead of running MCMCglmm.
+set.seed(198)
+
+# Fit model for whole effect (null model)
+sourceLines(orig_source, 9, 13)
+
+# Capture the summary of the null model to an object in order to extract the
+# point estimate and confidence interval.
+model_summary <- summary(mod_null)
+
+# The model summary does not report the number of studies but rather the
+# "effective" sample size based on the MCMCglmm run, which is 1,000,000.
+# Instead, get the number of data points from the dimensions of the fixed
+# effect design matrix from the MCMCglmm object - this will correspond to the
+# number of results included in the data file.
+
+repro_result_df <- data.frame(ID = "MA198",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Fisher z-transformation of correlation",
+                             point_est = round(model_summary$solutions[1, "post.mean"], 2),
+                             ci_lower = round(model_summary$solutions[1, "l-95% CI"], 2),
+                             ci_upper = round(model_summary$solutions[1, "u-95% CI"], 2),
+                             n = dim(mod_null$X)[1])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA198_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

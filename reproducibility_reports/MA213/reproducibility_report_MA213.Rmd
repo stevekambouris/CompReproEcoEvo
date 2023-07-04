@@ -1,0 +1,153 @@
+---
+title: "Reproducibility Report for MA213"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Colautti, R. I., & Lau, J. A. (2015). Contemporary evolution during invasion: Evidence for differentiation, natural selection, and local adaptation. _Molecular Ecology_, _24_(9), 1999–2017. https://doi.org/10.1111/mec.13162
+
+# Result to be reproduced
+
+> The average difference between the introduced and native range (i.e. effect size) of our hypothetical trait was small (-0.07) and nonsignificant (P = 0.362) when all sample sites were pooled in our analysis (N = 654). (Colautti & Lau, 2015, p.2004)
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA213",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "difference in means",
+                             point_est = -0.07,
+                             p_value = 0.362,
+                             n = 654)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Colautti, R. I., & Lau, J. A. (2015). _Data from: Contemporary evolution during invasion: Evidence for differentiation, natural selection, and local adaptation._ Dryad Digital Repository. https://doi.org/10.5061/dryad.gt678
+
+* ClinesModel.r
+* MetaPCA_Analysis.r
+* MetaPCA_Data.csv
+* README_for_MetaPCA_Data.txt
+* README_for_Selection_Data.txt
+* README_for_SpatialStructure_Data.txt
+* Selection_Analysis.R
+* Selection_Data.csv
+* SpatialStructure_Analysis.R
+* SpatialStructure_Data.csv
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The usage notes on the Dryad repository web page note that `SpatialStructure_Analysis.R` is the code applicable to the analysis presented in Box 1 of the article (on page 2004), see below. Given that information, the data file named `SpatialStructure_Data.csv` is logically named to be the relevant data file. The file `README_for_SpatialStructure_Data.txt` makes explicit that `SpatialStructure_Data.csv` is analysed by `SpatialStructure_Analysis.R`, and also describes the variables found in the file.
+
+## Code
+The usage notes on the Dryad repository web page note that `SpatialStructure_Analysis.R` is the code applicable to the analysis presented in Box 1 of the article (on page 2004). The code file contains enough comments to be able to follow the relevant parts of the analysis to reproduce the selected result.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(ggplot2)
+library(scales)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "SpatialStructure_Analysis.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+# Import the data from CSV (custom code required to deal with path issues)
+Locs <- read.csv(here::here("original", "SpatialStructure_Data.csv"),
+                 header=TRUE)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Show data.
+sourceLines(orig_source, 6, 6)
+
+# Format data.
+sourceLines(orig_source, 8, 19)
+
+# Calculate p-values for the full data set.
+# The t-test is all that's needed for this result.
+sourceLines(orig_source, 21, 23)
+
+# The test performed uses the Welch two-sample t-test. The sample size can't be
+# extracted from the test output object, so just take the number of rows from
+# the Locs data frame as the number of studies value.
+
+repro_result_df <- data.frame(ID = "MA213",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "difference in means",
+                             point_est = round(FullTtest$estimate[1] - FullTtest$estimate[2], 2),
+                             p_value = round(FullTtest$p.value, 3),
+                             n = dim(Locs)[1])
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "p_value",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA213_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

@@ -1,0 +1,156 @@
+---
+title: "Reproducibility Report for MA091"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Lemoine, N. P., Hoffman, A., Felton, A. J., Baur, L., Chaves, F., Gray, J., Yu, Q., & Smith, M. D. (2016). Underappreciated problems of low replication in ecological field studies. _Ecology_, _97_(10), 2554–2561. https://doi.org/10.1002/ecy.1506
+
+# Result to be reproduced
+
+> Overall, warming had a significant effect on plant biomass and growth ($P < 0.001$), although $\mu_{true}$ was small ($0.56$, $CI_{95} = 0.42-0.69$). (Lemoine et al., 2016, p.2556)
+
+Figure S1 from the supplemental information for this article ("Appendix S1 - Supplemental Figures") reported that the number of studies for the meta-analysis quoted above was 65. Further supplemental information ("Appendix S2 - Meta-analysis Methods") indicated that one effect was taken from each study, meaning a reported sample size of 65. The supplemental information also reported that the effect size used was Cohen's _d_.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA091",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "Cohen's d",
+                             point_est = 0.56,
+                             ci_lower = 0.42,
+                             ci_upper = 0.69,
+                             n = 65)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.1506#support-information-section):
+
+* ecy1506-sup-0004-DataS1-S3.zip
+    + Data_S1.csv
+    + Data_S2.R
+    + Data_S3.R
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+There is no readme or other documentation included with the files, but the original article refers to "Data S1" in the context of discussing the database of results collected from the literature (Lemoine et al., 2016, p.2556). This naming convention matches the name of the data file `Data_S1.csv` included in the archive.
+
+## Code
+There was no documentation in the article, or on the article webpage, or included with the files, to provide an indication of what the two code files did. Of the two included code files, `Data_S2.R` did not contain any comments, while `Data_S3.R` did. The comments in `Data_S3.R` made clear that this code file was not relevant to the meta-analysis results. Although `Data_S2.R` did not contain comments, the variable names and functions used provided enough clues to conclude that this code was relevant to the meta-analysis results.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metafor)
+library(ggthemes)
+library(plyr)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Data_S2.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+imported_data <- read.csv(here::here("original", "Data_S1.csv"))
+metaData <- imported_data
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Load functions.
+sourceLines(orig_source, 5, 24)
+
+# Format metaData data.
+# This formatting splits the data (using the split function) by the factor
+# "type" - relevant to the result to reproduce, "warming" is one of the types.
+sourceLines(orig_source, 67, 68)
+
+# Custom code required to create data object for analysis code trapped within
+# a function that I don't want to run (due to hard-coded path names).
+# To calculate the "warming" result, the data required is the subset of the
+# split dataset object with index 3.
+dataset <- splitData[[3]]
+
+# Run relevant part of the fullAnalysis function.
+# (Calculate standardised effect size and variance for each "raw" result in the
+# studies dataset, then run rma function from metafor package on the calculated
+# data.)
+sourceLines(orig_source, 28, 34)
+
+
+repro_result_df <- data.frame(ID = "MA091",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "Cohen's d",
+                             point_est = round(metaResults$beta, 2),
+                             ci_lower = round(metaResults$ci.lb, 2),
+                             ci_upper = round(metaResults$ci.ub, 2),
+                             n = metaResults$k)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA091_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

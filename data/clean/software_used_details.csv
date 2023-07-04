@@ -1,0 +1,543 @@
+search_id,software_details,software_pageref,version_specified,version_details,is_r_package,package_location,r_packages_mentioned,software_cited,citation_details,notes
+MA003,R,1630,Y,3.2.3,N,N/A,N,N,NA,No packages mentioned
+MA006,R,1445,N,NA,N,N/A,N,N,NA,Mentioned very briefly in authors' contributions section at end
+MA011,R,1311,Y,3.2.1,N,N/A,Y,Y,"R Core Team. (2015). R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from http://www.R-project.org/",NA
+MA011,lme4,1311,Y,1.1-8,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B., & Walker, S. (2015). lme4: Linear mixed-effects models using Eigen and S4_. R package version 1.1-8. Retrieved from http://CRAN.R-project.org/package=lme4","In the text this package is mistakenly referred to as ""lmer"" instead of ""lme4"" but reference is correct"
+MA013,R,1408,N,NA,N,N/A,Y,N,NA,NA
+MA013,nlme,1408,Y,3.1-28,Y,CRAN,N/A,Y,"Pinheiro, J., Bates, D.M., DebRoy, S. & Sarkar, D. (2016) nlme: linear and mixed-effect models version 3.1-128. http://CRAN.R-project.org/package=nlme",NA
+MA016,Python,1100,Y,2.7,N,N/A,N/A,Y,"Python Software Foundation, http://www.python.org","The Python code doesn't cover the meta-analysis results presented in the paper, it is for the simulation results"
+MA019,R,1661,N,NA,N,N/A,Y,Y,"R Core Development Team ( 2014 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Available at http://www.R-project.org/. Accessed 3.11.2014.",NA
+MA019,vegan,1659,Y,2.2-1,Y,CRAN,N/A,Y,"Oksanen,J.,Blanchet,F.G.,Kindt,R.,Legendre,P.,Minchin,P.R.,O’Hara, R. B., Simpson, G. L., Solymos, P., Henry, M., Stevens, H. & Wagner, H. ( 2015 ). Vegan: community ecology package. R package, version 2.2-1.",NA
+MA019,ade4,1660,N,NA,Y,CRAN,N/A,Y,"Dray, S. & Dufour, A. B. ( 2007 ). The ade4 package: implementing the duality diagram for ecologists. Journal of Statistical Software 22, 1–20.",NA
+MA022,Minitab,1177,N,NA,N,N/A,N/A,N,NA,No other details
+MA023,R,1612,N,NA,N,N/A,Y,N,NA,NA
+MA023,nlme,1612,Y,3.1-111,Y,CRAN,N/A,Y,"Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D. & The R Development Core Team ( 2013 ). Nlme: linear and nonlinear mixed effects models. R package version 3.1-111.",NA
+MA023,ape,1612,N,NA,Y,CRAN,N/A,Y,"Paradis, E., Claude, J. & Strimmer, K. ( 2004 ). APE: analyses of phylogenetics and evolution in R language. Bioinformatics 20, 289–290.",NA
+MA025,SPSS/PASW,300,Y,22.0,N,N/A,N/A,T,"SPSS Inc., Chicago, IL, USA",NA
+MA025,OriginPro,300,Y,9.1.0,N,N/A,N/A,T,"OriginLab Corporation, Northampton, MA, USA",Used for plotting results
+MA026,MuMIn,1759,N,NA,Y,CRAN,N/A,N,NA,NA
+MA026,Stan,1759,N,NA,N,N/A,N/A,N,NA,NA
+MA026,R,1759,N,NA,N,N/A,Y,N,NA,NA
+MA026,rstan,1759,N,NA,Y,CRAN,N/A,N,NA,NA
+MA026,lme4,1759,N,NA,Y,CRAN,N/A,N,NA,NA
+MA029,R,1168,Y,3.1.2,N,N/A,Y,Y,"R Core Team 2015. R: A Language and Environment for Statistical Computing. R foundation for statistical computing, Vienna, Austria.",NA
+MA029,meta,1168,N,NA,Y,CRAN,N/A,Y,"Schwarzer, G., Carpenter, J.R. & Rucker, G. 2015. Meta-analysis with R. Springer International Publishing, Switzerland.",NA
+MA035,R,211,Y,3.3.0,N,N/A,Y,Y,"R Development Core Team. (2016). R: A language and environment for statistical computing. [3.3.0]. Vienna, Austria: R Foundation for Statistical Computing. http://www.R-project.org/.",NA
+MA035,rms,212,Y,4.5-0,Y,CRAN,N/A,Y,"Harrell, F. (2016). Package ‘rms’. R package version 4.5-0 http://biostat.mc.vanderbilt.edu/wiki/Main/RmS.",NA
+MA035,MuMIn,212,Y,1.13.4,Y,CRAN,N/A,Y,"Barton, K. (2012). MuMIn: Model selection and model averaging based on information criteria. R package version 1.13.4 http://R-Forge.R-project.org/projects/mumin/.",NA
+MA035,lme4,212,N,NA,Y,CRAN,N/A,Y,"Bates, D., Machler, M., Bolker, B. M., & Walker, S. C. (2015). Fitting linear mixed-effects models using lme4. Journal of Statistical Software, 67, 1-48.",NA
+MA035,lsmeans,212,N,NA,Y,CRAN,N/A,Y,"Lenth, R. V. (2016). Least-squares means: the R package lsmeans. Journal of Statistical Software, 69, 1-33.",NA
+MA036,R,543,Y,3.2.2,N,N/A,Y,Y,"R Core Team. (2015). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA036,lme4,543,N,NA,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B. & Walker, S. (2015). Fitting linear mixed-effects models using lme4. J. Stat. Soft., 67, 1–48.",NA
+MA036,SigmaPlot,544,Y,12.5,N,N/A,N/A,T,"Systat software, San Jose",NA
+MA040,JMP,644,Y,11.0,N,N/A,N/A,T,"SAS Institute Inc., Cary, NC, USA",NA
+MA042,R,310,Y,3.1.2,N,N/A,Y,T,< www.r-project.org >,NA
+MA042,ape,311,N,NA,Y,CRAN,N/A,Y,"Paradis, E. et al. 2004. APE: analyses of phylogenetics and evolution in R language. – Bioinformatics 20: 289–290.",NA
+MA042,MASS,311,N,NA,Y,CRAN,N/A,Y,"Venables, W. N. and Ripley, B. D. 2002. MASS: modern applied statistics with S. – Springer.",NA
+MA042,PVR,311,N,NA,Y,CRAN,N/A,Y,"Santos, T. et al. 2012. PVR: Computes phylogenetic eigenvectors regression (PVR) and phylogenetic signal-representation curve (PSR) (with null and Brownian expectations). – CRAN: < http://143.107.212.50/web/packages/PVR/PVR.pdf >.",NA
+MA052,R,"p.7 (Methods S2, supplement)",Y,3.2.4,N,N/A,Y,N,NA,NA
+MA052,meta,"p.7 (Methods S2, supplement)",N,NA,Y,CRAN,N/A,N,NA,NA
+MA052,ggplot2,"p.7 (Methods S2, supplement)",N,NA,Y,CRAN,N/A,N,NA,NA
+MA054,R,184,Y,3.2.1,N,N/A,Y,Y,"R Development Core Team 2014. R: A language and environment for statistical computing. Vienna, Austria: R foundation for Statistical Computing. [WWW document] URL http://www.Rproject.org/ [accessed 6 March 2016].",NA
+MA054,nlme,184,N,NA,Y,CRAN,N/A,Y,"Pinheiro J, Bates D, DebRoy S, Sarkar D, Team RC. 2015. nlme: linear and nonlinear mixed effects models. R package v.3.1-119. [WWW document] URL http://CRAN.R-project.org/package=nlme [accessed 6 March 2016].",NA
+MA054,party,184,N,NA,Y,CRAN,N/A,Y,"Strobl C, Boulesteix A-L, Zeileis A, Hothorn T. 2007. Bias in random forest variable importance measures: illustrations, sources and a solution. BMC Bioinformatics 8: 25.",NA
+MA063,R,10,Y,3.2.3,N,N/A,Y,T,< www.r-project.org >,NA
+MA063,boot,10,Y,1.3-1,Y,CRAN,N/A,Y,"Canty, A. and Ripley, B. 2014. boot: bootstrap R (S-Plus) functions. – R package ver. 1.3-1.",NA
+MA063,lme4,11,Y,1.1-7,Y,CRAN,N/A,Y,"Bates, D. et al. 2014. lme4: linear mixed-effects models using Eigen and S4. – R package ver. 1.1-7.; Bates, D. et al. 2015. Fitting linear mixed-effects models using lme4. – J. Stat. Softw. 67: 1–48.",NA
+MA063,MuMIn,11,Y,1.14.0,Y,CRAN,N/A,Y,"Barton, K. 2015. MuMIn: multi-model inference. – R package ver.1.14.0.",NA
+MA064,R,1052,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA064,MODISTools,1052,N,NA,Y,CRAN,N/A,Y,"Tuck SL, Phillips HRP, Hintzen RE, Scharlemann JPW, Purvis A, Hudson LN. 2014. MODISTools – downloading and processing MODIS remotely sensed data in R. Ecology and Evolution 4: 4658–4668.",NA
+MA064,leaps,1052,N,NA,Y,CRAN,N/A,N,NA,NA
+MA064,glmulti,1052,N,NA,Y,CRAN,N/A,N,NA,NA
+MA066,R,3,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA066,lme4,3,N,NA,Y,CRAN,N/A,Y,"Bates D, Machler M, Bolker BM, Walker SC. 2015. Fitting linear mixed-effects models using lme4. Journal of Statistical Software 67: 1–48.",NA
+MA066,phytools,3,N,NA,Y,CRAN,N/A,Y,Revell LJ. 2012. phytools: an R package for phylogenetic comparative biology (and other things). Methods in Ecology and Evolution 3: 217–223.,NA
+MA066,pez,3,N,NA,Y,CRAN,N/A,Y,"Pearse WD, Cadotte MW, Cavender-Bares J, Ives AR, Tucker CM, Walker SC, Helmus MR. 2015. pez: phylogenetics for the environmental sciences. Bioinformatics 31: 2888–2890.",NA
+MA066,Cytoscape,4,N,NA,N,N/A,N/A,Y,"Shannon P, Markiel A, Ozier O, Baliga NS, Wang JT, Ramage D, Amin N, Schwikowski B, Ideker T. 2003. Cytoscape: a software environment for integrated models of biomolecular interaction networks. Genome Research 13: 2498–2504.",NA
+MA069,R,4,N,NA,N,N/A,Y,Y,"R Core Team (2016). R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing.",NA
+MA069,lme4,4,N,NA,Y,CRAN,N/A,Y,"Bates, D., Machler, M., Bolker, B. M., & Walker, S. C. (2015). Fitting linear mixed- effects models using lme4. Journal of Statistical Software, 67, 1–48.",NA
+MA069,caper,4,N,NA,Y,CRAN,N/A,Y,"Orme, D., Freckleton, R., Thomas, G., Petzoldt, T., Fritz, S., Isaac, N., & Pearse, W. (2013). caper: Comparative analyses of phylogenetics and evolution in R. Collingwood, Australia: CSIRO Publishing.",NA
+MA071,R,534,Y,3.2.2,N,N/A,Y,Y,"R Development Core Team ( 2015 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna.",NA
+MA071,lmerTest,534,Y,2,Y,CRAN,N/A,Y,"Kuznetsova, A., Brockhoff, P. B. & Christensen, R. H. B. ( 2015 ). Package ‘lmerTest’. R package version 2.",NA
+MA077,DataThief III,1420,Y,1.6 2010,N,N/A,N/A,Y,"Tummers, D. (2005). DataThief III. http://datathief.org/. Last accessed Accessed 1 April 2014.",NA
+MA077,R,1423,N,NA,N,N/A,Y,Y,"R Core Team (2015). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. http://www.R-project.org/.",NA
+MA077,zoo,1420,N,NA,Y,CRAN,N/A,Y,"Zeileis, A. & Grothendieck, G. (2005). zoo: S3 infrastructure for regular and irregular time series. J. Stat. Softw., 14(6), 1–27.",NA
+MA081,raster,5349,N,NA,Y,CRAN,N/A,Y,Hijmans RJ (2014) raster: Geographic Data Analysis and Modeling. http://CRAN.R-project.org/package=raster.,NA
+MA081,GRASS GIS,5349,N,NA,N,N/A,N/A,N,NA,NA
+MA081,Circuitscape,5349,Y,4.0,N,N/A,N/A,N,NA,NA
+MA081,nlme,5350,N,NA,Y,CRAN,N/A,Y,"Pinheiro J, Bates D, DebRoy S, Sarkar D (2014) nlme: Linear and Nonlinear Mixed Effects Models. http://CRAN.R-project.org/package=nlme.",NA
+MA081,MuMIn,5350,N,NA,Y,CRAN,N/A,Y,Kamil B (2014) MuMIn: Multi-Model Inference. http://CRAN.R-project.org/package=MuMIn.,NA
+MA081,R,5349,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA091,R,"p.1 (Appendix S2, supplement)",N,NA,N,N/A,Y,N,NA,NA
+MA091,metafor,"p.1 (Appendix S2, supplement)",N,NA,Y,CRAN,N/A,N,NA,NA
+MA091,DataThief III,"p.1 (Appendix S2, supplement)",N,NA,N,N/A,N/A,N,NA,NA
+MA092,ED2 (FORTRAN),81,Y,2,N,N/A,N/A,Y,"Medvigy D, Wofsy SC, Munger JW, Hollinger DY, Moorcroft PR. 2009. Mechanistic scaling of ecosystem function and dynamics in space and time: Ecosystem Demography model version 2. Journal of Geophysical Research 114: G01002.","This is a FORTRAN program, I guess it counts as software"
+MA093,lme4,1491,Y,0.999375-37,Y,CRAN,N/A,Y,"Bates, D. and Maechler, M. 2010. lme4: linear mixed-effects models using S4 classes. – R package ver. 0.999375-37. < http://CRAN.R-project.org/package = lme4 >.",NA
+MA093,R,1491,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA094,R,1225,Y,3.1.1,N,N/A,Y,T,< www.r-project.org >,NA
+MA094,foodweb,1225,N,NA,Y,CRAN,N/A,T,Perdomo et al. unpubl.,"Not the most helpful citation, but it is there"
+MA094,raster,1226,Y,2.3-0,Y,CRAN,N/A,Y,"Hijmans, R. J. 2014. raster: Geographic data analysis and modeling. – R package ver. 2.3-0. < http://CRAN.R-project.org/package = raster >.",NA
+MA094,vegan,1226,Y,2.3-1,Y,CRAN,N/A,Y,"Oksanen, J. F. et al. 2015. vegan: community ecology package. – R package ver. 2.3-1.",NA
+MA094,lme4,1226,Y,1.1-7,Y,CRAN,N/A,Y,Bates D. et al. 2014. _lme4: linear mixed-effects models using Eigen and S4. – R package ver. 1.1-7.,NA
+MA094,stats,1226,N,NA,Y,base,N/A,N,NA,This is a base package of R
+MA094,RInSp,1225,N,NA,Y,CRAN,N/A,Y,"Zaccarelli, N. et al. 2013. RInSp: an R package for the analysis of individual specialisation in resource use. – Meth. Ecol. Evol. 4: 1018–1023.",NA
+MA094,igraph,1225,N,NA,Y,CRAN,N/A,Y,"Csardi, G. and Nepusz, T. 2006. The igraph software package for complex network research, InterJournal. – Complex Systems 1695. 2006. < http://igraph.org >.","This package is not exclusively an R package, but it can be. Unclear but likely that the R package was used"
+MA100,GraphClick,987,N,NA,N,N/A,N/A,T,Arizona Software 2010,NA
+MA100,R,987,N,NA,N,N/A,Y,Y,"R Development Core Team (2010). R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/",NA
+MA100,rjags,987,Y,4-5,Y,CRAN,N/A,Y,Plummer M (2016) rjags: Bayesian Graphical Models using MCMC. R package version 4–5. https://CRAN.R-project.org/package=rjags,NA
+MA102,R,1140,Y,3.1.1,N,N/A,Y,N,NA,NA
+MA102,lme4,1140,Y,1.1-7,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B. & Walker, S. (2014) lme4: linear mixed-effects models using Eigen and S4. R package version 1.1-7, http://CRAN.R-project.org/package=lme4",NA
+MA102,visreg,1140,N,NA,Y,CRAN,N/A,Y,"Breheny, P. & Burchett, W. (2012) Visualizing regression models using visreg. Available at: http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf",NA
+MA102,MuMIn,1140,N,NA,Y,CRAN,N/A,Y,"Barton, K. (2016) Multi-model inference. Available at: https://cran.r-project.org/web/packages/MuMIn/MuMIn.pdf",NA
+MA106,R,377,Y,3.0.2,N,N/A,Y,Y,"R Development Team. 2013. R version 3.0.2. R Projecy for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA106,randomForest,377,N,NA,Y,CRAN,N/A,Y,"Breiman, L. 2001. Random forest. Machine Learning 45:5–32.",NA
+MA106,A3,377,N,NA,Y,CRAN,N/A,Y,"Fortmann-Roe, S. 2015. Consistent and clear reporting of results from diverse modeling techniques: the A3 method. Journal of Statistical Software 66(7):1–23. URL http://www.jstatsoft.org/v66/i07/",NA
+MA106,rfPermute,377,N,NA,Y,CRAN,N/A,Y,"Liaw, A., and M. Wiener. 2002. Classification and regression by randomForest. Rnews 2:18.",NA
+MA106,AMOS,378,Y,20.0,N,N/A,N/A,T,"Amos Development Company, Crawfordville, Florida, USA",NA
+MA106,PRIMER,378,N,NA,N,N/A,N/A,T,"PRIMER- E Ltd., Plymounth Marine Laboratory, Plymounth, UK",NA
+MA106,vegan,380,Y,2.3-5,Y,CRAN,N/A,Y,"Oksanen, J., F. B. Blanchet, R. Kindt, P. Legendre, P. R. Minchin, R. B. O’Hara, G. L. Simpson, P. Solymos, M. H. H. Stevens, and H. Wagner. 2016. vegan: Community Ecology Package. R package version 2.3-5. https://CRAN.R-project.org/package=vegan",NA
+MA107,R,763,N,NA,N,N/A,Y,Y,"R Development Core Team ( 2014 ). A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Electronic file available at http://www.r-project.org/ Accessed 2.4.2014.",NA
+MA107,coin,763,N,NA,Y,CRAN,N/A,Y,"Hothorn,T.,Hornik,K.,van deWiel,M.A.&Zeileis,A.( 2008 ).Implementing a class of permutation tests: the coin Package. Journal of Statistical Software 28, 1–23.",NA
+MA115,SPSS/PASW,104,Y,21.0,N,N/A,N/A,N,NA,NA
+MA118,SAS,1047,Y,9.4,N,N/A,N/A,T,"SAS Institute, Cary, NC, USA",NA
+MA125,DataThief III,1070,Y,1.6,N,N/A,N/A,Y,"Tummers, B. DataThief III. 2006 http://datathief.org/",NA
+MA125,R,1071,Y,2.14,N,N/A,Y,Y,"R development Core Team. 2011. R: A language and environment for statistical computing. R Foundation for Statistical Comping, Vienna, Austria. www.R_project.org/",NA
+MA125,lmodel2,1071,N,NA,Y,CRAN,N/A,Y,"Legendre, P. 2013. Model II regression user’s guide, R edition. Montreal, Canada. http://cran.r-project.org",NA
+MA126,WebPlotDigitizer,p.3 (Supporting Information Methods S1),N,NA,N,N/A,N/A,T,http://arohatgi.info/WebPlotDigitizer,NA
+MA126,Phylomatic,p.3 (Supporting Information Methods S1),Y,3,N,N/A,N/A,T,http://phylodiversity.net/phylomatic/,NA
+MA126,Phylocom,p.3 (Supporting Information Methods S1),Y,4.2,N,N/A,N/A,Y,"Webb CO, Ackerly DD, Kembel SW. 2008. Phylocom: software for the analysis of phylogenetic community structure and trait evolution. Bioinformatics 24: 2098-2100.",NA
+MA126,R,p.3 (Supporting Information Methods S1),Y,3.2,N,N/A,Y,N,NA,NA
+MA126,ape,p.3 (Supporting Information Methods S1),N,NA,Y,CRAN,N/A,N,NA,NA
+MA126,metafor,p.3 (Supporting Information Methods S1),N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36(3): 1-48.,NA
+MA126,phytools,p.5 (Supporting Information Methods S1),N,NA,Y,CRAN,N/A,N,NA,NA
+MA129,R,443,Y,2.12,N,N/A,N,Y,"R Development Core Team (2011) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Viena, Austria. Available at: http://www.R-project.org.",NA
+MA130,SAS,571,Y,9.2,N,N/A,N/A,T,"http://support.sas.com, consulted on 25 June 2014 and 15 June 2015",NA
+MA136,SAS,598,Y,9.4,N,N/A,N/A,T,"SAS Institute, Inc., Cary, NC",NA
+MA136,R,598,N,NA,N,N/A,Y,T,"R Development Core Team, www.r-project.org",NA
+MA136,boot,598,N,NA,Y,CRAN,N/A,N,NA,NA
+MA146,PlotDigitizer,N/A,Y,2.6.6,N,N/A,N/A,Y,Huwaldt JA. 2014. Plot digitiser. Software version 2.6.6. Available from: http://plotdigitizer.sourceforge.net.,NA
+MA146,R,N/A,Y,3.1.3,N,N/A,Y,Y,R Core Team. 2015. R: a language and environment for statistical computing. Vienna (Austria): R Foundation for Statistical Computing. Available from: http://www.R-project.org/.,NA
+MA146,metafor,N/A,N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. J Stat Softw. 36:1–48.,NA
+MA146,glmulti,N/A,N,NA,Y,CRAN,N/A,Y,Calcagno V and de Mazancourt C. 2010. glmulti: an R package for easy automated model selection with (generalized) linear models. J Stat Softw. 34:1–29.,NA
+MA151,R,724,Y,3.0.0/2.14.1,N,N/A,Y,Y,"R Development Core Team ( 2013 ). R: A Language and Environment for Statistical Computing. 2.14.1 Edition. R Foundation for Statistical Computing, Vienna.",NA
+MA151,party,724,N,NA,Y,CRAN,N/A,N,NA,NA
+MA152,Stan,24,N,NA,N,N/A,N/A,N,NA,Accessed via PyStan
+MA152,Python,24,Y,2.7,N,N/A,N/A,T,available at python.org,NA
+MA153,R,329,Y,3.0.1,N,N/A,Y,Y,"R Development Core Team . 2013 . R: a language and environment for statistical computing . R Foundation for Statistical Computing , Vienna, Austria . www.R-project.org",NA
+MA153,OpenBUGS,329,Y,3.2.2,N,N/A,N/A,Y,"Thomas , A. , B. O ’ Hara , U. Ligges , and S. Sturtz . 2006. Making BUGS open . R News 6 : 12 – 17 .",NA
+MA153,R2WinBUGS,329,N,NA,Y,CRAN,N/A,Y,"Sturtz , S. , U. Ligges , and A. Gelman . 2005 . R2WinBUGS: A package for running WinBUGS from R . Journal of Statistical Software 12 : 1 – 16 .",NA
+MA155,R,561,Y,3.1.2,N,N/A,Y,Y,"R Core Team (2015) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna.",NA
+MA155,Perl,561,N,NA,N,N/A,N/A,N,NA,Referred to indirectly via reference to a Perl script
+MA155,DESeq2,561,N,NA,Y,BioConductor,N/A,Y,"Love MI, Huber W, Anders S (2014) Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biology, 15, 1–21.","This is a bioconductor package, not a CRAN package"
+MA155,arrayQualityMetrics,561,N,NA,Y,BioConductor,N/A,Y,"Kauffmann A, Gentleman R, Huber W (2009) Arrayqualitymetrics–a bioconductor package for quality assessment of microarray data. Bioinformatics (Oxford, England), 25, 415–416.","This is a bioconductor package, not a CRAN package"
+MA155,Bowtie2,561,N,NA,N,N/A,N/A,Y,"Langmead B, Salzberg SL (2012) Fast gapped-read alignment with Bowtie 2. Nature Methods, 9, 357–359.",NA
+MA155,adegenet,561,N,NA,Y,CRAN,N/A,Y,"Jombart T (2008) Adegenet: A R package for the multivariate analysis of genetic markers. Bioinformatics, 24, 1403–1405.",NA
+MA155,vegan,561,N,NA,Y,CRAN,N/A,Y,"Dixon P (2003) VEGAN, a package of R functions for community ecology. Journal of Vegetation Science, 14, 927–930.",NA
+MA155,pheatmap,561,N,NA,Y,CRAN,N/A,Y,Kolde R (2013) pheatmap: Pretty Heatmaps. R-package,NA
+MA155,KOGMWU,561,N,NA,Y,CRAN,N/A,Y,"Dixon GB, Davies SW, Aglyamova GA et al. (2015) Genomic determinants of coral heat tolerance across latitudes. Science, 348, 1460–1462.",NA
+MA155,empiricalFDR.DESeq2,563,N,NA,Y,CRAN,N/A,N,NA,"This is actually incorrectly referred to as ""empiricalFDR"" instead of its full name"
+MA157,R,1131,Y,3.1.2,N,N/A,Y,Y,"R Development Core Team ( 2015 ). R: A Language and Environment for Statistical Computing. [3.1.2]. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA157,glmulti,1131,N,NA,Y,CRAN,N/A,Y,"Calcagno, V. & De Mazancourt, C. ( 2010 ). glmulti: an R package for easy automated model selection with (generalized) linear models. Journal of Statistical Software 34, 1–29.",NA
+MA158,SAS,3356,Y,9.3 2010 release,N,N/A,N/A,T,"SAS Institute, Cary, North Carolina, USA",NA
+MA160,R,2190,Y,3.1.1,N,N/A,Y,Y,"R Core Team. 2014. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA160,ape,2190,N,NA,Y,CRAN,N/A,Y,"Paradis, E., Claude, J. & Strimmer, K. 2004. APE: analyses of phylogenetics and evolution in R language. Bioinformatics 20: 289–290.",NA
+MA163,R,1431,Y,3.1.0,N,N/A,N,T,< www.r-project.org >,NA
+MA168,CMA,1191,Y,3/2,N,N/A,N/A,Y,"Borenstein, M., Hedges, L., Higgins, J. & Rothstein, H. (2014) Comprehensive Meta-Analysis Version 2. Biostat, Englewood, New Jersey.",Discrepancy over version used (in-text mention vs reference list)
+MA168,R,1191,Y,3.1,N,N/A,Y,Y,"R Core Team (2014) R: A Language and Environment for Statistical Computing, R Foundation for Statistical Computing, Vienna, Austria. http://www.R-project.org/.",NA
+MA168,segmented,1191,N,NA,Y,CRAN,N/A,N,NA,NA
+MA170,R,635,Y,2.14.1,N,N/A,Y,Y,"R Development Core Team (2014) R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna",NA
+MA170,smatr,634,Y,3,Y,CRAN,N/A,Y,"Warton DI, Duursma RA, Falster DS, Taskinen S (2012) smatr 3–an R package for estimation and inference about allometric lines. Methods Ecol Evol 3:257–259","Package not mentioned explicitly in text, just refered to"
+MA176,SPSS/PASW,274,Y,19.0,N,N/A,N/A,T,"IBM Corp., Armonk, NY, USA",NA
+MA179,ImageJ,135,Y,1.43u,N,N/A,N/A,T,"US National Institutes of Health, Bethesda, MD, USA",NA
+MA179,R,135,Y,3.0.2,N,N/A,N,T,"R Foundation for Statistical Computing, Vienna, Austria",NA
+MA181,Photoshop,2 (Supporting information Methods S1),N,NA,N,N/A,N/A,N,NA,NA
+MA185,MAFFT,296,Y,7,N,N/A,N/A,Y,"Katoh, K., and D. M. Standley. 2013. MAFFT multiple sequence alignment software version 7: improvements in performance and usability. Mol. Biol. Evol. 30:772–780. doi:10.1093/molbev/mst010.",NA
+MA185,MEGA 4,296,Y,4.0,N,N/A,N/A,Y,"Tamura, K., J. Dudley, M. Nei, and S. Kumar. 2007. MEGA4: molecular evolutionary genetics analysis (MEGA) software version 4.0. Mol. Biol. Evol. 24:1596–1599. doi:10.1093/molbev/msm092.",NA
+MA185,LocARNA,296,N,NA,N,N/A,N/A,Y,"Will, S., T. Joshi, I. L. Hofacker, P. F. Stadler, and R. Backofen. 2012. LocARNA-P: accurate boundary prediction and improved detection of structural RNAs. RNA 18:900–914. doi:10.1261/rna.029041.111.",NA
+MA185,Modeltest,296,Y,3.7,N,N/A,N/A,Y,"Nylander, J. A. A., F. Ronquist, J. P. Huelsenbeck, and J. L. Nieves-Aldrey. 2004. Bayesian phylogenetic analysis of combined data. Syst. Biol. 53:47–67. doi:10.1080/10635150490264699.",NA
+MA185,MrBayes,296,Y,3.1.1,N,N/A,N/A,Y,"Huelsenbeck, J. P., and F. Ronquist. 2001. MRBAYES: Bayesian inference of phylogenetic trees. Bioinformatics 17:754–755. doi:10.1093/bioinformatics/17.8.754.",NA
+MA185,RAxML,296,Y,7.2.6,N,N/A,N/A,Y,"Stamatakis, A. 2006. RAxML-VI-HPC: maximum likelihood-based phylogenetic analyses with thousands of taxa and mixed models. Bioinformatics 22:2688–2690. doi:10.1093/bioinformatics/btl446.",NA
+MA186,R,1412,Y,3.0.2,N,N/A,Y,Y,"R Core Development Team. (2012). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA186,lme4,1412,Y,1.0-4,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B. & Walker, S. (2013). lme4: mixed-effects model using Eigen and S4. R package version 1.0-4.",NA
+MA186,MuMIn,1412,Y,1.9.13,Y,CRAN,N/A,Y,"Barton, K.A. (2013). MuMIn: multi-model inference. R package version 1.9.13.",NA
+MA189,R,1332,Y,2.14.1,N,N/A,Y,Y,"R Development Core Team. 2012. R 2.14.1. R Project for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA189,multcomp,1332,Y,1.3-2,Y,CRAN,N/A,N,NA,NA
+MA190,Minitab,2612,Y,16 or 17,N,N/A,N/A,T,"Minitab Inc., State College, PA, USA",NA
+MA191,R,91,Y,3.0.2,N,N/A,Y,Y,"R Development Core Team. 2015. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna.",NA
+MA191,lme4,91,Y,1.1–7,Y,CRAN,N/A,Y,"Bates D., M. Maechler, B. Bolker, and S. Walker. 2014. lme4: linear mixed-effects models using Eigen and S4. R package, version 1.1–7.",NA
+MA191,effects,91,N,NA,Y,CRAN,N/A,Y,"Fox, F. 2003. Effect displays in R for generalised linear models. Journal of Statistical Software 8:1–27.",NA
+MA192,R,891,Y,2.14.1,N,N/A,N,T,"R Development Core Team 2011, R Foundation for Statistical Computing, Vienna, Austria",NA
+MA193,R,2338,N,NA,N,N/A,Y,Y,"R Development Core Team (2012) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, URL http://www.R-project.org/, Accessed June 9, 2013.",NA
+MA193,GenClone,2338,N,NA,N,N/A,N/A,Y,"Arnaud-Haond S, Belkhir K (2007) genclone: a computer program to analyse genotypic data, test for clonality and describe spatial clonal organization. Molecular Ecology Notes, 7, 15–17.",NA
+MA193,GENALEX,2338,Y,6.5,N,N/A,N/A,Y,"Peakall R, Smouse PE (2012) GENALEX 6.5: genetic analysis in Excel. Population genetic software for teaching and research—an update. Bioinformatics, 28, 2537–2539.",NA
+MA193,STANDARICH,2338,N,NA,Y,other,N/A,T,http://www.ccmar.ualg.pt/maree/software.php?soft=sarich,Link doesn't work; looks to be a standalone not in any repos
+MA193,GENHET,2338,N,NA,Y,other,N/A,Y,"Coulon A (2010) GENHET : an easy-to-use R function to estimate individual heterozygosity. Molecular Ecology Resources, 10, 167–169.",Looks to be a standalone package not in any repos
+MA193,QGIS,2340,N,NA,N,N/A,N/A,Y,"Quantum GIS Development Team (2013) Quantum GIS geographic information system. Open source geospatial foundation project. http://qgisosgeoorg. Accessed May 5, 2014.",Used for generating maps
+MA193,ArcMap,2340,Y,10.2.2,N,N/A,N/A,N,NA,Used for generating maps
+MA202,R,1072,Y,3.1.0/3.0.1,N,N/A,Y,Y,"R Core Development Team. 2013. R: a language and environment for statistical computing v.3.0.1. Vienna, Austria: R Foundation for Statistical Computing.","Version of R is ambiguous, possible typo"
+MA202,ape,1072,N,NA,Y,CRAN,N/A,Y,"Paradis E, Claude J, Strimmer K. 2004. APE: analyses of phylogenetics and evolution in R language. Bioinformatics 20: 289–290.",NA
+MA202,metahdep,1072,N,NA,Y,BioConductor,N/A,Y,"Stevens JR, Nicholas G. 2009. Metahdep: meta-snalysis of hierarchically dependent gene expression studies. Bioinformatics 25: 2619–2620.","This is a bioconductor package, not a CRAN package"
+MA202,MAFFT,1072,Y,7.205,N,N/A,N/A,Y,"Katoh K, Standley DM. 2013. MAFFT Multiple Sequence Alignment Software Version 7:improvements in performance and usability article fast track. Molecular Biology and Evolution 30: 772–780.",NA
+MA202,RAxML,1072,Y,7.0.4,N,N/A,N/A,Y,Stamatakis A. 2006. RAxML-VI-HPC: maximum likelihood-based phylogenetic analyses with thousands of taxa and mixed models. Bioinformatics 22: 2688–2690.,NA
+MA208,R,268,N,NA,N,N/A,Y,T,<www.R-project.org/>,NA
+MA208,nlme,268,Y,3.1-105,Y,CRAN,N/A,Y,"Pinheiro, J. et al. 2012. nlme: linear and nonlinear mixed effects models. – R package ver. 3.1-105.",NA
+MA210,R,5 (Supp. Info.),N,NA,N,N/A,Y,N,NA,NA
+MA210,metafor,5 (Supp. Info.),N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36: 1-48.,NA
+MA212,Ecopath,32,Y,6,N,N/A,N/A,Y,"Christensen, V., C. Walters, D. Pauly, and R. Forrest. 2008. Ecopath with Ecosim version 6 user guide. Lenfest Ocean Futures Project, University of British Columbia, Vancouver, British Columbia, Canada.",NA
+MA212,R,33,N,NA,N,N/A,N,Y,"R Development Core Team. 2014. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA213,R,2017,N,NA,N,N/A,N,N,NA,"Only reference is to R scripts, no other details in the paper"
+MA217,R,377,Y,3.0.2,N,N/A,Y,T,R Foundation for Statistical Computing,NA
+MA217,Kendall,377,Y,2.2,Y,CRAN,N/A,Y,"McLeod, A.I. (2011). Kendall: Kendall Rank Correlation and Mann-Kendall trend test, R package version 2.2. Available at: http://cran.r-project.org/package=Kendall. Last accessed 5 February 2015.",NA
+MA217,mgcv,378,N,NA,Y,CRAN,N/A,Y,"Wood, S.N. (2006). Generalized Additive Models: An Introduction with R. (eds. Carlin, B.P., Chatfield, C., Tanner, M. & Zidek, J.). Chapman and Hall/CRC, Boca Raton, Florida.",Possible missing reference? Text references Wood 2011 which is not in list of references
+MA217,MAc,378,Y,1.1,Y,CRAN,N/A,Y,"Del Re, A.C. & Hoyt, W.T. (2012). MAc: Meta-Analysis with Correlations. R package version 1.1. Available at: http://cran.r-project.org/package=MAc. Last accessed 4 February 2015.",NA
+MA223,GrabIt! XP,115,N,NA,N,N/A,N/A,N,NA,Excel plugin
+MA223,Engauge Digitizer,115,Y,4.1,N,N/A,N/A,Y,"Mitchell, M. 2002. Engauge digitizer (v. 4.1). – Sourceforge.",NA
+MA223,SAS,116,Y,9.2,N,N/A,N/A,N,NA,NA
+MA224,R,1202,Y,3.0.2,N,N/A,N,Y,"R Core Team (2013). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Available at http://www.R-project.org/ Accessed 01.01.2013.",NA
+MA226,R,223,Y,3.0.2,N,N/A,N,T,http://www.r-project.org,NA
+MA227,Excel,257,Y,2007,N,N/A,N/A,N,NA,NA
+MA227,SPSS/PASW,257,Y,18,N,N/A,N/A,T,"IBM SPSS Statistic, Armonk, NY, USA",NA
+MA229,R,256,Y,3.0.2,N,N/A,Y,N,NA,NA
+MA229,nlme,256,N,NA,Y,CRAN,N/A,Y,"Pinheiro, J. et al. 2013. nlme: linear and nonlinear mixed effects models.",NA
+MA120,CMA,486,Y,2,N,N/A,N/A,Y,"Borenstein, M., Hedges, L., Higgins, J. & Rothstein, H. (2005). Comprehensive Meta-Analysis, Version 2. Biostat, Englewood. Available at http://www.meta-analysis.com/. Accessed 1.5.2014.",NA
+MA120,R,486,N,NA,N,N/A,Y,Y,"R Development Core Team (2014). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. ISBN: 3-900051-07-0. Available at http://www.R-project.org/. Accessed 5.6.2014.",NA
+MA120,MCMCglmm,486,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. (2010). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R Package. Journal of Statistical Software 33, 1–22.",NA
+MA009,SAS,1931,Y,9.3,N,N/A,N/A,T,"SAS Institute Inc., Cary, NC, USA",NA
+MA009,R,1932,Y,3.2.1,N,N/A,Y,Y,"R Core Team. 2014. R Development Core Team 2010. R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA009,metafor,1932,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta–analyses in R with the meta for package. J. Stat. Softw. 36: 1–48.",NA
+MA111,MetaWin,959,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M.S., Adams, D.C. & Gurevitch, J. (2000) Metawin: Statistical Software for Meta-Analysis. Version 2.0. Sinauer Associates, Sunderland, MA, USA.",NA
+MA111,R,960,Y,3.1.3,N,N/A,Y,Y,"R Development Core Team (2013) A Language and Environment for Statistical Computing. Version 3.1.3. R Foundation for Statistical Computing, Vienna. Available at: http://www.R-project.org.",NA
+MA111,ape,959,Y,3.1.1,Y,CRAN,N/A,Y,"Paradis, E., Claude, J. & Strimmer, K. (2004) APE: analyses of phylogenetics and evolution in R language. Bioinformatics, 20, 289–290.",NA
+MA111,metafor,960,Y,1.9-5,Y,CRAN,N/A,Y,"Viechtbauer, W. (2012) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 3, 1–48.",NA
+MA111,MCMCglmm,960,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R Package. Journal of Statistical Software, 33, 1–22.",NA
+MA015,MetaWin,1235,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M. S. et al. 2000. MetaWin: statistical software for meta-analysis. – Sinauer.",NA
+MA015,R,1236,N,NA,N,N/A,Y,T,< www.r-project.org >,Only mentioned implicitly through the mention of R packages
+MA015,metafor,1236,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA017,R,1082,Y,3.3.1,N,N/A,Y,T,< www.r-project.org >,NA
+MA017,metafor,1082,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metaphor package. – J. Stat. Softw. 36: 1–48.",NA
+MA017,rmeta,1082,Y,2.16,Y,CRAN,N/A,Y,"Lumley, T. 2012. Rmeta: meta-analysis. – R package ver. 2.16. < https://CRAN.R-project.org/package = rmeta >.",NA
+MA018,MetaWin,2114,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M., D. Adams, and J. Gurevitch. 1997. MetaWin. 2.0. Sinauer Associates, Sunderland, Massachusetts, USA.; Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. MetaWin: statistical software for meta-analysis. Sinauer Associates, Sunderland, Massachusetts, USA.",NA
+MA021,SAS,1589,Y,9.3,N,N/A,N/A,N,NA,NA
+MA021,R,1591,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA021,metafor,1591,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta–analyses in R with the meta for package. Journal of Statistical Software 36, 1–48.",NA
+MA033,MetaWin,665,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M.S., Adams, D.C. & Gurevitch, J. (2000). MetaWin: Statistical Software for Meta-Analysis, Version 2. Sinauer Associates, Sunderland, MA.",NA
+MA056,MetaWin,98,Y,2.0,N,N/A,N/A,Y,"Rosenberg MS, Adams DC, Gurevitch J (2000) MetaWin: Statistical software for meta-analysis, Version 2.0. Sinauer, Sunderland",NA
+MA059,MetaWin,221,Y,2.0,N,N/A,N/A,Y,"Rosenberg, M.S., Adams, D.C. & Gurevitch, J. (2000) MetaWin: Statistical Software for Meta-Analysis, Version 2.0. Sinauer Associated, Sunderland, MA, USA.",NA
+MA059,RAxML,221,Y,7.0,N,N/A,N/A,Y,"Stamatakis, A. (2006) RAxML-VI-HPC: maximum likelihood-based phylogenetic analyses with thousands of taxa and mixed models. Bioinformatics, 22, 2688–2690.",NA
+MA059,R,221,Y,3.1.3,N,N/A,Y,Y,"R Core Team (2013) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA059,picante,221,Y,1.6-2,Y,CRAN,N/A,N,NA,NA
+MA059,metafor,221,Y,1.9-4,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA070,R,61,N,NA,N,N/A,Y,Y,"R Core Team. 2015. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. http://www.R-project.org/",NA
+MA070,vegan,61,N,NA,Y,CRAN,N/A,N,NA,NA
+MA070,JMP,60,Y,Pro 11.0.0,N,N/A,N/A,Y,"SAS Institute. 2013. JMP V. 11.0. SAS Institute., Cary, North Carolina, USA.",NA
+MA070,SAS,60,Y,9.4,N,N/A,N/A,Y,"SAS Institute. 2002–2012. The SAS system for windows. SAS Institute, Cary, North Carolina, USA.",NA
+MA070,MetaWin,61,N,NA,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2007. MetaWin statistical software for meta-analysis. Sinauer Associates, Sunderland, Massachusetts, USA. www.metawinsoft.com",NA
+MA080,MetaWin,1556,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M. S. et al. 2000. MetaWin: statistical software for meta-analysis. – Sinauer.",NA
+MA098,MetaWin,1072,Y,2.1.3.4,N,N/A,N/A,Y,"Rosenberg, M. S. et al. 2000. MetaWin: statistical software for meta-analysis, ver. 2.0. – Sinauer.",NA
+MA108,MetaWin,1797,Y,2.1,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. Metawin: statistical software for meta-analysis. Sinauer Associates, Sunderland, Massachusetts, USA.",NA
+MA110,Phylomatic,1005,N,NA,N,N/A,N/A,Y,"Webb, C.O. & Donoghue, M.J. (2005) Phylomatic: tree assembly for applied phylogenetics. Molecular Ecology Notes, 5, 181–183.",NA
+MA110,Phylocom,1005,N,NA,N,N/A,N/A,Y,"Webb, C.O., Ackerly, D.D. & Kembel, S.W. (2008) Phylocom: software for the analysis of phylogenetic community structure and trait evolution. Bioinformatics, 24, 2098–2100.",NA
+MA110,phyloMeta,1005,N,NA,N,N/A,N/A,Y,"Lajeunesse, M.J. (2011) PhyloMeta: a program for phylogenetic comparative analyses with meta-analysis. Bioinformatics, 27, 2603–2604.",NA
+MA133,R,330,Y,3.1.2,N,N/A,Y,Y,"R, Core Development Team (2013). R: A Language and Environment. R Foundation, Vienna, Austria.",NA
+MA133,metafor,330,N,NA,Y,CRAN,N/A,N,NA,NA
+MA137,MetaWin,111,Y,2.0,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. MetaWin: statistical software for meta-analysis. version 2.0. Sinauer, Sunderland, Massachusetts, USA.",NA
+MA137,SAS,111,Y,9.2,N,N/A,N/A,Y,"SAS Institute. 2009. SAS/STAT user’s guide, version 9.2. SAS Institute, Cary, North Carolina, USA.","Only references are as citations, not an explicit statement of software used"
+MA150,R,1506,Y,3.0.1,N,N/A,Y,Y,"R.Development Core Team(2014) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA150,metafor,1506,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in r with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA150,lme4,1506,N,NA,Y,CRAN,N/A,Y,"Bates, D.M., Maechler, M. & Bolker, B. (2014) lme4: linear mixed-effects models using Eigen and S4.",NA
+MA162,MetaWin,3 (Appendix S2),Y,2.1,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. MetaWin: Statistical Software for Meta-Analysis. Version 2.0. Sinauer Associates, Inc., Sunderland.",NA
+MA171,MetaWin,311,N,NA,N,N/A,N/A,N,NA,NA
+MA171,R,312,Y,2.15.2,N,N/A,N,Y,"R Development Core Team (2009) R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna. ISBN 3-900051-07-0. http://www.R-project.org",NA
+MA182,MetaWin,2037,Y,2.0/2.1,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. MetaWin: statistical software for meta-analysis: Version 2.1. Sinauer, Sunderland, Massachusetts, USA.","Version of MetaWin is ambiguous, difference between text and citation"
+MA182,R,2037,Y,3.0.3,N,N/A,N,Y,"R Core Team. 2014. R: a language and environment for statistical computing. Version 3.0.3. R Foundation for Statistical Computing, Vienna, Austria. http://www.R-project.org/",NA
+MA194,MetaWin,708,N,NA,N,N/A,N/A,Y,"Rosenberg, M. S., D. C. Adams, and J. Gurevitch. 2000. MetaWin. Statistical software for meta-analysis. Sinauer Associates, Sunderland, Massachusetts, USA.",NA
+MA194,R,709,N,NA,N,N/A,Y,Y,"R Development Core Team. 2012. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA194,metafor,708,Y,1.9-2,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36:1–48.",NA
+MA194,ICC,709,Y,2.2.1,Y,CRAN,N/A,Y,"Wolak, M. E., D. J. Fairbairn, and Y. R. Paulsen. 2012. Guidelines for estimating repeatability. Methods in Ecology and Evolution 3:129–137.",NA
+MA194,DataThief III,708,N,NA,N,N/A,N/A,Y,"Tummers, B. 2006. DataThief III. http://datathief.org/",NA
+MA197,Digitize It 2010,313,Y,4.0.2,N,N/A,N/A,T,A. Carrascal,Strange pseudo-citation
+MA197,MetaWin,314,Y,2.0,N,N/A,N/A,Y,"Rosenberg MS, Adams DC, Gurevitch J. 2000. MetaWin: statistical software for meta-analysis. Sunderland (MA): Sinauer Associates.",NA
+MA197,R,314,Y,3.0.1,N,N/A,Y,Y,"R Development Core Team. 2012. R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing.",NA
+MA197,metafor,314,Y,1.9-2,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. J Stat Softw. 36:1–48.,NA
+MA197,ape,314,Y,3.1.1,Y,CRAN,N/A,Y,"Paradis E, Claude J, Strimmer K. 2004. APE: analyses of phylogenetics and evolution in R language. Bioinformatics. 20:289–290.",NA
+MA197,FigTree,314,Y,1.4,N,N/A,N/A,T,"Andrew Rambaut, 2012",Strange pseudo-citation
+MA200,ImageJ,124,N,NA,N,N/A,N/A,N,NA,NA
+MA200,MetaWin,124,Y,2.0,N,N/A,N/A,Y,"Rosenberg, M. S. et al. 1999. MetaWin: statistical software for meta-analysis. Ver. 2.0. – Sinauer.",NA
+MA203,MetaWin,1078,Y,2.0,N,N/A,N/A,Y,"Rosenberg NJ, Adams DC, Gurevitch J (2000) MetaWin: statistical software for meta-analysis MetaWin: statistical software for meta-analysis, version 2.0. Sinauer, Sunderland, MA",NA
+MA218,MetaWin,1176,Y,2,N,N/A,N/A,Y,"Rosenberg, M.S., Adams, D.C. & Gurevitch, J. (1999). MetaWin: Statistical Software for Meta-Analysis. (ed. Associates, S.). Version 2.0. Sinauer Associates, Sunderland, Massachusetts.",NA
+MA218,Engauge Digitizer,1175,Y,4.1,N,N/A,N/A,Y,"Mitchell, M. (2000). Engauge Digitizer. Free Software Foundation, Inc., Boston, MA.",NA
+MA220,MetaWin,554,Y,2,N,N/A,N/A,Y,"Rosenberg, M.S., Adams, D.C. & Gurevitch, J. (2000) MetaWin: Statistical Software for Meta-Analysis, Version 2. Sinauer Associates, Sunderland.",NA
+MA027,R,869,Y,3.0.2,N,N/A,Y,Y,"R Development Core Team (2012) R: A Language and Environment for Statistical Computing. Vienna, Austria.",NA
+MA027,MCMCglmm,869,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA027,metafor,869,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA027,coda,869,N,NA,Y,CRAN,N/A,Y,"Plummer, M., Best, N., Cowles, K. & Vines, K. (2006) CODA: convergence diagnosis and output analysis for MCMC. R News, 6, 7–11.",NA
+MA031,R,1345,Y,3.3.2,N,N/A,Y,Y,"R Development Core Team. 2015. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA031,MCMCglmm,1345,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. 2010. MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J. Stat. Softw. 33:1–22.",NA
+MA031,xyscan,1344,N,NA,N,N/A,N/A,N,NA,"Used for extracting data from plots, no other details given"
+MA038,R,687,Y,3.2.1,N,N/A,Y,Y,"R Core Team (2015) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA038,lme4,687,N,NA,Y,CRAN,N/A,Y,"Bates, D., Maechler, M. & Bolker, B. (2015) Fitting linear mixed-effects models using lme4. Journal of Statistical Software, 67, 1–48.",NA
+MA038,MCMCglmm,688,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA038,metafor,688,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2012) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA041,R,253,N,NA,N,N/A,Y,Y,"R Development Core Team. (2014) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA041,MCMCglmm,253,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA041,WebPlotDigitizer,252,Y,3.9,N,N/A,N/A,Y,"Rohatgi, A. (2015) WebPlotDigitizer. Available at: http://arohatgi.info/ WebPlotDigitizer, Accessed 15 October 2015.",NA
+MA045,R,357,Y,3.1.2,N,N/A,Y,N,NA,NA
+MA045,Rstudio,357,Y,0.99.879,N,N/A,N/A,N,NA,NA
+MA045,compute.es,357,N,NA,Y,CRAN,N/A,N,NA,NA
+MA045,MCMCglmm,357,Y,2.22,Y,CRAN,N/A,Y,Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J Stat Softw 33:1–22. doi:10.1002/ana.22635,NA
+MA046,GraphClick,554,N,NA,N,N/A,N/A,Y,"Arizona-Software (2008). GraphClick. Arizona-Software, Available at http://www.arizona-software.ch/graphclick/. Accessed 01/06/2013.",NA
+MA046,R,556,Y,3.0.3,N,N/A,Y,Y,"R Core Team ( 2014 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Available at http://www.R-project.org/. Accessed 05/06/2014.",NA
+MA046,ape,556,N,NA,Y,CRAN,N/A,N,NA,NA
+MA046,metafor,556,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48 (doi: 10.18637/jss.v036.i03).",NA
+MA046,MuMIn,556,Y,1.12.1,Y,CRAN,N/A,Y,"Barton, K. ( 2014 ). MuMIn: multi-model inference. R package version 1.12.1. Available at http://r-forge.r-project.org/projects/mumin/. Accessed 01/12/2014.",NA
+MA046,MCMCglmm,557,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. ( 2010 ). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33, 1–22 (doi:10.1002/ana.23792).",NA
+MA049,R,118,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA049,metafor,118,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA049,MCMCglmm,119,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. ( 2010 ). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33, 1–22.",NA
+MA060,DataThief III,671,N,NA,N,N/A,N/A,Y,Tummers B (2006) Datathief iii. http://datathief.org.,NA
+MA060,R,674,Y,3.2.1,N,N/A,Y,Y,"R Core Team (2015) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA060,ape,674,Y,3.5,Y,CRAN,N/A,Y,"Paradis E, Claude J, Strimmer K (2004) Ape: analyses of phylogenetics and evolution in r language. Bioinformatics, 20, 289–290.",NA
+MA060,MCMCglmm,674,N,NA,Y,CRAN,N/A,Y,"Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA060,metafor,674,N,NA,Y,CRAN,N/A,Y,"Viechtbauer W (2010) Conducting meta-analyses in r with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA060,phytools,674,N,NA,Y,CRAN,N/A,Y,"Revell LJ (2012) phytools: an R package for phylogenetic comparative biology (and other things). Methods in Ecology and Evolution, 3, 217–223.",NA
+MA060,plotmcmc,674,Y,2.0-0,Y,CRAN,N/A,Y,"Magnusson A, Stewart I (2014) plotMCMC: MCMC Diagnostic Plots. R package version 2.0-0. https://CRAN.R-project.org/package=plotMCMC.",NA
+MA060,shape,674,Y,1.4.2,Y,CRAN,N/A,Y,"Soetaert K (2014) shape: functions for plotting graphical shapes, colors. R package version 1.4.2. https://CRAN.R-project.org/package=shape.",NA
+MA065,R,78,Y,3.2.1,N,N/A,Y,T,R Core Development Team,NA
+MA065,MCMCglmm,78,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. ( 2010 ). MCMC methods for multi-response generalised linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33, 1–22.",NA
+MA065,metafor,80,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA068,WebPlotDigitizer,5,N,NA,N,N/A,N/A,T,http://arohatgi.info/WebPlotDigitizer/,NA
+MA068,R,5,Y,3.3.0,N,N/A,Y,Y,"R Core Development Team ( 2015 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Available at http://www.R-project.org/.",NA
+MA068,betareg,5,N,NA,Y,CRAN,N/A,N,NA,NA
+MA068,MCMCglmm,6,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. ( 2010 ). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33, 1–22.",NA
+MA068,metafor,14,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor Package. Journal of Statistical Software 36, 1–48.",NA
+MA074,R,2794,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA074,metafor,2794,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metaphor package. J. Stat. Soft. 36:1–48.",NA
+MA074,MCMCglmm,2795,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. 2010. MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J. Stat. Soft. 33:1–22.",NA
+MA079,GetData Graph Digitizer,1071,Y,2.24,N,N/A,N/A,T,http://getdata-graph-digitizer.com,NA
+MA079,R,1071,Y,3.0.2,N,N/A,Y,Y,R Development Core Team ( 2014 ). R: A language and environment for statistical computing. http://www.r-project.org.,NA
+MA079,MCMCglmm,1071,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. ( 2010 ). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33, 1–22.",NA
+MA079,mice,1072,N,NA,Y,CRAN,N/A,Y,"van Buuren, S. & Groothuis-Oudshoorn, K. ( 2011 ). MICE: multivariate imputation by chained equations in R. Journal of Statistical Software 45, 1–67.",NA
+MA079,AbstrackR,1067,N,NA,N,N/A,N/A,Y,"Wallace, B. C., Small, K., Brodley, C. E., Lau, J. & Trikalinos, T. A. ( 2012 ). Deploying an interactive machine learning system in an evidence-based practice center: abstrackr. In Proceedings of the ACM International Health Informatics Symposium, Miami, Florida, pp. 819–824.",NA
+MA096,R,344,Y,3.0.2,N,N/A,Y,Y,"R Core Team. 2013. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna. http://www.R-project.org/.",NA
+MA096,mgcv,344,N,NA,Y,CRAN,N/A,Y,"Wood, S. 2010. MGCV: GAMs with GCV/AIC/REML smoothness estimation and GAMMs by PQL. http://cran.r-project.org/package=mgcv.",NA
+MA096,gbm,346,Y,2.1,Y,CRAN,N/A,Y,"Ridgeway, G. 2015. gbm: generalized boosted regression models. R package, version 2.1.",NA
+MA096,MCMCglmm,347,Y,2.22,Y,CRAN,N/A,Y,"Hadfield, J. 2015b. MCMCglmm. R package, version 2.22",NA
+MA112,R,685,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA112,compute.es,685,N,NA,Y,CRAN,N/A,N,NA,NA
+MA112,MCMCglmm,685,N,NA,Y,CRAN,N/A,Y,Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J Stat Softw 33:1–22,NA
+MA112,lme4,686,N,NA,Y,CRAN,N/A,N,NA,NA
+MA122,R,437,Y,3.1.2,N,N/A,Y,Y,"R Core Team. (2014). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. Available at: http://www.R-project.org/. Last updated: 31 October 2014.",NA
+MA122,MCMCglmm,437,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R Package. J. Stat. Softw., 33, 1–22.",NA
+MA124,R,1433,Y,3.0.1,N,N/A,Y,Y,"R Core Team (2015) R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.",NA
+MA124,MCMCglmm,1433,N,NA,Y,CRAN,N/A,Y,"Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R Package. Journal of Statistical Software, 33, 1–22.",NA
+MA135,PlotDigitizer,338,Y,2.6.3,N,N/A,N/A,T,"SourceForge, DHI Group Inc, New York, New York, USA",NA
+MA135,R,341,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA135,MCMCglmm,341,N,NA,Y,CRAN,N/A,Y,"Hadfield, J.D. (2010). MCMCglmm: Markov chain Monte Carlo methods for generalised linear mixed models.",NA
+MA135,MuMIn,341,N,NA,Y,CRAN,N/A,N,NA,NA
+MA145,R,366,Y,3.2.2,N,N/A,Y,Y,R Development Core Team. 2015. R: a language and environment for statistical computing. Vienna (Austria): R Foundation for Statistical Computing.,NA
+MA145,MCMCglmm,365,N,NA,Y,CRAN,N/A,Y,Hadfield JD. 2010. MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J Stat Soft. 33:1–22.,NA
+MA145,metafor,366,N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. J Stat Softw. 36:1–48.,NA
+MA159,R,2009,N,NA,N,N/A,Y,Y,"R Development Core Team (2015) R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria, http://www.R-project.org",NA
+MA159,MCMCglmm,2010,N,NA,Y,CRAN,N/A,Y,Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. J Stat Softw 33:1–22,NA
+MA159,metafor,2011,N,NA,Y,CRAN,N/A,Y,Viechtbauer W (2010) Conducting meta-analyses in R with the metafor package. J Stat Softw 36:1–48,NA
+MA180,R,1562,Y,2.15.2,N,N/A,Y,Y,"R Development Core Team (2012) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. Available at http://www.R-project.org. ISBN 3-900051-07-0",NA
+MA180,MCMCglmm,1560,N,NA,Y,CRAN,N/A,Y,"Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA180,metafor,1562,N,NA,Y,CRAN,N/A,Y,"Viechtbauer W (2010) Conducting meta-analyses in R with metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA180,Cervus,1560,Y,3.0,N,N/A,N/A,Y,"Marshall TC, Slate J, Kruuk LEB, Pemberton JM (1998) Statistical confidence for likelihood-based paternity inference in natural populations. Molecular Ecology, 7, 639–655.",NA
+MA180,GENALEX,1560,Y,6.5,N,N/A,N/A,Y,"Peakall R, Smouse PE (2012) GenAlEx 6.5: genetic analysis in Excel. Population genetic software for teaching and research - An update. Bioinformatics, 28, 2537–2539.",NA
+MA188,GraphClick,652,N,NA,N,N/A,N/A,Y,"Boyle,M.A., A.L.Samaha,A.M.Rodewald, and A.N.Hoffmann.2013. Evaluation of the reliability and validity of GraphClick as a data extraction program. Computers in Human Behavior 29:1023–1027.",NA
+MA188,R,652,Y,3.1.1,N,N/A,Y,Y,R Development Core Team. 2014. R: a language and environment for statistical computing. Version 3.1.1 http://www.r-project.org.,NA
+MA188,metafor,652,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36:1–48.",NA
+MA188,MCMCglmm,652,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. 2010. MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software 33:1–22.",NA
+MA198,ARLSUMSTAT,4592,Y,3.5,N,N/A,N/A,Y,"Excoffier L, Lischer HEL (2010) Arlequin suite ver 3.5: a new series of programs to perform population genetics analyses under Linux and Windows. Molecular ecology resources, 10, 564–567.",NA
+MA198,ADZE,4592,Y,1.0,N,N/A,N/A,Y,"Szpiech ZA, Jakobsson M, Rosenberg NA (2008) ADZE: a rarefaction approach for counting alleles private to combinations of populations. Bioinformatics, 24, 2498–2504.",NA
+MA198,R,4592,Y,2.13,N,N/A,Y,N,NA,NA
+MA198,ecodist,4592,N,NA,Y,CRAN,N/A,Y,"Goslee SC, Urban DL (2007) The ecodist package for dissimilarity-based analysis of ecological data. Journal of Statistical Software, 22, 1–19.",NA
+MA198,MCMCglmm,4593,N,NA,Y,CRAN,N/A,Y,"Hadfield JD (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA198,randomForest,4594,N,NA,Y,CRAN,N/A,Y,"Liaw A, Wiener M (2002) Classification and regression by randomForest. R News, 2, 18–22.",NA
+MA198,abc,4594,N,NA,Y,CRAN,N/A,Y,"Csillery K, Franc ?ois O, Blum MGB (2012) abc: an R package for approximate Bayesian computation (ABC). Methods in Ecology and Evolution, 3, 475–479.",NA
+MA215,R,178,Y,3.0.2,N,N/A,Y,Y,"R Core Team (2013) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA215,MCMCglmm,178,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. (2010) MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R package. Journal of Statistical Software, 33, 1–22.",NA
+MA215,Phylocom,177,N,NA,N,N/A,N/A,Y,"Webb, C.O., Ackerly, D.D. & Kembel, S.W. (2008) Phylocom: software for the analysis of phylogenetic community structure and trait evolution. Bioinformatics, 24, 2098–2100.",NA
+MA215,Phylomatic,177,N,NA,N,N/A,N/A,Y,"Webb, C.O. & Donoghue, M.J. (2005) Phylomatic: tree assembly for applied phylogenetics. Molecular Ecology Notes, 5, 181–183.",NA
+MA215,phytools,179,N,NA,Y,CRAN,N/A,Y,"Revell, L.J. (2013) Two new graphical methods for mapping trait evolution on phylogenies (ed R Freckleton). Methods in Ecology and Evolution, 4, 754–759.",NA
+MA222,R,1021,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA222,MCMCglmm,1021,N,NA,Y,CRAN,N/A,Y,"Hadfield, J. D. (2010). MCMC methods for multi-response generalized linear mixed models: the MCMCglmm R Package. Journal of Statistical Software 33, 1–22.",NA
+MA222,ape,1021,N,NA,Y,CRAN,N/A,Y,"Paradis, E., Claude, J. & Strimmer, K. (2004). APE: analyses of phylogenetics and evolution in R language. Bioinformatics 20, 289–290.",NA
+MA222,metafor,1026,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA020,R,1787,N,NA,N,N/A,Y,Y,"R Development Core Team ( 2015 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Available at http://www.R-project.org. Accessed 00.12.2015.",NA
+MA020,raster,1787,Y,2.2-31,Y,CRAN,N/A,Y,"Hijmans, R. J. ( 2014 ). raster: geographic data analysis and modeling. R package, version2.2-31.Availableathttp://CRAN.R-project.org/package=raster. Accessed 00.9.2015.",NA
+MA020,rgdal,1787,N,NA,Y,CRAN,N/A,N,NA,NA
+MA020,maptools,1787,N,NA,Y,CRAN,N/A,N,NA,NA
+MA020,dismo,1787,N,NA,Y,CRAN,N/A,Y,"Hijmans, R. J., Phillips, S., Leathwick, J. & Elith, J. ( 2012 ). Package ‘dismo’. Available at http://cran.r-project.org/web/packages/dismo/index.html. Accessed 00.10.2015.",NA
+MA020,metafor,1788,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA020,lme4,1789,N,NA,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B. & Walker, S. ( 2015 ). Fitting linear mixed-effects models using lme4. Journal of Statistical Software 67, 1–48.",NA
+MA024,R,1174,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA024,metafor,1174,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA062,GraphClick,1111,N,NA,N,N/A,N/A,T,http://www.arizona-software.ch/graphclick/,NA
+MA062,R,1114,Y,3.4.0,N,N/A,Y,Y,"R Core Team ( 2016 ). R: A Language and Environment for Statistical Computing. Vienna, Austria. URL https://www.R-project.org/.",NA
+MA062,mice,1114,N,NA,Y,CRAN,N/A,Y,"van Buuren, S. & Groothuis-Oudshoorn, K. ( 2011 ). mice: multivariate imputation by chained equations in R. Journal of Statistical Software 45, 1–67.",NA
+MA062,metafor,1114,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA067,GetData Graph Digitizer,303,N,NA,N,N/A,N/A,N,NA,NA
+MA067,R,306,Y,3.2.3,N,N/A,Y,Y,"R Core Team. (2013). R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing.",NA
+MA067,compute.es,303,N,NA,Y,CRAN,N/A,Y,"Del Re, A. (2010). compute.es: Compute effect sizes. R package.",NA
+MA067,glmulti,305,N,NA,Y,CRAN,N/A,Y,"Calcagno, V., & de Mazancourt, C. (2010). glmulti: An R package for easy automated model selection with (generalized) linear models. Journal of Statistical Software, 34, 1–29. https://doi.org/10.18637/jss.v034.i12",NA
+MA067,metafor,305,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta- analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA067,rotl,306,N,NA,Y,CRAN,N/A,Y,"Michonneau, F., Brown, J. W., & Winter, D. J. (2016). rotl: An R package to interact with the Open Tree of Life data. Methods in Ecology and Evolution, 7, 1476–1481. https://doi.org/10.1111/2041-210X.12593",NA
+MA067,ape,306,N,NA,Y,CRAN,N/A,Y,"Paradis, E., Claude, J., & Strimmer, K. (2004). APE: Analyses of phylogenetics and evolution in R language. Bioinformatics, 20, 289–290. https://doi.org/10.1093/bioinformatics/btg412",NA
+MA048,R,175,Y,2.14.1,N,N/A,Y,T,< www.r-project.org >,NA
+MA048,metafor,175,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analysis in R with the metafor package. – J. Stat. Soft. 36: 1–48.",NA
+MA048,vif,176,N,NA,Y,CRAN,N/A,Y,"Lin, D. et al. 2011. VIF regression: a fast regression algorithm for large data. – J. Am. Stat. Ass. 106: 232–247.",NA
+MA195,GetData Graph Digitizer,815,Y,2.25,N,N/A,N/A,T,Fedorov 2012; software available online - getdata-graph-digitizer.com,There is a special footnote with a link to the website
+MA195,ArcGIS,815,Y,10,N,N/A,N/A,N,NA,NA
+MA195,R,818,Y,3.0.1,N,N/A,Y,Y,"R Development Core Team. 2013. R version 3.0.1. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA195,metafor,818,N,NA,Y,CRAN,N/A,N,NA,NA
+MA195,lme4,818,N,NA,Y,CRAN,N/A,N,NA,NA
+MA195,languageR,818,N,NA,Y,CRAN,N/A,N,NA,NA
+MA001,WebPlotDigitizer,1787,N,NA,N,N/A,N/A,Y,"Rohatgi, A. (2015) WebPlotDigitizer. http://arohatgi.info/WebPlotDigitizer/",NA
+MA001,R,1787,N,NA,N,N/A,Y,Y,"R Development Core Team (2015) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA001,metafor,1787,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA005,DataThief III,1481,N,NA,N,N/A,N/A,Y,"Tummers, B. (2006) Data Thief III. Available at: http://datathief.org/. Last accessed date, September 12, 2016.",NA
+MA005,R,1482,Y,3.2.3,N,N/A,Y,Y,"R Core Team (2015). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.",NA
+MA005,ape,1482,N,NA,Y,CRAN,N/A,Y,"Paradis, E., Claude, J. & Strimmer, K. (2004). APE: analyses of phylogenetics and evolution in R language. Bioinformatics, 20, 289–290.",NA
+MA005,metafor,1482,Y,1.9-9,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. J. Stat. Softw., 36, 1–48.",NA
+MA010,R,1398,Y,3.1.2,N,N/A,Y,Y,"R Core Team (2014) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. Available at: http://www.r-project.org/ (accessed 8 February 2015)",NA
+MA010,metafor,1397,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA010,lme4,1398,N,NA,Y,CRAN,N/A,Y,"Bates, D., Maechler, M., Bolker, B. & Waler, S. (2015) Fitting linear mixed-effects models using lme4. Journal of Statistical Software, 67, 1–48.",NA
+MA010,merTools,1398,Y,0.2.1,Y,CRAN,N/A,Y,"Knowles, J.E. & Frederick, C. (2016) merTools: Tools for analyzing mixed effect regression models 0.2.1. Available at: https://cran.r-project.org/web/packages/merTools/merTools.pdf (accessed 4 April 2016)",NA
+MA014,GraphClick,1730,N,NA,N,N/A,N/A,T,http://www.arizona-software.ch/graphclick/,NA
+MA014,R,1730,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA014,metafor,1730,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA028,ImageJ,774,Y,1.48,N,N/A,N/A,Y,"Rasband, W. S. 1997–2016. ImageJ, < http://imagej.nih.gov/ij >. – US Nat. Inst. of Health, Bethesda, MD, USA.",NA
+MA028,R,776,Y,3.2.2,N,N/A,Y,T,< www.r-project.org >,NA
+MA028,ape,776,N,NA,Y,CRAN,N/A,Y,"Paradis, E. et al. 2004. APE: analyses of phylogenetics and evolution in R language. – Bioinformatics 20: 289–290.",NA
+MA028,metafor,776,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA037,DataThief III,1028,N,NA,N,N/A,N/A,Y,"Tummers, B. 2006. DataThief III. http://datathief.org/",NA
+MA037,R,1029,Y,3.2.3,N,N/A,Y,Y,"R Development Core Team. 2011. R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. http://www.R-project.org/",NA
+MA037,metafor,1029,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta- analyses in R with the metafor package. Journal of Statistical Software 36:1–48.",NA
+MA037,rvest,1029,Y,0.3.1,Y,CRAN,N/A,Y,"Wickham, H. 2015. rvest: Easily Harvest (Scrape) Web Pages. R package version 0.3.1. https://CRAN.R-project.org/package=rvest",NA
+MA039,R,350,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA039,vegan,350,Y,2.3-0,Y,CRAN,N/A,Y,"Oksanen, J., Blanchet, F.G., Kindt, R., Legendre, P., Minchin, P.R., O’Hara, R.B. et al. (2015). vegan: Community Ecology Package.",NA
+MA039,metafor,350,Y,1.9-5,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting Meta-Analyses in R with the metafor Package. J. Stat. Softw., 36, 1–48.",NA
+MA044,R,267,Y,3.2.2,N,N/A,Y,Y,R Development Core Team. (2015). A language and environment for statistical computing. R version 3.2.2. R Foundation for Statistical Computing. Vienna.,NA
+MA044,metafor,267,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. J. Stat. Softw., 36, 1–48.",NA
+MA138,R,183,Y,3.1.2,N,N/A,Y,N,NA,NA
+MA138,metafor,183,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA138,Techdig,183,Y,2.0,N,N/A,N/A,Y,"Jones, R.B. (2007) TechDig. Microsoft Corporation. Collaborative Computational Program, www.ccp14.ac.uk.",NA
+MA140,R,205,N,NA,N,N/A,Y,Y,"R Core Team. (2013). R: A language and environment for statistical computing. Vienna, Austria: The R Foundation for Statistical Computing. Retrieved from http://www.r-project.org/.",NA
+MA140,weights,205,Y,0.75,Y,CRAN,N/A,Y,"Pasek, J. (2012). weights: Weighting and weighted statistics (R package), version 0.75. http://CRAN.R-project.org/package¼weights.",NA
+MA140,metafor,205,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1e48.",NA
+MA147,R,64,N,NA,N,N/A,Y,N,NA,NA
+MA147,metafor,66,N,NA,Y,CRAN,N/A,N,NA,NA
+MA147,lme4,70,N,NA,Y,CRAN,N/A,N,NA,Inferred from reference to lmer function in article
+MA149,WebPlotDigitizer,860,N,NA,N,N/A,N/A,Y,"Rohatgi, A. (2011) WebPlotDigitizer. http://arohatgi.info/WebPlotDigitizer/app/.",NA
+MA149,ArcMap,860,Y,10.0,N,N/A,N/A,T,"ESRI, Inc., Redlands, CA",NA
+MA149,R,861,Y,3.2.2,N,N/A,Y,Y,"R Core Team. (2013) R 3.0. Vienna, Austria.",NA
+MA149,metafor,861,Y,1.9-8,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA164,JMP,1871,Y,9.0.3,N,N/A,N/A,Y,"SAS Institute Inc. (2010) JMP v. 9.03., Cary, NC, USA",NA
+MA164,R,1871,Y,3.1.2,N,N/A,Y,Y,"Development Core Team R (2014) R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna",NA
+MA164,GraphClick,1871,Y,3.0.2,N,N/A,N/A,T,http://www.arizona-software.ch/,NA
+MA164,metafor,1872,Y,1.9.2,Y,CRAN,N/A,Y,Viechtbauer W (2010) Conducting meta-analyses in R with the metafor Package. J Stat Softw 36:1–48,NA
+MA169,ImageJ,880,Y,1.47t,N,N/A,N/A,T,http://rsb.info.nih.gov/ij,NA
+MA169,WebPlotDigitizer,880,Y,2.5,N,N/A,N/A,T,http://www.arohatgi.info/WebPlotDigitizer,NA
+MA169,R,880,N,NA,N,N/A,Y,Y,"R Development Core Team (2011). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Viena.",NA
+MA169,metafor,880,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA178,R,487,N,NA,N,N/A,Y,Y,"R Core Team. (2013). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA178,multcomp,487,N,NA,Y,CRAN,N/A,Y,"Benjamini, Y. & Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. J. R. Stat. Soc. Ser. B Methodol. 57, 289–300.",NA
+MA178,metafor,487,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. J. Stat. Softw., 36, 1–48.",NA
+MA183,R,960,N,NA,N,N/A,Y,Y,R Development Core Team. 2011. R: a language and environment for statistical computing. Vienna (Austria): R Foundation for Statistical Computing.,NA
+MA183,ASReml-R,960,N,NA,N,N/A,N/A,Y,"Butler D, Cullis BR, Gilmour AR, Gogel BJ. 2007. ASReml-S reference manual. Brisbane (Australia): Dept. of Primary Industries and Fisheries.","This is a non-CRAN, commercial R package?"
+MA183,metafor,962,N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. J Stat Soft. 36:1–48.,NA
+MA184,R,842,N,NA,N,N/A,Y,Y,"R Core Development Team (2012) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. URL http://www.R-project.org (Accessed October 12, 2012).",NA
+MA184,metafor,842,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA187,R,586,Y,3.0.2,N,N/A,Y,Y,"R Core Team (2013). R: A language and Environment. R Foundation, Vienna, Austria.",NA
+MA187,rmeta,586,Y,2.16,Y,CRAN,N/A,Y,"Lumley, T. (2012). rmeta: Meta-analysis. R package version 2.16. http://cran.r-project.org/web/packages/rmeta/index.html.",NA
+MA187,metafor,586,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting Meta-Analyses in R with the metafor Package. J. Stat. Softw., 36, 1–48.",NA
+MA053,PlotDigitizer,140,N,NA,N,N/A,N/A,N,NA,NA
+MA053,R,141,Y,3.4.1,N,N/A,Y,Y,"R Development Core Team, R. (2011). R: A language and environment for statistical computing R. D. C. Team, ed. R Foundation for Statistical Computing, 1(2.11.1), p.409. Available at: http://www.r-project.org. Last accessed 18 October 2017",NA
+MA053,multcomp,141,N,NA,Y,CRAN,N/A,N,NA,NA
+MA053,metafor,141,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analysis in R with the metafor package. J. Stat. Softw., 36, 1–48.",NA
+MA055,R,131,N,NA,N,N/A,Y,Y,"R Core Team. 2014. R: a language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing.",NA
+MA055,metafor,131,N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36: 1–48.,NA
+MA055,plyr,131,N,NA,Y,CRAN,N/A,Y,Wickham H. 2011. The split-apply-combine strategy for data analysis. Journal of Statistical Software 40: 1–29.,NA
+MA055,ggplot2,131,N,NA,Y,CRAN,N/A,Y,"Wickham H. 2009. ggplot2: elegant graphics for data analysis. New York, USA: Springer-Verlag.",NA
+MA057,GetData Graph Digitizer,152,N,NA,N,N/A,N/A,T,http://www.getdata-graph-digitizer.com,NA
+MA057,R,153,N,NA,N,N/A,Y,Y,"R Development Core Team. (2015). R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing, Available from: http://www.R-project.org.",NA
+MA057,metafor,153,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta- analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA058,R,7,Y,3.1.2,N,N/A,Y,Y,"RCore Team. 2014. R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA058,metafor,7,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36:1–48.",NA
+MA058,PlotDigitizer,p.1 Appendix S1,Y,2.6.8,N,N/A,N/A,T,http://plotdigitizer.sourceforge.net,NA
+MA058,maps,p.3 Appendix S1,N,NA,Y,CRAN,N/A,T,https://CRAN.R‐project.org/package=maps,NA
+MA117,WebPlotDigitizer,352,Y,2.6,N,N/A,N/A,T,http://arohatgi.info/WebPlotDigitizer/,NA
+MA117,R,352,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA117,picante,352,N,NA,Y,CRAN,N/A,Y,"Kembel, S. W., Cowan, P. D., Helmus, M. R., Cornwell, W. K., Morlon, H., Ackerly, D. D., Blomberg, S. P. & Webb, C. O. (2010). Picante: R tools for integrating phylogenies and ecology. Bioinformatics 26, 1463–1464.",NA
+MA117,metafor,352,Y,1.9-2,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA119,R,473,N,NA,N,N/A,Y,Y,"RCoreTeam(2014).R:ALanguageandEnvironmentforStatisticalComputing.Rfoundation for Statistical Computing, Vienna.",NA
+MA119,metafor,473,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA119,phytools,473,N,NA,Y,CRAN,N/A,Y,"Revell, L. J. (2012). phytools: an R package for phylogenetic comparative biology (and other things). Methods in Ecology and Evolution 3, 217–223.",NA
+MA119,JMP,474,Y,8.0.2,N,N/A,N/A,Y,"SAS Institute Inc. (2009). JMP, Version 8.0.2. SAS Institute, Inc., Cary.",NA
+MA121,R,1207,Y,3.2.0,N,N/A,Y,Y,"R Development Core Team (2007) R: a language and environment for statistical computing. R foundation for Statistical Computing, Vienna",NA
+MA121,Rstudio,1207,Y,0.98.1103,N,N/A,N/A,T,"(v.0.98.1103; RStudio, Boston, MA, USA)",NA
+MA121,metafor,1207,N,NA,Y,CRAN,N/A,Y,Viechtbauer W (2010) Conducting meta-analyses in R with the metafor package. J Stat Softw 36:1–48,NA
+MA121,ImageJ,1207,N,NA,N,N/A,N/A,Y,"Abràmoff MD, Magalhães PJ, Ram SJ (2004) Image processing with ImageJ. Biophotonics Int 11:36–42",NA
+MA121,AICcmodavg,1207,Y,1,Y,CRAN,N/A,Y,Mazerolle M (2011) AICcmodavg: model selection and multimodel inference based on (Q) AIC (c). R package version 1,NA
+MA123,R,286,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA123,metafor,286,N,NA,Y,CRAN,N/A,Y,Viechtbauer W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36: 1–48.,NA
+MA128,R,630,Y,3.0.1,N,N/A,Y,Y,"R Development Core Team (2014) R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna",NA
+MA128,metafor,630,N,NA,Y,CRAN,N/A,Y,Viechtbauer W (2010) Conducting meta-analyses in R with the metafor package. J Stat Softw 36:1–48,NA
+MA199,DataThief III,951,N,NA,N,N/A,N/A,T,< www.datathief.org >,NA
+MA199,R,952,Y,3.0.3,N,N/A,Y,T,<www.R-project.org/>,NA
+MA199,lmerTest,952,Y,2.0-11,Y,CRAN,N/A,Y,"Kuznetsova, A. et al. 2014. lmerTest: tests for random and fixed effects for linear mixed effect models (lmer objects of lme4 package). – R package ver. 2.0-11.",NA
+MA199,ggplot2,952,N,NA,Y,CRAN,N/A,Y,"Wickham, H. 2009. ggplot2: elegant graphics for data analysis. – Springer.",NA
+MA199,metafor,952,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA201,WebPlotDigitizer,1549,Y,2.6,N,N/A,N/A,T,"(v 2.6 released 10/20/2013, author Ankit Rohatg, http://arohatgi.info/WebPlotDigitizer/)",NA
+MA201,R,1549,Y,3.1.0,N,N/A,Y,Y,"R Core Team (2014) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. Available at http://www.R-project.org/",NA
+MA201,Rstudio,1549,Y,0.98.953,N,N/A,N/A,Y,"RStudio Team (2012) R Studio: Integrated Development for R. RStudio Inc, Boston, MA. Available at http://www.rstudio.com/",NA
+MA201,metafor,1549,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48 URL http://www.jstatsoft.org/v36/i03/.",NA
+MA204,R,1113,Y,3.0.1,N,N/A,Y,T,< www.r-project.org >,NA
+MA204,ade4,1113,N,NA,Y,CRAN,N/A,Y,"Dray, S. and Dufour, A. B. 2007. The ade4 package: implementing the duality diagram for ecologists. – J. Stat. Softw. 22: 1–20.",NA
+MA204,metafor,1113,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA204,Hmisc,1113,Y,3.13-0,Y,CRAN,N/A,Y,"Harrell Jr, F. E. 2013. Hmisc: Harrell miscellaneous. R package ver. 3.13-0. – < http://CRAN.R-project.org/package=Hmisc >.",NA
+MA206,ImageJ,1122,N,NA,N,N/A,N/A,Y,"Schneider, C. A. et al. 2012. NIH Image to ImageJ: 25 years of image analysis. – Nat. Meth. 9: 671–675.",NA
+MA206,ArcGIS,1123,Y,10.1,N,N/A,N/A,N,NA,NA
+MA206,metafor,1123,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA206,R,p.10 Supplementary Info,Y,2.15,N,N/A,Y,T,<www.r-project.org>,No mention of R in the article only in supplement
+MA207,Rstudio,675,N,NA,N,N/A,N/A,Y,RStudio (2012). RStudio: integrated development environment for R (Version 2.15.2) (Computer software). Boston. Available at http://www.rstudio.com/ Accessed 5.2.2013.,NA
+MA207,R,687,Y,2.15.2,N,N/A,Y,N,NA,Mentioned in the reference to Rstudio but nowhere else
+MA207,metafor,675,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). Conducting meta-analysis in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA211,Image Pro Plus,374,Y,7.0,N,N/A,N/A,T,"Media Cybernetics, Rockville, Maryland, USA",NA
+MA211,R,374,Y,3.0.2,N,N/A,Y,Y,"R Development Core Team. 2013. R 3.02. R Project for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA211,metafor,374,Y,1.9-2,Y,CRAN,N/A,N,NA,"In the acknowledgments: ""We thank Wolfgang Viechtbauer, who provided some code for us to use the metafor package in R"""
+MA076,R,1703,Y,3.0.1,N,N/A,Y,T,< www.r-project.org >,NA
+MA076,metafor,1703,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Software. 36: 1–48.",NA
+MA078,ImageJ,1365,N,NA,N,N/A,N/A,Y,"Rasband, W.S. (1997–2015). ImageJ. U. S. National Institutes of Health, Bethesda, Maryland, USA. URL http://imagej.nih.gov/ij/.",NA
+MA078,R,1365,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA078,metafor,1365,Y,1.9.8,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010). “metafor: Meta-Analysis Package for R.” R Package Version 1.9.8. Available at: http://CRAN.R-project.org/package=metafor. Last accessed: May 2016.",NA
+MA082,Minitab,p.2 Appendix S1,Y,17,N,N/A,N/A,T,"Minitab Inc., State College, PA, USA",Details in supplement only
+MA082,R,p.2 Appendix S1,Y,3.1,N,N/A,Y,T,(v. 3.1; www.R-project.org),NA
+MA082,metafor,p.3 Appendix S1,Y,1.9-2,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36, 1–48.","Full reference is in the main article, but otherwise not mentioned. Mention in Appendix only"
+MA090,R,1388,Y,3.2.3,N,N/A,Y,T,< www.r-project.org >,NA
+MA090,vegan,1388,N,NA,Y,CRAN,N/A,Y,"Oksanen, J. et al. 2015. vegan: community ecology package. – < http://CRAN.R-project.org/package = vegan >.",NA
+MA090,inext,1388,N,NA,Y,CRAN,N/A,Y,"Hsieh, T. C. et al. 2015. inext: iNterpolation and EXTrapolation for species diversity. – < http://chao.stat.nthu.edu.tw/blog/software-download >.",NA
+MA090,metafor,1390,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. – J. Stat. Softw. 36: 1–48.",NA
+MA095,R,1495,N,NA,N,N/A,Y,Y,"R Core Team (2014) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria.",NA
+MA095,lme4,1495,N,NA,Y,CRAN,N/A,Y,"Bates, D., M€ achler, M., Bolker, B. & Walker, S. (2014) Fitting linear mixed-effects models using lme4. arXiv: 1406.5823.",NA
+MA095,metafor,1495,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA095,ggplot2,1495,N,NA,Y,CRAN,N/A,Y,"Wickham, H. (2009) Ggplot2: Elegant Graphics for Data Analysis. Springer, New York, NY, USA.",NA
+MA097,PlotDigitizer,45,N,NA,N,N/A,N/A,Y,"Huwaldt J, Steinhorst S (2013) Plot Digitizer. Available at: http://plot-digitizer.sourceforge.net/",NA
+MA097,JAGS,46,Y,3.4,N,N/A,N/A,Y,Plummer M (2003) JAGS: A program for analysis of Bayesian graphical models using Gibbs sampling. Available at: http://mcmc-jags.sourceforge.net/,NA
+MA097,rjags,46,N,NA,Y,CRAN,N/A,Y,Plummer M (2014) rjags: Bayesian graphical models using MCMC. Available at: https://cran.r-project.org/web/packages/rjags/rjags.pdf,NA
+MA097,R,46,N,NA,N,N/A,Y,Y,"R Core Team (2013) R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna",NA
+MA097,metafor,47,N,NA,Y,CRAN,N/A,Y,Viechtbauer W (2010) Conducting meta-analyses in R with the metafor package. J Stat Softw 36:1–48,NA
+MA097,ggplot2,47,N,NA,Y,CRAN,N/A,Y,"Wickham H (2009) ggplot2: elegant graphics for data analysis. Springer SBM, New York",NA
+MA099,DataThief III,1342,Y,1.3,N,N/A,N/A,Y,"Tummers, B. (2006) DataThief III, v.1.3. Available at: http://www.datathief.org/ (accessed Jan–Dec 2010).",NA
+MA099,WebPlotDigitizer,1343,Y,3.10,N,N/A,N/A,Y,"Rohatgi, A. (2015) WebPlotDigitalizer: HTML5 based online tool to extract numerical data from plot images. Version 3.10 [WWW document] Available at: http://arohatgi.info/WebPlotDigitizer/app/ (accessed Oct 2015–Apr 2016).",NA
+MA099,R,1343,N,NA,N,N/A,Y,N,NA,Only mentioned implicitly through the mention of R packages
+MA099,metafor,1343,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. (2010) Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1–48.",NA
+MA101,WebPlotDigitizer,581,Y,2.4,N,N/A,N/A,Y,"Rohatgi, A. ( 2012 ). WebPlotDigitizer v2.4. Accessed 8 April 2015. Available at http://arohatgi.info/WebPlotDigitizer.",NA
+MA101,compute.es,583,N,NA,Y,CRAN,N/A,Y,"Del Re, A. C. ( 2014 ). Package ‘‘compute.es’’. Accessed 8 April 2015. Available at http://cran.r-project.org/web/packages/compute.es/compute.es.pdf).",NA
+MA101,R,583,N,NA,N,N/A,Y,Y,"R Core Team ( 2014 ). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna. Accessed 8 April 2015. Available at http://www.R-project.org/.",NA
+MA101,metafor,583,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. ( 2010 ). Conducting meta-analysis in R with the metafor package. Journal of Statistical Software 36, 1–48.",NA
+MA103,R,282,Y,3.1.2,N,N/A,Y,Y,"R Core Team. 2014. The R Project for Statistical Computing, version 3.1.2. R Foundation for Statistical Computing, Vienna, Austria. www.r-project.org",NA
+MA103,metafor,282,N,NA,Y,CRAN,N/A,Y,"Viechtbauer, W. 2010. Conducting meta-analyses in R with the metafor package. Journal of Statistical Software 36:1–48.",NA
+MA061,Mesquite,23,N,NA,N,N/A,N/A,Y,"Maddison, W.P. & Maddison, D.R. ( 2017 ). Mesquite: a modular system for evolutionary analysis. http://mesquiteproject.org",NA

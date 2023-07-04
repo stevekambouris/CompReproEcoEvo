@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA095","mean","Fisher z-transformation of correlation","point_est",0.76,0.76,0,"Original and reproduced values match exactly"
+"MA095","mean","Fisher z-transformation of correlation","ci_lower",0.61,0.61,0,"Original and reproduced values match exactly"
+"MA095","mean","Fisher z-transformation of correlation","ci_upper",0.91,0.91,0,"Original and reproduced values match exactly"
+"MA095","mean","Fisher z-transformation of correlation","n",25,25,0,"Original and reproduced values match exactly"

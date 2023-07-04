@@ -1,0 +1,13 @@
+Package: reprohelper
+Title: Helper functions for computational reproducibility reports
+Version: 0.5.0
+Authors@R: 
+    person(given = "Steve",
+           family = "Kambouris",
+           role = c("aut", "cre"),
+           email = "steve_rpackages@fastmail.com")
+Description: This package contains some functions that are useful for conducting and reporting a computational reproduction attempt.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

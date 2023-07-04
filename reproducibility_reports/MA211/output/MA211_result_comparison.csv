@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA211","mean","log response ratio","point_est",0.24,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA211","mean","log response ratio","ci_lower",0.23,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA211","mean","log response ratio","ci_upper",0.25,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA211","mean","log response ratio","n",3298,NA,NA,"Cannot calculate result, invalid value(s)"

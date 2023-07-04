@@ -1,0 +1,155 @@
+---
+title: "Reproducibility Report for MA155"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Strader, M. E., Aglyamova, G. V., & Matz, M. V. (2016). Red fluorescence in coral larvae is associated with a diapause-like state. _Molecular Ecology_, _25_(2), 559–569. https://doi.org/10.1111/mec.13488
+
+# Result to be reproduced
+
+> In comparing the KOG delta ranks with the other coral stress data sets, there is a significant correlation between red larvae and the A. millepora larval thermal tolerance data set (R = 0.51; P-value = 0.01) (Fig. 2B). (Strader et al., 2016, p.565)
+
+Note that the sample size for this result is not mentioned in the article.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA155",
+                             source = "original",
+                             result_type = "correlation",
+                             es_type = "Pearson's r",
+                             point_est = 0.51,
+                             p_value = 0.01,
+                             n = NA_integer_)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Strader, M. E., Aglyamova, G. V., & Matz, M. V. (2015). _Data from: Red fluorescence in coral larvae is associated with a diapause-like state._ Dryad Digital Repository. https://doi.org/10.5061/dryad.m3685
+
+* allcounts_Jan102015.txt
+* DESeq2_ColorMorphGE.R
+* GO_KOGinputfiles.zip
+* KOGtableDeltaRanks.csv
+* KOGtablePvals.csv
+* Parentage.R
+* ParentsRJune2015.csv
+* props_stacked.csv
+* VSDandPVALS_All.csv
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The Usage Notes on the Dryad repository web page indicate that the archive `GO_KOGinputfiles.zip` contains the input files for the KOG (euKaryotic Orthologous Groups) meta-analysis. However, as detailed in the code section below, the code relevant to processing these particular input files is missing.
+
+However, the file `KOGtableDeltaRanks.csv` does nominally contain the "delta ranks" that result from applying the KOG analysis to the input files. It is these delta ranks which are used for the correlation calculations which make up the "meta-analysis" section of this article, one of which is the selected result to reproduce here.
+
+This is a case where code for the "raw" data files is not included, but the processed data file used directly for results is shared as well.
+
+## Code
+There are two code files provided in the Dryad repository, `DESeq2_ColorMorphGE.R` and `Parentage.R`. According to the Dryad usage notes, neither of these files are relevant to the calculation of the meta-analysis results presented in the article.
+
+The methods section in the article refers to (i) the use of rank-based Gene Ontology enrichment analysis using Mann-Whitney tests in relation to the meta-analysis part of the analysis, and provides a link to a GitHub repository which contains the code and instructions: [https://github.com/z0on/GO_MWU](https://github.com/z0on/GO_MWU). The methods section also mentions that with respect to the meta-analysis, "the KOG [euKaryotic Orthologous Groups] analysis was performed using `KOGMWU` package in `R`" (Strader et al., 2016, p.561), but no code relating to this particular analysis can be found in the Dryad repository or in the mentioned GitHub repository.
+
+The methods section does mention "Correlations between KOG categories in each data set comparison were performed using a Pearson’s Correlation" (Strader et al., 2016, p.561), which is directly relevant to the result selected to be reproduced, but there is no reference to code here.
+
+Based on all of this, it seems that analysis code _specific to the meta-analysis part of this article_ is not included, although code for other parts of the article analysis are included, and a link to the _generic_ code used for the meta-analysis part is provided. Given that the processed data (in `KOGtableDeltaRanks.csv`) is provided, and that Pearson's correlation is very straightforward to do in R, a reproduction of the result _based on the processed data_ can be attempted despite the lack of code.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+# (None required.)
+
+# Set the path to the original code file(s).
+# (Not required.)
+
+```
+
+# Import and clean data
+```{r importdata}
+
+data1 <- read.csv(file = here::here("original", "KOGtableDeltaRanks.csv"),
+                  header = TRUE)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Red larvae (redvmega) and A. millepora larval thermal tolerance data set
+# (tolerance).
+cor_red_thermal <- cor.test(x = data1$tolerance, y = data1$redvmega,
+                            alternative = "two.sided",
+                            method = "pearson")
+
+repro_result_df <- data.frame(ID = "MA155",
+                             source = "repro",
+                             result_type = "correlation",
+                             es_type = "Pearson's r",
+                             point_est = round(cor_red_thermal$estimate[[1]], 2),
+                             p_value = round(cor_red_thermal$p.value, 2),
+                             n = nrow(data1))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "p_value",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA155_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

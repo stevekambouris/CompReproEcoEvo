@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA202","mean","Hedges' d","point_est",-0.33,-0.34,3.03,"Original and reproduced values differ by less than 10%"
+"MA202","mean","Hedges' d","ci_lower",-0.503,-0.521,3.58,"Original and reproduced values differ by less than 10%"
+"MA202","mean","Hedges' d","ci_upper",-0.156,-0.159,1.92,"Original and reproduced values differ by less than 10%"
+"MA202","mean","Hedges' d","n",329,329,0,"Original and reproduced values match exactly"

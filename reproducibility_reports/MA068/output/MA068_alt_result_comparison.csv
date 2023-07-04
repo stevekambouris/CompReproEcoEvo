@@ -1,0 +1,5 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA068","logistic regression model (Rödel)","slope parameter","point_est",NA,NA,NA,"Cannot calculate result, invalid value(s)"
+"MA068","logistic regression model (Rödel)","slope parameter","se",0.001,0.001,0,"Original and reproduced values match exactly"
+"MA068","logistic regression model (Barber-Meyer)","slope parameter","point_est",-0.001,0.001,200,"Original and reproduced values differ by at least 10%"
+"MA068","logistic regression model (Barber-Meyer)","slope parameter","se",0.113,0.113,0,"Original and reproduced values match exactly"

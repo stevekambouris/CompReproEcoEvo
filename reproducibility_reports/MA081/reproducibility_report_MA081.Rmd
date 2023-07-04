@@ -1,0 +1,266 @@
+---
+title: "Reproducibility Report for MA081"
+author: "Steven Kambouris"
+date: "21/06/2022"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Jaffé, R., Pope, N., Acosta, A. L., Alves, D. A., Arias, M. C., De la Rúa, P., Francisco, F. O., Giannini, T. C., González‐Chaves, A., Imperatriz‐Fonseca, V. L., Tavares, M. G., Jha, S., & Carvalheiro, L. G. (2016). Beekeeping practices and geographic distance, not land use, drive gene flow across tropical bees. _Molecular Ecology_, _25_(21), 5345–5358. https://doi.org/10.1111/mec.13852
+
+# Result to be reproduced
+
+> As expected, genetic differentiation was explained by geographic distance across the 17 analysed stingless bee species (Fig. 1, Table 2)... Mean IBD [isolation by geographic distance] slope overall species was 1.30 (95% CI: 0.95–1.66)... (Jaffé et al., 2016, p.5351)
+
+Table 2 (p.5352) in the article shows that the sample size associated with the mean slope was 1296, which is the number of model slope parameters that were averaged.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA081",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "slope parameter",
+                             point_est = 1.30,
+                             ci_lower = 0.95,
+                             ci_upper = 1.66,
+                             n = 1296)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared as supporting information on the web page for the article (https://onlinelibrary.wiley.com/doi/full/10.1111/mec.13852):
+
+* mec13852-sup-0006-DataS1.zip
+    + DMA_rd_roads.csv
+    + DMA-May2015.csv
+    + corMLPE.R
+    + Full_Script.R
+    + mavg.R
+    + MLPElikelihood_take2.cpp
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+The data archive (described on the journal article webpage as "Full dataset and R scripts") contains only two data files, `DMA_rd_roads.csv` and `DMA-May2015.csv`. These two files are imported by the R script `Full_Script.R` (see below).
+
+## Code
+There are three R scripts and one C++ script in the archive. In the absence of a readme file or other documentation, the name of the file `Full_Script.R` was the best clue about how to proceed. This code file imports the two included data files by name, and invokes the other included R scripts and C++ script. The comments in this file provided some clues about how to run the analysis to reproduce the selected result.
+
+# Set up
+```{r library}
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+
+# From Full_Script.R
+library(lme4)
+library(MuMIn)
+library(ggplot2)
+library(Rcpp)
+
+# From corMLPE.R
+library(nlme)
+library(plyr)
+library(Matrix)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Full_Script.R")
+orig_source2 <- here::here("original", "corMLPE.R")
+orig_source3 <- here::here("original", "mavg.R")
+orig_source4 <- here::here("original", "MLPElikelihood_take2.cpp")
+
+```
+
+# Import and clean data
+```{r importdata}
+
+DMA <- read.csv(here::here("original", "DMA-May2015.csv"), header=T)
+
+
+# Perform some custom cleaning - when the files are imported as-is, the check on
+# lines 24-25 checking the "alignment" of the DMA and Road datasets fails.
+# The issue seems to be the inconsistent name of a value in the Pop1 variable
+# in the Road data: there is both a value "Manaus_M. Pascoal" and
+# "Manaus_M._Pascoal"; the DMA data just has "Manaus_M._Pascoal". Solution is to
+# make the change in the Road data before converting Pop1 to a factor. Then, all
+# the factor labels will align correctly.
+
+# Import the roads data with stringsAsFactors = FALSE.
+Road <- read.csv(here::here("original", "DMA_rd_roads.csv"), stringsAsFactors = FALSE)
+
+# Correct the errant value of Pop1.
+Road[Road$Pop1 == "Manaus_M. Pascoal", "Pop1"] <- "Manaus_M._Pascoal"
+
+# Convert all the string variables to factors.
+Road$Species <- factor(Road$Species)
+Road$Pop1 <- factor(Road$Pop1)
+Road$Pop2 <- factor(Road$Pop2)
+Road$Managed <- factor(Road$Managed)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format DMA data.
+sourceLines(orig_source, 12, 14)
+
+# Format Roads data.
+sourceLines(orig_source, 18, 21)
+
+# Check that the DMA and Roads data are aligned.
+sourceLines(orig_source, 23, 25)
+
+# Perform additional data transformations.
+sourceLines(orig_source, 27, 46)
+
+# Run corMLPE.R (loads a bunch of functions)
+sourceLines(orig_source2, 39, 384)
+
+# Run C++ code
+# Change to original line required due to path.
+sourceCpp(orig_source4)
+
+# Re-order DMA data, fit the full model.
+sourceLines(orig_source, 56, 64)
+
+# Get covariate and Z matrices, re-fit full model.
+sourceLines(orig_source, 68, 78)
+
+# Perform "model fitting" according to the comment in source file.
+sourceLines(orig_source, 82, 87)
+
+# 2022-06-21: New stuff follows here.
+
+# This is the point at which things can't be replicated.
+#
+# mavg.R is supposed to create a script, bootstrap.R, which runs the
+# bootstrap simulations used to calculate confidence intervals.
+#
+# However, attempting to run the bootstrapping functions results in an
+# error:
+# Error in solve.default(-val) : 
+#   Lapack routine dgesv: system is exactly singular: U[3,3] = 0
+#
+# This error comes from the solve() function in base R, which is invoked when
+# attempting to update a linear mixed model (lme object from package nlme).
+#
+# The following code is the minimum required to reproduce the issue:
+# ******************************************************************
+# # Load the functions defined in mavg.R.
+# sourceLines(orig_source3, 1, 140)
+#
+# # Generate a set of 1000 random seeds to use for bootstrapping.
+# sourceLines(orig_source3, 142, 142)
+# set.seed(100081)
+# sourceLines(orig_source3, 145, 145)
+#
+# # Generate fitted values, according to mavg.R.
+# sourceLines(orig_source3, 149, 150)
+#
+# # Re-run corMLPE.R and the C++ code, as according to mavg.R.
+# sourceLines(orig_source2, 39, 384)
+# sourceCpp(orig_source4)
+#
+# # Calculate the yhat and shat objects.
+# sourceLines(orig_source3, 156, 161)
+#
+# # Custom code: minimum code to attempt bootstrapping:
+# for (j in 1:1000) {
+#   cat(paste0(Sys.time(), ": j = ", j, "\n"))
+#   bootstrapConditional(yhat, shat, model.list, seed.list, j)
+# }
+# ******************************************************************
+# 
+# The code above will result in the singular matrix error during
+# the execution of bootstrapConditional for j = 2 (i.e. the second seed).
+#
+# It's unclear what the problem is - the original code doesn't specify what
+# to do if one simulation fails (try another seed until the calculation
+# succeeds, until one reaches 1000? Ignore failures and calculate bootstrapped
+# results based on less than 1000 simulated data points?)
+#
+# Additionally, the shared code is incomplete: code which compiles the separate
+# <slopes|intercepts|fitted|fixed>_conditional_<j>.tab files into a single file
+# which is imported by Full_Script.R as SLOPES_CONDITIONAL.TAB, etc. isn't
+# included, even though it would be a relatively trivial to combine the files.
+#
+# As a result of all this, only a partial reproduction of results can
+# continue - the confidence interval (which relies on bootstrapping) cannot be
+# calculated, but the overall mean and number of the IBD slope parameters
+# can still be.
+
+# Load the `fix` function from mavg.R.
+sourceLines(orig_source3, 44, 61)
+
+# The IBD slope is a fixed effect in these models, named "Rnull.t".
+# Use the fix function to calculate model-averaged fixed effects, as used in
+# the script Full_Script.R at line 173. Custom code is needed because the
+# original code embeds this calculation in a call to calculate confidence
+# intervals.
+model_avg_fixed <- fix(parm)
+
+repro_result_df <- data.frame(ID = "MA081",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "slope parameter",
+                             point_est = round(model_avg_fixed["Rnull.t"], 2),
+                             ci_lower = NA_real_,
+                             ci_upper = NA_real_,
+                             n = length(parm))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est", "ci_lower",
+                                              "ci_upper", "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA081_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

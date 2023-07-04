@@ -1,0 +1,259 @@
+---
+title: "Reproducibility Report for MA126"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Anderson, J. T. (2016). Plant fitness in a rapidly changing world. _New Phytologist_, _210_(1), 81–87. https://doi.org/10.1111/nph.13693
+
+# Result to be reproduced
+
+> Three manipulations depressed viability (germination, seedling establishment, and juvenile and adult survival): warming via infrared heaters($z = -2.28$, $P = 0.023$), snow removal ($z = -2.44$, $P= 0.015$) and warming plus drought ($z = -2.64$, $P = 0.0084$); however, there was no effect of elevated CO2 concentration, drought or warming via open top chambers (Fig. 2a). (Anderson, 2016, p.83)
+
+The result to be reproduced is the effect of warming via infrared heaters on viability, being the first result from the meta-analysis to be mentioned in the text.
+
+The above quote from Anderson (2016) refers to Figure 2a, which plots the effect size (as a log odds ratio, not a z-value) plus confidence interval associated with each manipulation listed. Figure 2a refers to the viability components mentioned above as "binary fitness components".
+
+In addition to the information provided in the article, the supplementary document includes the model output for this analysis on page 7. The output lists the numerical results for the effect sizes expressed as log odds ratios, along with their confidence intervals and standard errors (in addition to the z-value and P-value, which match the values already reported in the article). In the model output, the warming via infrared heaters manipulation is referred to as "active warming". Rather than extract the effect size and confidence interval values from the figure, the values in the model output in the supplementary document are the values to be reproduced.
+
+No sample size information is provided, but an annotation in Figure 2a notes that the warming via infrared heaters result is based on results from 5 studies, and 38 species. The model output in the supplementary document indicates that the model was based on a data set with 104 individual results in total--this is presumably across all six manipulations.
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA126",
+                             source = "original",
+                             result_type = "mean",
+                             es_type = "log odds ratio",
+                             point_est = -1.11,
+                             se = 0.49,
+                             ci_lower = -2.06,
+                             ci_upper = -0.15,
+                             z_value = -2.28,
+                             p_value = 0.023)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and files were shared on on the journal publisher's website:
+
+* nph13693-sup-0001-methods1.pdf
+* nph13693-sup-0002-notess1.txt
+* nph13693-sup-0003-notess2.txt
+* nph13693-sup-0004-notess3.new
+* nph13693-sup-0005-notess4.txt
+* nph13693-sup-0006-notess5.new
+
+There is no licencing information available for these files.
+
+# Applicability of shared data and code files
+
+## Data
+
+The supplementary document `nph13693-sup-0001-methods1.pdf` clearly lays out the contents of the other five files supplied as supplementary material. Files `nph13693-sup-0002-notess1.txt`, `nph13693-sup-0003-notess2.txt`, and `nph13693-sup-0004-notess3.new` are identified as being relevant to the "binary components of fitness" meta-analysis reported in the article. (Files `nph13693-sup-0005-notess4.txt` and `nph13693-sup-0006-notess5.new` are identified as being relevant to the "fecundity components of fitness" meta-analysis which is also reported in the article.)
+
+File `nph13693-sup-0002-notess1.txt` is referred to as the "full" data file for the "binary components of fitness" meta-analysis. File `nph13693-sup-0003-notess2.txt` is referred to as the "reduced" data file for the "binary components of fitness" meta-analysis. The supplementary document states the difference between the two is that the reduced data set collapses multiple sites per species per study into a single record, while the full data set keeps each site per species per study as a separate record. The document indicates that the results presented in the article are based on the reduced data set.
+
+Both of these files contain a "header" which briefly describes each of the variables included the data file before the tab-delimited data begins. This metadata is repeated on pages 5 and 6 of `nph13693-sup-0001-methods1.pdf`.
+
+File `nph13693-sup-0004-notess3.new` is the phylogenetic tree data applicable to the "binary components of fitness" meta-analysis, in Newick tree format. This data file is relevant because the meta-analysis model takes phylogenetic relatedness into account.
+
+## Code
+
+R code is included on pages 5-6 the supplementary document `nph13693-sup-0001-methods1.pdf`. The R code is very clearly signposted as being relevant to reproducing the "binary components of fitness" meta-analysis in the paper.
+
+Because the R code is provided within the PDF document, and not as a separate text file, the code text will need to be extracted from the PDF and coerced into a usable format.
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+library(pdftools)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(phytools)
+library(metafor)
+
+# Create a useable R script from the R code contained within the supplementary
+# information PDF document.
+# The meta-analysis code for the "binary components of fitness" analysis is on
+# pp.5-6.
+
+# Extract all text from the supplementary information PDF.
+sup_text_raw <- pdftools::pdf_text(pdf = here("original",
+                                              "nph13693-sup-0001-methods1.pdf"))
+
+# Page 5: remove all text before first comment (starting with ##).
+code_start_p5 <- gregexpr("##", sup_text_raw[5])
+code_text_p5 <- substring(sup_text_raw[5],
+                          code_start_p5[[1]][1])
+
+# Page 6: remove all non-code text starting with
+# "Three climatic manipulation ..."
+code_end_p6 <- gregexpr("Three climatic manipulation", sup_text_raw[6])
+code_text_p6 <- substring(sup_text_raw[6],
+                          1,
+                          code_end_p6[[1]][1] - 1)
+
+# Concatenate the two pages of code together.
+code_binary_fmt <- paste(code_text_p5, code_text_p6, sep = "")
+
+# Perform some cleaning.
+# Add double hashes in front of the second line of explanatory comments.
+code_binary_fmt <- gsub("\\ncalculates", "\n##calculates", code_binary_fmt)
+code_binary_fmt <- gsub("\\ndataset ", "\n## dataset ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nstudy, ", "\n## study, ", code_binary_fmt)
+# Fix an issue with the text wrapping of R code.
+code_binary_fmt <- gsub("R =\\nlist", "R = list", code_binary_fmt)
+# Turn the metadata specification lines into comments.
+code_binary_fmt <- gsub("\\nspecies ", "\n# species ", code_binary_fmt)
+code_binary_fmt <- gsub("\\ngenus ", "\n# genus ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nlife form ", "\n# life form ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nstrategy ", "\n# strategy ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nn1i ", "\n# n1i ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nai ", "\n# ai ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nthe ", "\n# the ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nn2i ", "\n# n2i ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nci ", "\n# ci ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nlife_stage ", "\n# life_stage ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nfitness_component ", "\n# fitness_component ",
+                        code_binary_fmt)
+code_binary_fmt <- gsub("\\ntreatment ", "\n# treatment ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nfirst_year ", "\n# first_year ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nlocation ", "\n# location ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nclimate ", "\n# climate ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nhabitat ", "\n# habitat ", code_binary_fmt)
+code_binary_fmt <- gsub("\\nabsolute_latitude ", "\n# absolute_latitude ",
+                        code_binary_fmt)
+code_binary_fmt <- gsub("\\nelevation\\(m\\) ", "\n# elevation(m) ",
+                        code_binary_fmt)
+code_binary_fmt <- gsub("\\npublication_year ", "\n# publication_year ",
+                        code_binary_fmt)
+# Remove all cases of double line breaks and replace with single line breaks.
+code_binary_fmt <- gsub("\\n\\n", "\n", code_binary_fmt)
+# Remove the page 5 footer from the extracted text.
+code_binary_fmt <- gsub("\\n *5", "", code_binary_fmt)
+# Change one final line of metadata specification into a comment.
+code_binary_fmt <- gsub("\\nstudy =", "\n# study =", code_binary_fmt)
+# Add in double line breaks before the explanatory comments.
+code_binary_fmt <- gsub("\\n## Now", "\n\n## Now", code_binary_fmt)
+code_binary_fmt <- gsub("\\n## First", "\n\n## First", code_binary_fmt)
+code_binary_fmt <- gsub("\\n## This", "\n\n## This", code_binary_fmt)
+code_binary_fmt <- gsub("\\n## The model", "\n\n## The model", code_binary_fmt)
+
+# Write the code to a file.
+cat(code_binary_fmt, file = here("binary_fitness.R"))
+
+# Set the path to the original code file(s).
+orig_source <- here::here("binary_fitness.R")
+
+
+```
+
+# Import and clean data
+```{r importdata}
+
+# Import the reduced data set for the binary components of fitness.
+# Object name "FileS3" is chosen to be compatible with the original code as
+# written.
+FileS3 <- read.delim(file = here("original",
+                                 "nph13693-sup-0003-notess2.txt"),
+                     skip = 21,
+                     header = TRUE)
+
+# Import the phylogeny data file (in Newick format). This code is adapted from
+# the provided code.
+# Object name "binary_tree" is chosen to be compatible with the original code
+# as written.
+binary_tree <- read.newick(file = here("original",
+                                       "nph13693-sup-0004-notess3.new"),
+                           text)
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Format (collapse singles) and plot the phylogenetic tree.
+sourceLines(orig_source, 5, 6)
+
+# Calculate the phylogenetic correlation matrix.
+# Custom code needed because name of R object is inconsistent.
+# Original command, line 9: sigma<-vcv.phylo(binarytree,cor=T)
+sigma <- vcv.phylo(binary_tree, cor=T)
+
+# Calculate effect sizes (odds ratios) for the studies in the data set.
+sourceLines(orig_source, 36, 36)
+
+# Run the model.
+sourceLines(orig_source, 40, 40)
+
+# Show summary of the model output.
+summary(Model_binary)
+
+repro_result_df <- data.frame(ID = "MA126",
+                             source = "repro",
+                             result_type = "mean",
+                             es_type = "log odds ratio",
+                             point_est = round(Model_binary$beta[3], 2),
+                             se = round(Model_binary$se[3], 2),
+                             ci_lower = round(Model_binary$ci.lb[3], 2),
+                             ci_upper = round(Model_binary$ci.ub[3], 2),
+                             z_value = round(Model_binary$zval[3], 2),
+                             p_value = round(Model_binary$pval[3], 3))
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est", "se",
+                                              "ci_lower", "ci_upper",
+                                              "z_value", "p_value"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA126_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```

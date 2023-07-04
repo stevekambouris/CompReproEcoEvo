@@ -1,0 +1,4 @@
+"ID","result_type","es_type","compared","original","repro","percent_error","note"
+"MA155","correlation","Pearson's r","point_est",0.51,0.51,0,"Original and reproduced values match exactly"
+"MA155","correlation","Pearson's r","p_value",0.01,0.01,0,"Original and reproduced values match exactly"
+"MA155","correlation","Pearson's r","n",NA,23,NA,"Cannot calculate result, invalid value(s)"

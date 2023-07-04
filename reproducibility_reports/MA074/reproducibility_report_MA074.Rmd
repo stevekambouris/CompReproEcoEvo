@@ -1,0 +1,147 @@
+---
+title: "Reproducibility Report for MA074"
+author: "Steven Kambouris"
+date: "18/09/2021"
+output: html_document
+knit: (function(input, ...){
+    rmarkdown::render(input, output_dir = here::here("output"), envir = globalenv())
+  })
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE,
+                      include = TRUE)
+```
+
+# Reproducing result from
+
+Harts, A. M. F., Booksmythe, I., & Jennions, M. D. (2016). Mate guarding and frequent copulation in birds: A meta-analysis of their relationship to paternity and male phenotype. _Evolution_, _70_(12), 2789–2808. https://doi.org/10.1111/evo.13081
+
+# Result to be reproduced
+
+> Behaviors assumed to increase paternity were significantly positively related to actual paternity when looking at all measures of paternity protection combined, and when looking separately at mate guarding or manipulation of paternity protection (Fig. 2A, Table 3). (Harts et al., 2016, p.2795)
+
+No numeric results were reported on p.2795, the first page of the results section, but the article references Table 3, on p.2796, which lists numeric results. The first result in Table 3 is the relationship (measured by Pearson correlation) between actual paternity and all measures of paternity protection combined, for dataset 1 (described on p.2794).
+
+```{r orig-result}
+orig_result_df <- data.frame(ID = "MA074",
+                             source = "original",
+                             result_type = "correlation",
+                             es_type = "Pearson's r",
+                             point_est = 0.183,
+                             ci_lower = 0.089,
+                             ci_upper = 0.274,
+                             n = 43)
+
+knitr::kable(x = orig_result_df)
+```
+
+# Details of shared data and code files
+
+The following data and code files were shared on Dryad:
+
+Harts, A. M. F., Booksmythe, I., Jennions, M. D., & Harts, A. M. F. (2016). _Data from: Mate guarding and frequent copulation in birds: a meta-analysis of their relationship to paternity and male phenotype (Version 1, p. 1099896 bytes) [Data set]._ Dryad. https://doi.org/10.5061/DRYAD.QV000
+
+* Ericson.tre
+* Hackett.tre
+* Q1 standard and multilevel.R
+* Q1All.csv
+* Q1Cat.csv
+* Q1phylo.csv
+* Q2 standard and multilevel.R
+* Q2All.csv
+* Q2Cat.csv
+* Q2phylo.csv
+
+These files are licensed under a [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/) license.
+
+# Applicability of shared data and code files
+
+## Data
+The Dryad webpage contains detailed "Usage Notes" for all files listed in the archive. The usage notes indicate that the file `Q1All.csv` contains effect size data "for the relationship between paternity protection behaviours and realized paternity, across all categories of paternity protection". This seems most relevant for reproducing the selected result.
+
+## Code
+The Dryad webpage contains detailed "Usage Notes" for all files listed in the archive. The usage notes indicate that the file `Q1 standard and multilevel.R` contains code "for standard and multilevel (phylogenetic) meta analyses of the relationship between paternity protection behaviours and realized paternity". This seems most relevant for reproducing the selected result. In addition, the comments within the R script file provide further indications that this is the correct file to be using for the selected result.
+
+
+# Set up
+```{r library}
+
+# Load packages required for working with original files.
+library(here)
+
+# Load custom package for (i) running the source command for specific line
+# numbers within a file and (ii) for calculating the percentage error between
+# the original and reproduced values.
+library(reprohelper)
+
+# Load packages required for data import/cleaning.
+# (None required.)
+
+# Load packages required by the code to run.
+# (These packages are loaded in the same order as loaded in the original code
+# file.)
+library(metafor)
+library(MCMCglmm)
+
+# Set the path to the original code file(s).
+orig_source <- here::here("original", "Q1 standard and multilevel.R")
+```
+
+# Import and clean data
+```{r importdata}
+
+Data <- read.csv(here::here("original", "Q1All.csv"))
+
+```
+
+# (Re-)run the analysis to reproduce result
+```{r analysis}
+
+# Fit model 1 (based on all data) for question 1, regarding paternity.
+sourceLines(orig_source, 20, 20)
+
+model_summary <- mQ1A1
+
+repro_result_df <- data.frame(ID = "MA074",
+                             source = "repro",
+                             result_type = "correlation",
+                             es_type = "Pearson's r",
+                             point_est = round(model_summary$beta, 3),
+                             ci_lower = round(model_summary$ci.lb, 3),
+                             ci_upper = round(model_summary$ci.ub, 3),
+                             n = model_summary$k)
+rownames(repro_result_df) <- NULL
+
+knitr::kable(x = repro_result_df)
+
+```
+
+# Compare original and reproduced result
+```{r compare}
+
+result_compare <- compare_vars(df_orig = orig_result_df,
+                                df_repro = repro_result_df,
+                                checkvars = c("point_est",
+                                              "ci_lower", "ci_upper",
+                                              "n"))
+
+knitr::kable(x = orig_result_df[, c("ID", "result_type", "es_type")],
+             caption = "Details of result")
+
+knitr::kable(x = result_compare,
+             caption = "Comparison of original and reproduced values")
+
+# Write results comparison to file.
+out1 <- orig_result_df[1, c("ID", "result_type", "es_type")]
+out2 <- cbind(out1, result_compare, row.names = NULL)
+write.csv(x = out2, file = here::here("output", "MA074_result_comparison.csv"),
+          row.names = FALSE)
+
+```
+
+# R session information
+
+```{r rsession}
+devtools::session_info()
+```
